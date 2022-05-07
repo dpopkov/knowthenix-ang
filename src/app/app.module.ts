@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './questions/categories/categories.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     HomeComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
