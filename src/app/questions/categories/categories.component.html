@@ -1,1 +1,29 @@
-<p>categories works!</p>
+<h1>Categories</h1>
+
+<a class="btn btn-warning mb-3">Add</a>
+
+<div class="row">
+  <div class="col-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>
+          <button type="button" class="btn btn-primary">View</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    Categoy details will go here
+  </div>
+</div>

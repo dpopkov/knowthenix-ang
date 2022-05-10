@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
+import { Category } from 'src/app/model/Category';
 
 @Component({
   selector: 'app-categories',
@@ -8,10 +9,12 @@ import { DataService } from 'src/app/data.service';
 })
 export class CategoriesComponent implements OnInit {
 
+  categories: Array<Category>;
+
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    console.log('Categories:', this.dataService.categories);
+    this.categories = this.dataService.categories;
   }
 
 }
