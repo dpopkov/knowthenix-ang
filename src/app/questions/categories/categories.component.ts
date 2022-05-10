@@ -14,7 +14,19 @@ export class CategoriesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.categories = this.dataService.categories;
+    // this.categories = this.dataService.categories;
+
+    // Prepare for REST
+    this.dataService.getCategory(2).subscribe(
+      category => {
+        console.log('in categories.component.ts ngOnInit: category.name=', category.name);
+      }
+    )
+    this.dataService.getCategories().subscribe(
+      (next) => {
+        this.categories = next;
+      }
+    )
   }
 
 }
