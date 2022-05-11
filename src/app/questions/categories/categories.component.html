@@ -1,6 +1,6 @@
 <h1>Categories</h1>
 
-<a class="btn btn-warning mb-3">Add</a>
+<a class="btn btn-primary mb-3">Add</a>
 
 <div class="row">
   <div class="col-6">
@@ -17,13 +17,15 @@
         <td>{{ category.id }}</td>
         <td>{{ category.name }}</td>
         <td>
-          <button type="button" class="btn btn-primary">View</button>
+          <button type="button" class="btn btn-primary"
+                  (click)="setSelectedCategory(category.id)"
+          >View</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
   <div class="col-6">
-    Categoy details will go here
+    <app-category-detail [category]="selectedCategory" ></app-category-detail>
   </div>
 </div>

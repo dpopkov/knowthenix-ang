@@ -17,3 +17,7 @@ a {
   .row-striped {
     padding: 15px 0;
   }
+
+tr td {
+  padding-right: 20px;
+}

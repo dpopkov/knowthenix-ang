@@ -8,6 +8,7 @@ import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './questions/categories/categories.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CategoryDetailComponent } from './questions/categories/category-detail/category-detail.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MenuComponent,
     HomeComponent,
     CategoriesComponent,
+    CategoryDetailComponent,
     PageNotFoundComponent
   ],
   imports: [

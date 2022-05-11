@@ -10,6 +10,7 @@ import { Category } from 'src/app/model/Category';
 export class CategoriesComponent implements OnInit {
 
   categories: Array<Category>;
+  selectedCategory: Category;
 
   constructor(private dataService: DataService) { }
 
@@ -17,16 +18,22 @@ export class CategoriesComponent implements OnInit {
     // this.categories = this.dataService.categories;
 
     // Prepare for REST
+    /*
     this.dataService.getCategory(2).subscribe(
       category => {
         console.log('in categories.component.ts ngOnInit: category.name=', category.name);
       }
     )
+    */
     this.dataService.getCategories().subscribe(
       (next) => {
         this.categories = next;
       }
     )
+  }
+
+  setSelectedCategory(id: number): void {
+    this.selectedCategory = this.categories.find(category => category.id === id);
   }
 
 }
