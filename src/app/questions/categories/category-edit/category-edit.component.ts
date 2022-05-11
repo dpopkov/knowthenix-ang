@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/data.service';
 import { Category } from 'src/app/model/Category';
 
 @Component({
@@ -13,14 +15,20 @@ export class CategoryEditComponent implements OnInit {
   formCategory: Category;
   message: string;
 
-  constructor() { }
+  constructor(private dataService: DataService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.formCategory = Object.assign({}, this.category);
   }
 
   onSubmit(): void {
-    console.log('We need to save the category', this.formCategory);
+    this.dataService.updateCategory(this.formCategory).subscribe(
+      (category) => {
+        this.router.navigate(['questions', 'categories'],
+                            {queryParams: {id: category.id, action: 'view'}});
+      }
+    )
   }
 
 }

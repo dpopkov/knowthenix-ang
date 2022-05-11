@@ -32,4 +32,11 @@ export class DataService {
     console.log('data.service.ts: getCategory by id=', id);
     return this.http.get<Category>(environment.restUrl + '/categories/' + id);
   }
+
+  updateCategory(toUpdate: Category): Observable<Category> {
+    const originalCategory = this.categories.find((category) => category.id === toUpdate.id);
+    originalCategory.name = toUpdate.name;
+    originalCategory.description = toUpdate.description;
+    return of(originalCategory);
+  }
 }
