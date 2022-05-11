@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 import { Category } from 'src/app/model/Category';
 
@@ -12,11 +13,11 @@ export class CategoriesComponent implements OnInit {
   categories: Array<Category>;
   selectedCategory: Category;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    // this.categories = this.dataService.categories;
-
     // Prepare for REST
     /*
     this.dataService.getCategory(2).subscribe(
@@ -30,10 +31,19 @@ export class CategoriesComponent implements OnInit {
         this.categories = next;
       }
     )
+    this.route.queryParams.subscribe(
+      (params) => {
+        const idAsString = params['id'];
+        if (idAsString) {
+          const idAsNumber = +idAsString;
+          this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
+        }
+      }
+    )
   }
 
-  setSelectedCategory(id: number): void {
-    this.selectedCategory = this.categories.find(category => category.id === id);
+  setSelectedCategory(categoryId: number): void {
+    this.router.navigate(['questions', 'categories'], {queryParams : { id : categoryId}});
   }
 
 }

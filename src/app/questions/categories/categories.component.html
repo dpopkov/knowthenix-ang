@@ -26,6 +26,6 @@
     </table>
   </div>
   <div class="col-6">
-    <app-category-detail [category]="selectedCategory" ></app-category-detail>
+    <app-category-detail *ngIf="selectedCategory" [category]="selectedCategory" ></app-category-detail>
   </div>
 </div>
