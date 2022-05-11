@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './questions/categories/categories.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoryDetailComponent } from './questions/categories/category-detail/category-detail.component';
+import { CategoryEditComponent } from './questions/categories/category-edit/category-edit.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CategoryDetailComponent } from './questions/categories/category-detail/
     HomeComponent,
     CategoriesComponent,
     CategoryDetailComponent,
+    CategoryEditComponent,
     PageNotFoundComponent
   ],
   imports: [

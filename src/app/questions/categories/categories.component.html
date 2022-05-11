@@ -26,6 +26,7 @@
     </table>
   </div>
   <div class="col-6">
-    <app-category-detail *ngIf="selectedCategory" [category]="selectedCategory" ></app-category-detail>
+    <app-category-detail *ngIf="action === 'view'" [category]="selectedCategory" ></app-category-detail>
+    <app-category-edit *ngIf="action === 'edit'" [category]="selectedCategory"></app-category-edit>
   </div>
 </div>

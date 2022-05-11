@@ -12,6 +12,7 @@ export class CategoriesComponent implements OnInit {
 
   categories: Array<Category>;
   selectedCategory: Category;
+  action: string;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -34,16 +35,20 @@ export class CategoriesComponent implements OnInit {
     this.route.queryParams.subscribe(
       (params) => {
         const idAsString = params['id'];
+        const action = params['action'];
         if (idAsString) {
           const idAsNumber = +idAsString;
           this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
+          if (action) {
+            this.action = action;
+          }
         }
       }
     )
   }
 
   setSelectedCategory(categoryId: number): void {
-    this.router.navigate(['questions', 'categories'], {queryParams : { id : categoryId}});
+    this.router.navigate(['questions', 'categories'], {queryParams : { id : categoryId, action : 'view'}});
   }
 
 }
