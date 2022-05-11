@@ -10,6 +10,7 @@ export class CategoryEditComponent implements OnInit {
 
   @Input()
   category: Category;
+  message: string;
 
   constructor() { }
 
