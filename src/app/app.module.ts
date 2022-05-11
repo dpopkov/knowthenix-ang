@@ -10,6 +10,7 @@ import { CategoriesComponent } from './questions/categories/categories.component
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoryDetailComponent } from './questions/categories/category-detail/category-detail.component';
 import { CategoryEditComponent } from './questions/categories/category-edit/category-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CategoryEditComponent } from './questions/categories/category-edit/cate
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [],

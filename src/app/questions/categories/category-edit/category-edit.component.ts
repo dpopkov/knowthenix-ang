@@ -10,11 +10,17 @@ export class CategoryEditComponent implements OnInit {
 
   @Input()
   category: Category;
+  formCategory: Category;
   message: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.formCategory = Object.assign({}, this.category);
+  }
+
+  onSubmit(): void {
+    console.log('We need to save the category', this.formCategory);
   }
 
 }
