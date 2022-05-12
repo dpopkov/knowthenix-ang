@@ -35,20 +35,22 @@ export class CategoriesComponent implements OnInit {
     this.route.queryParams.subscribe(
       (params) => {
         const idAsString = params['id'];
-        const action = params['action'];
         if (idAsString) {
           const idAsNumber = +idAsString;
           this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
-          if (action) {
-            this.action = action;
-          }
         }
+        this.action = params['action'];
       }
     )
   }
 
   setSelectedCategory(categoryId: number): void {
     this.router.navigate(['questions', 'categories'], {queryParams : { id : categoryId, action : 'view'}});
+  }
+
+  addCategory(): void {
+    this.selectedCategory = new Category();
+    this.router.navigate(['questions', 'categories'], {queryParams: {action: 'add'}});
   }
 
 }

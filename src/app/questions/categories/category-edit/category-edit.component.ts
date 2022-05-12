@@ -23,12 +23,23 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.dataService.updateCategory(this.formCategory).subscribe(
-      (category) => {
-        this.router.navigate(['questions', 'categories'],
-                            {queryParams: {id: category.id, action: 'view'}});
-      }
-    )
+    if (this.formCategory.id == null) {
+      this.dataService.addCategory(this.formCategory).subscribe(
+        (category) => {
+          this.navigateToView(category);
+        }
+      )
+    } else {
+      this.dataService.updateCategory(this.formCategory).subscribe(
+        (category) => {
+          this.navigateToView(category);
+        }
+      )
+    }
+  }
+
+  private navigateToView(category: Category) {
+    this.router.navigate(['questions', 'categories'], {queryParams: {id: category.id, action: 'view'}});
   }
 
 }

@@ -39,4 +39,16 @@ export class DataService {
     originalCategory.description = toUpdate.description;
     return of(originalCategory);
   }
+
+  addCategory(newCategory: Category): Observable<Category> {
+    let maxId = 0;
+    for (const c of this.categories) {
+      if (c.id > maxId) {
+        maxId = c.id;
+      }
+    }
+    newCategory.id = maxId + 1;
+    this.categories.push(newCategory);
+    return of(newCategory);
+  }
 }

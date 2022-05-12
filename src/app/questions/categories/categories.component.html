@@ -1,6 +1,6 @@
 <h1>Categories</h1>
 
-<a class="btn btn-primary mb-3">Add</a>
+<a class="btn btn-primary mb-3" (click)="addCategory()">Add</a>
 
 <div class="row">
   <div class="col-6">
@@ -27,6 +27,6 @@
   </div>
   <div class="col-6">
     <app-category-detail *ngIf="action === 'view'" [category]="selectedCategory" ></app-category-detail>
-    <app-category-edit *ngIf="action === 'edit'" [category]="selectedCategory"></app-category-edit>
+    <app-category-edit *ngIf="action === 'edit' || action === 'add'" [category]="selectedCategory"></app-category-edit>
   </div>
 </div>

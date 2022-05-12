@@ -3,9 +3,15 @@ export class Category {
     name: string;
     description: string;
 
-    constructor(id: number, name: string, description: string) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    constructor(id?: number, name?: string, description?: string) {
+        if (id) {
+            this.id = id;
+        }
+        if (name) {
+            this.name = name;
+        }
+        if (description) {
+            this.description = description;
+        }
     }
 }
