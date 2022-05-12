@@ -21,3 +21,8 @@ a {
 tr td {
   padding-right: 20px;
 }
+
+/* Dynamic classes for form elements */
+input.ng-invalid.ng-touched {
+  border: 1ps solid red;
+}
