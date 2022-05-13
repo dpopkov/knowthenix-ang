@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
+import { KeyTerm } from './model/KeyTerm';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class DataService {
 
   // Prepare for REST
   private categories: Array<Category> = new Array<Category>();
+  private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
 
   constructor(private http: HttpClient) {
     console.log('environment.restUrl=', environment.restUrl);
@@ -21,6 +23,8 @@ export class DataService {
     const category2 = new Category(2, 'Category 2', 'Description 2');
     this.categories.push(category1);
     this.categories.push(category2);
+    this.keyTerms.push(new KeyTerm(3, 'KeyTerm 1', 'Description 1'));
+    this.keyTerms.push(new KeyTerm(4, 'KeyTerm 2', 'Description 2'));
   }
 
   // Prepare for REST
@@ -29,7 +33,6 @@ export class DataService {
   }
 
   getCategory(id: number) : Observable<Category> {
-    console.log('data.service.ts: getCategory by id=', id);
     return this.http.get<Category>(environment.restUrl + '/categories/' + id);
   }
 
@@ -50,5 +53,9 @@ export class DataService {
     newCategory.id = maxId + 1;
     this.categories.push(newCategory);
     return of(newCategory);
+  }
+
+  getKeyTerms(): Observable<Array<KeyTerm>> {
+    return of(this.keyTerms);
   }
 }

@@ -1,0 +1,32 @@
+<h1>KeyTerms</h1>
+
+<a class="btn btn-primary mb-3" (click)="addKeyTerm()">Add</a>
+
+<div class="row">
+  <div class="col-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let keyterm of keyterms">
+        <td>{{ keyterm.id }}</td>
+        <td>{{ keyterm.name }}</td>
+        <td>
+          <button type="button" class="btn btn-primary"
+                  (click)="setSelectedKeyTerm(keyterm.id)"
+          >View</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <app-key-term-detail *ngIf="action === 'view'" [keyTerm]="selectedKeyTerm" ></app-key-term-detail>
+    <app-key-term-edit *ngIf="action === 'edit'" [keyTerm]="selectedKeyTerm"></app-key-term-edit>
+  </div>
+</div>

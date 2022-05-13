@@ -20,4 +20,8 @@ export class MenuComponent implements OnInit {
   navigateToQuestionsCategories(): void {
     this.router.navigate(['questions', 'categories']);
   }
+
+  navigateToKeyTerms(): void {
+    this.router.navigate(['keyterms']);
+  }
 }

@@ -1,0 +1,22 @@
+<div class="keyTermDetails">
+    <h2>KeyTerm details</h2>
+    <a class="btn btn-small btn-primary"
+        (click)="editKeyTerm()"
+    >Edit</a>
+    <a class="btn btn-small btn-warning">Delete</a>
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>{{ keyTerm?.id }}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{ keyTerm?.name }}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{{ keyTerm?.description }}</td>
+      </tr>
+    </table>
+  </div>
+  
