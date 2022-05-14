@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/data.service';
 import { KeyTerm } from 'src/app/model/KeyTerm';
 
 @Component({
@@ -12,7 +13,8 @@ export class KeyTermDetailComponent implements OnInit {
   @Input()
   keyTerm: KeyTerm;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, 
+            private dataService: DataService) { }
 
   ngOnInit(): void {
   }
@@ -21,4 +23,11 @@ export class KeyTermDetailComponent implements OnInit {
     this.router.navigate(['keyterms'], {queryParams: {id: this.keyTerm.id, action: 'edit'}});
   }
 
+  deleteKeyTerm() {
+    this.dataService.deleteKeyTerm(this.keyTerm.id).subscribe(
+      next => {
+        this.router.navigate(['keyterms']);
+      }
+    )
+  }
 }

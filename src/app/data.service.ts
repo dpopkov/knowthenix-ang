@@ -55,6 +55,12 @@ export class DataService {
     return of(newCategory);
   }
 
+  deleteCategory(id: number): Observable<any> {
+    const ct = this.categories.find(c => c.id === id);
+    this.categories.splice(this.categories.indexOf(ct), 1);
+    return of(null);
+  }
+
   getKeyTerms(): Observable<Array<KeyTerm>> {
     return of(this.keyTerms);
   }
@@ -72,6 +78,12 @@ export class DataService {
     newKeyTerm.id = this.findKeyTermMaxId() + 1;
     this.keyTerms.push(newKeyTerm);
     return of(newKeyTerm);
+  }
+
+  deleteKeyTerm(id: number): Observable<any> {
+    const kt = this.keyTerms.find(k => k.id === id);
+    this.keyTerms.splice(this.keyTerms.indexOf(kt), 1);
+    return of(null);
   }
 
   private findKeyTermMaxId(): number {
