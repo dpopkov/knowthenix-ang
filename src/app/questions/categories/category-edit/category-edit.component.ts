@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/data.service';
+import { FormResetService } from 'src/app/form-reset.service';
 import { Category } from 'src/app/model/Category';
 
 @Component({
@@ -8,18 +10,30 @@ import { Category } from 'src/app/model/Category';
   templateUrl: './category-edit.component.html',
   styleUrls: ['./category-edit.component.css']
 })
-export class CategoryEditComponent implements OnInit {
+export class CategoryEditComponent implements OnInit, OnDestroy {
 
   @Input()
   category: Category;
   formCategory: Category;
   message: string;
   nameIsValid = false;
+  resetEventSubscription: Subscription;
 
   constructor(private dataService: DataService,
+              private formResetService: FormResetService,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+    this.resetEventSubscription = this.formResetService.resetCategoryFormEvent.subscribe(
+      ct => {
+        this.category = ct;
+        this.initializeForm();
+      }
+    )
+  }
+
+  private initializeForm() {
     this.formCategory = Object.assign({}, this.category);
     this.checkIfNameIsValid();
   }
@@ -38,6 +52,10 @@ export class CategoryEditComponent implements OnInit {
         }
       )
     }
+  }
+
+  ngOnDestroy() {
+    this.resetEventSubscription.unsubscribe();
   }
 
   private navigateToView(category: Category) {

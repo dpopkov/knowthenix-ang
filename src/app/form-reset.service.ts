@@ -6,6 +6,7 @@ import { KeyTerm } from './model/KeyTerm';
 })
 export class FormResetService {
 
+  resetCategoryFormEvent = new EventEmitter<KeyTerm>();
   resetKeyTermFormEvent = new EventEmitter<KeyTerm>();
 
   constructor() { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
+import { FormResetService } from 'src/app/form-reset.service';
 import { Category } from 'src/app/model/Category';
 
 @Component({
@@ -16,6 +17,7 @@ export class CategoriesComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
+              private formResetService: FormResetService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -50,6 +52,7 @@ export class CategoriesComponent implements OnInit {
 
   addCategory(): void {
     this.selectedCategory = new Category();
+    this.formResetService.resetCategoryFormEvent.emit(this.selectedCategory);
     this.router.navigate(['questions', 'categories'], {queryParams: {action: 'add'}});
   }
 
