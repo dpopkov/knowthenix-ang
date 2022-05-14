@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { FormResetService } from 'src/app/form-reset.service';
 import { KeyTerm } from 'src/app/model/KeyTerm';
 
@@ -17,6 +19,8 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
   resetEventSubscription: Subscription;
 
   constructor(private formBuilder: FormBuilder,
+            private dataService: DataService,
+            private router: Router,
             private formResetService: FormResetService) { }
 
   ngOnInit(): void {
@@ -46,6 +50,24 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
     this.keyTerm.name = this.keyTermForm.controls['keyTermName'].value;
     this.keyTerm.description = this.keyTermForm.controls['keyTermDescription'].value;
     console.log('updated keyterm', this.keyTerm);
+
+    if (this.keyTerm.id == null) {
+      this.dataService.addKeyTerm(this.keyTerm).subscribe(
+        next => {
+          this.navigateToFiew(next);
+        }
+      )
+    } else {
+      this.dataService.updateKeyTerm(this.keyTerm).subscribe(
+        next => {
+          this.navigateToFiew(next);
+        }
+      )
+    }
+  }
+
+  private navigateToFiew(kt: KeyTerm): void {
+    this.router.navigate(['keyterms'], {queryParams: {action: 'view', id: kt.id}});
   }
 
 }

@@ -58,4 +58,29 @@ export class DataService {
   getKeyTerms(): Observable<Array<KeyTerm>> {
     return of(this.keyTerms);
   }
+
+  updateKeyTerm(keyTerm: KeyTerm): Observable<KeyTerm> {
+    const original = this.keyTerms.find(kt => kt.id === keyTerm.id);
+    if (original) {
+      original.name = keyTerm.name;
+      original.description = keyTerm.description;
+    }
+    return of(original);
+  }
+
+  addKeyTerm(newKeyTerm: KeyTerm): Observable<KeyTerm> {
+    newKeyTerm.id = this.findKeyTermMaxId() + 1;
+    this.keyTerms.push(newKeyTerm);
+    return of(newKeyTerm);
+  }
+
+  private findKeyTermMaxId(): number {
+    let maxId = 0;
+    for (const kt of this.keyTerms) {
+      if (kt.id > maxId) {
+        maxId = kt.id;
+      }
+    }
+    return maxId;
+  }
 }
