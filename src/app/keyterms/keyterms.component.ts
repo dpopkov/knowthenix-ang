@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { FormResetService } from '../form-reset.service';
 import { KeyTerm } from '../model/KeyTerm';
 
 @Component({
@@ -16,6 +17,7 @@ export class KeytermsComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
+              private formResetService: FormResetService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class KeytermsComponent implements OnInit {
         if (this.action === 'add') {
           this.selectedKeyTerm = new KeyTerm();
           this.action = 'edit';
+          this.formResetService.resetKeyTermFormEvent.emit(this.selectedKeyTerm);
         }
       }
     )
