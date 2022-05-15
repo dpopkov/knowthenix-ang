@@ -11,6 +11,7 @@ import { KeyTerm } from './model/KeyTerm';
 export class DataService {
 
   constructor(private http: HttpClient) {
+    console.log('environment.restUrl=', environment.restUrl);
   }
 
   getCategories(): Observable<Array<Category>> {
@@ -48,4 +49,11 @@ export class DataService {
   deleteKeyTerm(id: number): Observable<any> {
     return of(null);
   }
+
+  /*
+                IMPORTANT !!!
+    The signatures of all non-private methods in data.service.ts
+    must be identical to the signatures of all methods
+    in data.service.local.ts
+  */
 }
