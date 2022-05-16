@@ -14,4 +14,8 @@ export class KeyTerm {
             this.description = description;
         }
     }
+
+    static fromHttp(obj: KeyTerm ): KeyTerm {
+        return new KeyTerm(obj.id, obj.name, obj.description);
+    }
 }

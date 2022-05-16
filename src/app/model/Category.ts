@@ -14,4 +14,8 @@ export class Category {
             this.description = description;
         }
     }
+
+    static fromHttp(obj: Category): Category {
+        return new Category(obj.id, obj.name, obj.description);
+    }
 }
