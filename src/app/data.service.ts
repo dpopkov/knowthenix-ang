@@ -27,13 +27,6 @@ export class DataService {
       );
   }
 
-  getCategory(id: number) : Observable<Category> {
-    return this.http.get<Category>(environment.restUrl + '/categories/' + id)
-      .pipe(
-        map(data => Category.fromHttp(data))
-      );
-  }
-
   updateCategory(toUpdate: Category): Observable<Category> {
     return of(null);
   }
