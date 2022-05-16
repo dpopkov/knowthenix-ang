@@ -25,16 +25,6 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    this.route.queryParams.subscribe(
-      (params) => {
-        const idAsString = params['id'];
-        if (idAsString) {
-          const idAsNumber = +idAsString;
-          this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
-        }
-        this.action = params['action'];
-      }
-    )
   }
 
   private loadData(): void {
@@ -42,6 +32,7 @@ export class CategoriesComponent implements OnInit {
       (next) => {
         this.categories = next;
         this.loadingData = false;
+        this.processUrlParams();
       },
       (error) => {
         this.reloadAttempts++;
@@ -51,6 +42,19 @@ export class CategoriesComponent implements OnInit {
         } else {
           this.message = 'Sorry - something went wrong, please contact support';
         }
+      }
+    )
+  }
+
+  private processUrlParams(): void {
+    this.route.queryParams.subscribe(
+      (params) => {
+        const idAsString = params['id'];
+        if (idAsString) {
+          const idAsNumber = +idAsString;
+          this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
+        }
+        this.action = params['action'];
       }
     )
   }

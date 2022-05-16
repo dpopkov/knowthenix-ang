@@ -25,6 +25,28 @@ export class KeytermsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  private loadData(): void {
+    this.dataService.getKeyTerms().subscribe(
+      (next) => {
+        this.keyterms = next;
+        this.loadingData = false;
+        this.processUrlParams();
+      },
+      (error) => {
+        this.reloadAttempts++;
+        if (this.reloadAttempts < 5) {
+          this.message = 'Sorry - something went wrong, trying again... please wait';
+          this.loadData();
+        } else {
+          this.message = 'Sorry - something went wrong, please contact support';
+        }
+      }
+    )
+  }
+
+  private processUrlParams(): void {
     this.route.queryParams.subscribe(
       (params) => {
         const idAsString = params['id'];
@@ -37,24 +59,6 @@ export class KeytermsComponent implements OnInit {
           this.selectedKeyTerm = new KeyTerm();
           this.action = 'edit';
           this.formResetService.resetKeyTermFormEvent.emit(this.selectedKeyTerm);
-        }
-      }
-    )
-  }
-
-  private loadData(): void {
-    this.dataService.getKeyTerms().subscribe(
-      (next) => {
-        this.keyterms = next;
-        this.loadingData = false;
-      },
-      (error) => {
-        this.reloadAttempts++;
-        if (this.reloadAttempts < 5) {
-          this.message = 'Sorry - something went wrong, trying again... please wait';
-          this.loadData();
-        } else {
-          this.message = 'Sorry - something went wrong, please contact support';
         }
       }
     )
