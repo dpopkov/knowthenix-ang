@@ -16,6 +16,7 @@ export class KeytermsComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of KeyTerms';
+  reloadAttempts = 0;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -23,17 +24,7 @@ export class KeytermsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.dataService.getKeyTerms().subscribe(
-      (next) => {
-        this.keyterms = next;
-        this.loadingData = false;
-      },
-      (error) => {
-        this.message = 'Sorry - something went wrong, please try again. '
-          + error.message;
-        console.log('KeytermsComponent:ngOnInit: error:', error);
-      }
-    )
+    this.loadData();
     this.route.queryParams.subscribe(
       (params) => {
         const idAsString = params['id'];
@@ -46,6 +37,24 @@ export class KeytermsComponent implements OnInit {
           this.selectedKeyTerm = new KeyTerm();
           this.action = 'edit';
           this.formResetService.resetKeyTermFormEvent.emit(this.selectedKeyTerm);
+        }
+      }
+    )
+  }
+
+  private loadData(): void {
+    this.dataService.getKeyTerms().subscribe(
+      (next) => {
+        this.keyterms = next;
+        this.loadingData = false;
+      },
+      (error) => {
+        this.reloadAttempts++;
+        if (this.reloadAttempts < 5) {
+          this.message = 'Sorry - something went wrong, trying again... please wait';
+          this.loadData();
+        } else {
+          this.message = 'Sorry - something went wrong, please contact support';
         }
       }
     )

@@ -16,6 +16,7 @@ export class CategoriesComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Categories';
+  reloadAttempts = 0;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -23,17 +24,7 @@ export class CategoriesComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.dataService.getCategories().subscribe(
-      (next) => {
-        this.categories = next;
-        this.loadingData = false;
-      },
-      (error) => {
-        this.message = 'Sorry - something went wrong, please try again. '
-          + error.message;
-        console.log('CategoriesComponent:ngOnInit: error:', error);
-      }
-    )
+    this.loadData();
     this.route.queryParams.subscribe(
       (params) => {
         const idAsString = params['id'];
@@ -42,6 +33,24 @@ export class CategoriesComponent implements OnInit {
           this.selectedCategory = this.categories.find(category => category.id === idAsNumber);
         }
         this.action = params['action'];
+      }
+    )
+  }
+
+  private loadData(): void {
+    this.dataService.getCategories().subscribe(
+      (next) => {
+        this.categories = next;
+        this.loadingData = false;
+      },
+      (error) => {
+        this.reloadAttempts++;
+        if (this.reloadAttempts < 5) {
+          this.message = 'Sorry - something went wrong, trying again... please wait';
+          this.loadData();
+        } else {
+          this.message = 'Sorry - something went wrong, please contact support';
+        }
       }
     )
   }
