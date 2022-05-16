@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
 import { KeyTerm } from './model/KeyTerm';
@@ -15,11 +15,23 @@ export class DataService {
   }
 
   getCategories(): Observable<Array<Category>> {
-    return of(null);
+    return this.http.get<Array<Category>>(environment.restUrl + '/categories')
+      .pipe(
+        map(data => {
+          const categories = new Array<Category>();
+          for (const categoryData of data) {
+            categories.push(Category.fromHttp(categoryData));
+          }
+          return categories;
+        })
+      );
   }
 
   getCategory(id: number) : Observable<Category> {
-    return this.http.get<Category>(environment.restUrl + '/categories/' + id);
+    return this.http.get<Category>(environment.restUrl + '/categories/' + id)
+      .pipe(
+        map(data => Category.fromHttp(data))
+      );
   }
 
   updateCategory(toUpdate: Category): Observable<Category> {
@@ -35,7 +47,16 @@ export class DataService {
   }
 
   getKeyTerms(): Observable<Array<KeyTerm>> {
-    return of(null);
+    return this.http.get<Array<KeyTerm>>(environment.restUrl + '/keyterms')
+      .pipe(
+        map(data => {
+          const keyterms = new Array<KeyTerm>();
+          for (const keytermData of data) {
+            keyterms.push(KeyTerm.fromHttp(keytermData));
+          }
+          return keyterms;
+        })
+      );
   }
 
   updateKeyTerm(keyTerm: KeyTerm): Observable<KeyTerm> {
