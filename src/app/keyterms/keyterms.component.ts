@@ -15,6 +15,7 @@ export class KeytermsComponent implements OnInit {
   selectedKeyTerm: KeyTerm;
   action: string;
   loadingData = true;
+  message = 'Please wait... getting the list of KeyTerms';
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -26,6 +27,11 @@ export class KeytermsComponent implements OnInit {
       (next) => {
         this.keyterms = next;
         this.loadingData = false;
+      },
+      (error) => {
+        this.message = 'Sorry - something went wrong, please try again. '
+          + error.message;
+        console.log('KeytermsComponent:ngOnInit: error:', error);
       }
     )
     this.route.queryParams.subscribe(

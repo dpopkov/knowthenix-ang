@@ -15,6 +15,7 @@ export class CategoriesComponent implements OnInit {
   selectedCategory: Category;
   action: string;
   loadingData = true;
+  message = 'Please wait... getting the list of Categories';
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -26,6 +27,11 @@ export class CategoriesComponent implements OnInit {
       (next) => {
         this.categories = next;
         this.loadingData = false;
+      },
+      (error) => {
+        this.message = 'Sorry - something went wrong, please try again. '
+          + error.message;
+        console.log('CategoriesComponent:ngOnInit: error:', error);
       }
     )
     this.route.queryParams.subscribe(
