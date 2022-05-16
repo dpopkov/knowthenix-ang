@@ -25,6 +25,7 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="loadingData">Please wait... getting the list of Categories</div>
   <div class="col-6">
     <app-category-detail *ngIf="action === 'view'" [category]="selectedCategory" ></app-category-detail>
     <app-category-edit *ngIf="action === 'edit' || action === 'add'" [category]="selectedCategory"></app-category-edit>

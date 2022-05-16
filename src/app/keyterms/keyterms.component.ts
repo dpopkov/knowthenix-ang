@@ -14,6 +14,7 @@ export class KeytermsComponent implements OnInit {
   keyterms: Array<KeyTerm>;
   selectedKeyTerm: KeyTerm;
   action: string;
+  loadingData = true;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class KeytermsComponent implements OnInit {
     this.dataService.getKeyTerms().subscribe(
       (next) => {
         this.keyterms = next;
+        this.loadingData = false;
       }
     )
     this.route.queryParams.subscribe(

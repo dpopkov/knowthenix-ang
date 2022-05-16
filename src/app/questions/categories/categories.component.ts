@@ -14,6 +14,7 @@ export class CategoriesComponent implements OnInit {
   categories: Array<Category>;
   selectedCategory: Category;
   action: string;
+  loadingData = true;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -21,17 +22,10 @@ export class CategoriesComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    // Prepare for REST
-    /*
-    this.dataService.getCategory(2).subscribe(
-      category => {
-        console.log('in categories.component.ts ngOnInit: category.name=', category.name);
-      }
-    )
-    */
     this.dataService.getCategories().subscribe(
       (next) => {
         this.categories = next;
+        this.loadingData = false;
       }
     )
     this.route.queryParams.subscribe(

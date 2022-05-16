@@ -25,6 +25,7 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="loadingData">Please wait... getting the list of KeyTerms</div>
   <div class="col-6">
     <app-key-term-detail *ngIf="action === 'view'" [keyTerm]="selectedKeyTerm" ></app-key-term-detail>
     <app-key-term-edit *ngIf="action === 'edit'" [keyTerm]="selectedKeyTerm"></app-key-term-edit>
