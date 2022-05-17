@@ -28,6 +28,7 @@
   <div *ngIf="loadingData">{{ message }}</div>
   <div class="col-6">
     <app-key-term-detail *ngIf="action === 'view'" [keyTerm]="selectedKeyTerm" ></app-key-term-detail>
-    <app-key-term-edit *ngIf="action === 'edit'" [keyTerm]="selectedKeyTerm"></app-key-term-edit>
+    <app-key-term-edit *ngIf="action === 'edit'" [keyTerm]="selectedKeyTerm"
+                        (dataChangedEvent)="loadData()"></app-key-term-edit>
   </div>
 </div>

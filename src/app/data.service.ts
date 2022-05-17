@@ -28,11 +28,13 @@ export class DataService {
   }
 
   updateCategory(toUpdate: Category): Observable<Category> {
-    return of(null);
+    return this.http.put<Category>(environment.restUrl + '/categories', toUpdate)
+      .pipe(map(data => Category.fromHttp(data)));
   }
 
   addCategory(newCategory: Category): Observable<Category> {
-    return of(null);
+    return this.http.post<Category>(environment.restUrl + '/categories', newCategory)
+    .pipe(map(data => Category.fromHttp(data)));
   }
 
   deleteCategory(id: number): Observable<any> {
@@ -53,11 +55,13 @@ export class DataService {
   }
 
   updateKeyTerm(keyTerm: KeyTerm): Observable<KeyTerm> {
-    return of(null);
+    return this.http.put<KeyTerm>(environment.restUrl + '/keyterms', keyTerm)
+      .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   addKeyTerm(newKeyTerm: KeyTerm): Observable<KeyTerm> {
-    return of(null);
+    return this.http.post<KeyTerm>(environment.restUrl + '/keyterms', newKeyTerm)
+      .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   deleteKeyTerm(id: number): Observable<any> {

@@ -27,7 +27,7 @@ export class KeytermsComponent implements OnInit {
     this.loadData();
   }
 
-  private loadData(): void {
+  loadData(): void {
     this.dataService.getKeyTerms().subscribe(
       (next) => {
         this.keyterms = next;

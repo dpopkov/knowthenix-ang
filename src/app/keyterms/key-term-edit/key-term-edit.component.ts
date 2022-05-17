@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,8 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
 
   @Input()
   keyTerm: KeyTerm;
+  @Output()
+  dataChangedEvent = new EventEmitter();
   keyTermForm: FormGroup;
   resetEventSubscription: Subscription;
 
@@ -49,17 +51,18 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.keyTerm.name = this.keyTermForm.controls['keyTermName'].value;
     this.keyTerm.description = this.keyTermForm.controls['keyTermDescription'].value;
-    console.log('updated keyterm', this.keyTerm);
 
     if (this.keyTerm.id == null) {
       this.dataService.addKeyTerm(this.keyTerm).subscribe(
         next => {
+          this.dataChangedEvent.emit();
           this.navigateToFiew(next);
         }
       )
     } else {
       this.dataService.updateKeyTerm(this.keyTerm).subscribe(
         next => {
+          this.dataChangedEvent.emit();
           this.navigateToFiew(next);
         }
       )

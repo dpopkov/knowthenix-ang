@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/data.service';
@@ -14,6 +14,8 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
 
   @Input()
   category: Category;
+  @Output()
+  dataChangedEvent = new EventEmitter();
   formCategory: Category;
   message: string;
   nameIsValid = false;
@@ -39,16 +41,25 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.message = "Saving...";
     if (this.formCategory.id == null) {
       this.dataService.addCategory(this.formCategory).subscribe(
         (category) => {
+          this.dataChangedEvent.emit();
           this.navigateToView(category);
+        },
+        (error) => {
+          this.message = 'Something went wrong and the Category was not added.';
         }
       )
     } else {
       this.dataService.updateCategory(this.formCategory).subscribe(
         (category) => {
+          this.dataChangedEvent.emit();
           this.navigateToView(category);
+        },
+        (error) => {
+          this.message = 'Something went wrong and the Category was not updated.';
         }
       )
     }

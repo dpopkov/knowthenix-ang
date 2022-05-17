@@ -28,6 +28,7 @@
   <div *ngIf="loadingData">{{ message }}</div>
   <div class="col-6">
     <app-category-detail *ngIf="action === 'view'" [category]="selectedCategory" ></app-category-detail>
-    <app-category-edit *ngIf="action === 'edit' || action === 'add'" [category]="selectedCategory"></app-category-edit>
+    <app-category-edit *ngIf="action === 'edit' || action === 'add'" [category]="selectedCategory"
+                      (dataChangedEvent)="loadData()"></app-category-edit>
   </div>
 </div>

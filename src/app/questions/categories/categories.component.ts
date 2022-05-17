@@ -27,7 +27,7 @@ export class CategoriesComponent implements OnInit {
     this.loadData();
   }
 
-  private loadData(): void {
+  loadData(): void {
     this.dataService.getCategories().subscribe(
       (next) => {
         this.categories = next;
