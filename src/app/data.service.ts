@@ -38,7 +38,7 @@ export class DataService {
   }
 
   deleteCategory(id: number): Observable<any> {
-    return of(null);
+    return this.http.delete(environment.restUrl + '/categories/' + id);
   }
 
   getKeyTerms(): Observable<Array<KeyTerm>> {
@@ -65,7 +65,7 @@ export class DataService {
   }
 
   deleteKeyTerm(id: number): Observable<any> {
-    return of(null);
+    return this.http.delete(environment.restUrl + '/keyterms/' + id);
   }
 
   /*

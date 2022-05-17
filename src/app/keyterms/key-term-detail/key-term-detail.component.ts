@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 import { KeyTerm } from 'src/app/model/KeyTerm';
@@ -12,6 +12,9 @@ export class KeyTermDetailComponent implements OnInit {
 
   @Input()
   keyTerm: KeyTerm;
+  @Output()
+  dataChangedEvent = new EventEmitter();
+  message = '';
 
   constructor(private router: Router, 
             private dataService: DataService) { }
@@ -24,10 +27,17 @@ export class KeyTermDetailComponent implements OnInit {
   }
 
   deleteKeyTerm() {
-    this.dataService.deleteKeyTerm(this.keyTerm.id).subscribe(
-      next => {
-        this.router.navigate(['keyterms']);
-      }
-    )
+    const deleteConfirmed = confirm('Are you sure you wish do delete this KeyTerm?');
+    if (deleteConfirmed) {
+      this.message = "Deleting...";
+      this.dataService.deleteKeyTerm(this.keyTerm.id).subscribe(
+        next => {
+          this.dataChangedEvent.emit();
+          this.router.navigate(['keyterms']);
+        }, error => {
+          this.message = 'Sorry, this KeyTerm cannot be deleted at this time';
+        }
+      )
+    }
   }
 }
