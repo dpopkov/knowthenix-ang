@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" (click)="navigateToHome()" >Home</a>
+    <a class="navbar-brand" (click)="navigateToHome()" >Knowthenix</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,17 +11,43 @@
           <a class="nav-link" (click)="navigateToHome()" >Home</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" href="#" id="questionsNavbarDropdown" role="button" data-bs-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
             Questions
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" (click)="navigateToViewAllQuestions()" >All Questions</a>
+          <div class="dropdown-menu" aria-labelledby="questionsNavbarDropdown">
+            <a class="dropdown-item" (click)="navigateToViewAllQuestions()" >List Questions</a>
+            <a class="dropdown-item" >Add Question</a>
+            <a class="dropdown-item" >Find Question</a>
             <a class="dropdown-item" (click)="navigateToQuestionsCategories()" >Categories</a>
+            <a class="dropdown-item" >Collections</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="decksNavbarDropdown" role="button" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Decks
+          </a>
+          <div class="dropdown-menu" aria-labelledby="decksNavbarDropdown">
+            <a class="dropdown-item" >List Decks</a>
+            <a class="dropdown-item" >Add Deck</a>
           </div>
         </li>
         <li class="nav-item active">
           <a class="nav-link" (click)="navigateToKeyTerms()" >KeyTerms</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" >Sources</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="usersNavbarDropdown" role="button" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Users
+          </a>
+          <div class="dropdown-menu" aria-labelledby="usersNavbarDropdown">
+            <a class="dropdown-item" >List Users</a>
+            <a class="dropdown-item" >Add User</a>
+          </div>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="/" >Logout</a>
