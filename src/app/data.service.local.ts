@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Category } from './model/Category';
-import { KeyTerm } from './model/KeyTerm';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {Category} from './model/Category';
+import {KeyTerm} from './model/KeyTerm';
+import {Question} from "./model/Question";
+import {Translation} from "./model/Translation";
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +14,37 @@ export class DataService {
 
   private categories: Array<Category> = new Array<Category>();
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
+  private questions: Array<Question> = new Array<Question>();
 
   constructor(private http: HttpClient) {
     console.log('environment.restUrl=', environment.restUrl);
 
+    this.initCategories();
+    this.initKeyTerms();
+    this.initQuestions(this.categories[0]);
+  }
+
+  private initCategories(): void {
     const category1 = new Category(1, 'Category 1', 'Description 1');
     const category2 = new Category(2, 'Category 2', 'Description 2');
     this.categories.push(category1);
     this.categories.push(category2);
+  }
+
+  private initKeyTerms(): void {
     this.keyTerms.push(new KeyTerm(3, 'KeyTerm 1', 'Description 1'));
     this.keyTerms.push(new KeyTerm(4, 'KeyTerm 2', 'Description 2'));
+  }
+
+  private initQuestions(category: Category): void {
+    const translationJvmEn = new Translation(41, 'EN', 'PLAINTEXT', 'What is JVM?');
+    const translationJvmRu = new Translation(42, 'RU', 'PLAINTEXT', 'Что такое JVM?');
+    const jvm = new Question(31, category, 'EN', [translationJvmEn, translationJvmRu]);
+    this.questions.push(jvm);
+    const translationJreEn = new Translation(43, 'EN', 'PLAINTEXT', 'What is JRE?');
+    const translationJreRu = new Translation(44, 'RU', 'PLAINTEXT', 'Что такое JRE?');
+    const jre = new Question(32, category, 'RU', [translationJreEn, translationJreRu] );
+    this.questions.push(jre);
   }
 
   getCategories(): Observable<Array<Category>> {
@@ -86,6 +109,11 @@ export class DataService {
       }
     }
     return maxId;
+  }
+
+  getQuestions(): Observable<Array<Question>> {
+    console.log('data.service.local:getQuestions() runs');
+    return of(this.questions);
   }
 
   /*

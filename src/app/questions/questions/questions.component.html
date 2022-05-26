@@ -1,1 +1,33 @@
-<p>questions works!</p>
+<h1>Questions</h1>
+
+<a class="btn btn-primary mb-3">Add</a>
+
+<div class="row">
+  <div class="col-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Question</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let question of questions">
+        <td>{{ question.id }}</td>
+        <td>{{ question.category?.name }}</td>
+        <td>{{ question.displayTranslation?.text }}</td>
+        <td>
+          <button type="button" class="btn btn-primary"
+          >View</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="loadingData">{{ message }}</div>
+  <div class="col-6">
+    Details
+  </div>
+</div>

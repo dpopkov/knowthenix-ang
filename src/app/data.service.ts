@@ -4,6 +4,7 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
 import { KeyTerm } from './model/KeyTerm';
+import {Question} from "./model/Question";
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,11 @@ export class DataService {
 
   deleteKeyTerm(id: number): Observable<any> {
     return this.http.delete(environment.restUrl + '/keyterms/' + id);
+  }
+
+  getQuestions(): Observable<Array<Question>> {
+    console.log('data.service:getQuestions() runs');
+    return of(null);
   }
 
   /*
