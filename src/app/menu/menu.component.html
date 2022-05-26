@@ -4,7 +4,7 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -16,6 +16,7 @@
             Questions
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" (click)="navigateToViewAllQuestions()" >All Questions</a>
             <a class="dropdown-item" (click)="navigateToQuestionsCategories()" >Categories</a>
           </div>
         </li>
@@ -26,7 +27,6 @@
           <a class="nav-link" href="/" >Logout</a>
         </li>
       </ul>
-  
+
     </div>
   </nav>
-  

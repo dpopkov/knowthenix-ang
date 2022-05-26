@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeytermsComponent } from './keyterms/keyterms.component';
 import { KeyTermDetailComponent } from './keyterms/key-term-detail/key-term-detail.component';
 import { KeyTermEditComponent } from './keyterms/key-term-edit/key-term-edit.component';
+import { QuestionsComponent } from './questions/questions/questions.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { KeyTermEditComponent } from './keyterms/key-term-edit/key-term-edit.com
     KeytermsComponent,
     KeyTermDetailComponent,
     KeyTermEditComponent,
+    QuestionsComponent,
     PageNotFoundComponent
   ],
   imports: [
