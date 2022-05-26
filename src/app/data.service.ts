@@ -12,6 +12,7 @@ import {Question} from "./model/Question";
 export class DataService {
 
   constructor(private http: HttpClient) {
+    console.log('data.service.ts runs');
     console.log('environment.restUrl=', environment.restUrl);
   }
 
@@ -70,8 +71,16 @@ export class DataService {
   }
 
   getQuestions(): Observable<Array<Question>> {
-    console.log('data.service:getQuestions() runs');
-    return of(null);
+    return this.http.get<Array<Question>>(environment.restUrl + '/questions')
+      .pipe(
+        map(data => {
+          const questions = new Array<Question>();
+          for (const questionData of data) {
+            questions.push(Question.fromHttp(questionData));
+          }
+          return questions;
+        })
+      );
   }
 
   /*

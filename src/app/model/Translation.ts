@@ -18,4 +18,8 @@ export class Translation {
       this.text = text;
     }
   }
+
+  static fromHttp(obj: Translation): Translation {
+    return new Translation(obj.id, obj.language, obj.type, obj.text);
+  }
 }

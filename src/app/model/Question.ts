@@ -24,6 +24,8 @@ export class Question {
     }
     if (translations) {
       this.translations = translations;
+    } else {
+      this.translations = new Array<Translation>();
     }
     if (displayTranslation) {
       this.displayTranslation = displayTranslation;
@@ -36,5 +38,15 @@ export class Question {
     if (this.selectedLanguage && this.translations) {
       this.displayTranslation = this.translations.find(tr => tr.language === this.selectedLanguage);
     }
+  }
+
+  static fromHttp(obj: Question): Question {
+    const translations = new Array<Translation>();
+    for (const translationData of obj.translations) {
+      translations.push(Translation.fromHttp(translationData))
+    }
+    return new Question(obj.id,
+      Category.fromHttp(obj.category), obj.selectedLanguage,
+      translations, obj.displayTranslation)
   }
 }
