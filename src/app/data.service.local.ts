@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {Category} from './model/Category';
 import {KeyTerm} from './model/KeyTerm';
-import {Question} from "./model/Question";
+import {Language, Question} from "./model/Question";
 import {Translation} from "./model/Translation";
 
 @Injectable({
@@ -114,6 +114,26 @@ export class DataService {
 
   getQuestions(): Observable<Array<Question>> {
     return of(this.questions);
+  }
+
+  getQuestionById(id: number): Observable<Question> {
+    const found: Question = this.questions.find(q => q.id === id);
+    return of(found);
+  }
+
+  updateQuestion(question: Question): Observable<Question> {
+    const existing: Question = this.questions.find(q => q.id === question.id);
+    question.copyTo(existing);
+    return of(existing);
+  }
+
+  getLanguageMap(): Map<string, string> {
+    const keys = Object.keys(Language);
+    const languageMap: Map<string, string> = new Map<string, string>();
+    for (let key of keys) {
+      languageMap.set(key, Language[key]);
+    }
+    return languageMap;
   }
 
   /*

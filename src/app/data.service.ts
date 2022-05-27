@@ -4,7 +4,7 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
 import { KeyTerm } from './model/KeyTerm';
-import {Question} from "./model/Question";
+import {Language, Question} from "./model/Question";
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +81,25 @@ export class DataService {
           return questions;
         })
       );
+  }
+
+  getQuestionById(id: number): Observable<Question> {
+    return this.http.get<Question>(environment.restUrl + '/questions/' + id)
+      .pipe(map(data => Question.fromHttp(data)));
+  }
+
+  updateQuestion(question: Question): Observable<Question> {
+    console.log('NOT IMPLEMENTED: data.service.ts:updateQuestion id=', question.id);
+    return of(null);
+  }
+
+  getLanguageMap(): Map<string, string> {
+    const keys = Object.keys(Language);
+    const languageMap: Map<string, string> = new Map<string, string>();
+    for (let key of keys) {
+      languageMap.set(key, Language[key]);
+    }
+    return languageMap;
   }
 
   /*

@@ -3,13 +3,14 @@
 <a class="btn btn-primary mb-3">Add</a>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-10">
     <table class="table">
       <thead>
       <tr>
         <th>ID</th>
         <th>Category</th>
         <th>Question</th>
+        <th>Lang</th>
         <th></th>
       </tr>
       </thead>
@@ -18,16 +19,17 @@
         <td>{{ question.id }}</td>
         <td>{{ question.category?.name }}</td>
         <td>{{ question.displayTranslation?.text }}</td>
+        <td>{{ question.selectedLanguage }}</td>
         <td>
           <button type="button" class="btn btn-primary"
-          >View</button>
+                  (click)="displayEditQuestion(question.id)"
+          >Edit</button>
+          <button type="button" class="btn btn-danger"
+          >Del</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
   <div *ngIf="loadingData">{{ message }}</div>
-  <div class="col-6">
-    Details
-  </div>
 </div>

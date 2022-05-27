@@ -1,0 +1,48 @@
+<h1>{{question.isNew() ? 'Add' : 'Edit'}} Question</h1>
+
+<form>
+  <div class="row">
+    <div class="form-group col-5">
+      <label for="category">Category</label>
+      <select class="form-control" id="category" [(ngModel)]="question.category" name="category">
+        <option *ngFor="let category of categories" [ngValue]="category"
+        >{{ category.name }}</option>
+      </select>
+    </div>
+    <div class="form-group col-5">
+      <label for="selectedLanguage">Selected Language</label>
+      <select class="form-control" id="selectedLanguage" [(ngModel)]="question.selectedLanguage" name="selectedLanguage">
+        <option *ngFor="let selectedLanguage of languages" [ngValue]="selectedLanguage"
+        >{{ languageMap.get(selectedLanguage) }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-10">
+      <label for="displayTranslation">Display Translation</label>
+
+      <select class="form-control" id="displayTranslation" [(ngModel)]="question.displayTranslation" name="displayTranslation">
+        <option *ngFor="let tr of question.translations" [ngValue]="tr"
+        >{{ tr.text }}</option>
+      </select>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary"
+              (click)="displayAllTranslations()"
+      >Translations</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary"
+              (click)="onSubmit()"
+      >Save</button>
+    </div>
+  </div>
+</form>

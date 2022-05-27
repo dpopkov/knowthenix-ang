@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Question} from "../../model/Question";
 import {DataService} from "../../data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-questions',
@@ -16,7 +17,8 @@ export class QuestionsComponent implements OnInit {
   message = 'Please wait... getting the list of Questions';
   reloadAttempts = 0;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -40,4 +42,7 @@ export class QuestionsComponent implements OnInit {
     )
   }
 
+  displayEditQuestion(questionId: number): void {
+    this.router.navigate(['questions', 'edit'], {queryParams: {id: questionId}});
+  }
 }

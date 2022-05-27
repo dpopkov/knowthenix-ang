@@ -40,6 +40,22 @@ export class Question {
     }
   }
 
+  computeLanguageFromDisplayTranslation(): void {
+    this.selectedLanguage = this.displayTranslation.language;
+  }
+
+  isNew(): boolean {
+    return this.id == null;
+  }
+
+  copyTo(other: Question): Question {
+    other.category = this.category;
+    other.selectedLanguage = this.selectedLanguage;
+    other.translations = this.translations;
+    other.displayTranslation = this.displayTranslation;
+    return other;
+  }
+
   static fromHttp(obj: Question): Question {
     const translations = new Array<Translation>();
     for (const translationData of obj.translations) {
@@ -49,4 +65,19 @@ export class Question {
       Category.fromHttp(obj.category), obj.selectedLanguage,
       translations, obj.displayTranslation)
   }
+}
+
+export enum Language {
+  BE = "Belarusian",
+  DE = "German",
+  EN = "English",
+  ES = "Spanish",
+  FR = "French",
+  IT = "Italian",
+  JA = "Japanese",
+  KO = "Korean",
+  RU = "Russian",
+  TR = "Turkish",
+  UK = "Ukrainian",
+  ZH = "Chinese"
 }
