@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Language, Question} from "../../../model/Question";
 import {Category} from "../../../model/Category";
 import {DataService} from "../../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Translation} from "../../../model/Translation";
 
 @Component({
   selector: 'app-question-edit',
@@ -40,7 +41,12 @@ export class QuestionEditComponent implements OnInit {
     );
   }
 
-  displayAllTranslations(): void {
-    console.log('NOT IMPLEMENTED: displayAllTranslations()');
+  selectTranslationByLanguage() {
+    const found: Translation = this.question.translations
+      .find(tr => tr.language === this.question.selectedLanguage);
+    if (found) {
+      this.question.displayTranslation = found;
+      console.log('found:', found);
+    }
   }
 }

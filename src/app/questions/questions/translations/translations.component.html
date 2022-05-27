@@ -1,0 +1,32 @@
+<h3>Translations</h3>
+
+<table class="table">
+  <thead>
+  <tr>
+    <td>ID</td>
+    <td>Type</td>
+    <td>Lang</td>
+    <td>Text</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let translation of translations">
+    <td>{{ translation.id }}</td>
+    <td>{{ translation.type }}</td>
+    <td>{{ translation.language }}</td>
+    <td>{{ translation.text }}</td>
+    <td>
+      <button type="button" class="btn btn-primary"
+              (click)="displayEditTranslation(translation.id)"
+      >Edit</button>
+      <button type="button" class="btn btn-danger"
+      >Del</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<button type="button" class="btn btn-primary"
+        (click)="addTranslation()"
+>Add Translation</button>

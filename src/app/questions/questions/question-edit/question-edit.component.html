@@ -11,7 +11,9 @@
     </div>
     <div class="form-group col-5">
       <label for="selectedLanguage">Selected Language</label>
-      <select class="form-control" id="selectedLanguage" [(ngModel)]="question.selectedLanguage" name="selectedLanguage">
+      <select class="form-control" id="selectedLanguage"
+              (change)="selectTranslationByLanguage()"
+              [(ngModel)]="question.selectedLanguage" name="selectedLanguage">
         <option *ngFor="let selectedLanguage of languages" [ngValue]="selectedLanguage"
         >{{ languageMap.get(selectedLanguage) }}</option>
       </select>
@@ -20,7 +22,7 @@
 
   <div class="row">
     <div class="form-group col-10">
-      <label for="displayTranslation">Display Translation</label>
+      <label for="displayTranslation">Display Question Translation ({{ question.displayTranslation.language }})</label>
 
       <select class="form-control" id="displayTranslation" [(ngModel)]="question.displayTranslation" name="displayTranslation">
         <option *ngFor="let tr of question.translations" [ngValue]="tr"
@@ -33,16 +35,15 @@
   <div class="row">
     <div class="col">
       <button type="button" class="btn btn-primary"
-              (click)="displayAllTranslations()"
-      >Translations</button>
+              (click)="onSubmit()"
+      >Save Question</button>
     </div>
   </div>
 
   <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-primary"
-              (click)="onSubmit()"
-      >Save</button>
+    <div class="col-10">
+      <app-translations [translations]="question.translations"></app-translations>
     </div>
   </div>
+
 </form>
