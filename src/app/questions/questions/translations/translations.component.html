@@ -1,6 +1,10 @@
 <h3>Translations</h3>
 
-<table class="table">
+<div *ngIf="translations.length === 0">
+  There are no Translations for this Question.
+</div>
+
+<table *ngIf="translations.length !== 0" class="table">
   <thead>
   <tr>
     <td>ID</td>

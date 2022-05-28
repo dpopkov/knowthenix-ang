@@ -48,6 +48,8 @@ export class DataService {
     const translationJreRu = new Translation(44, 'RU', 'PLAINTEXT', 'Что такое JRE? (local data)');
     const jre = new Question(32, category, 'RU', [translationJreEn, translationJreRu] );
     this.questions.push(jre);
+    const empty = new Question(33, category, 'EN');
+    this.questions.push(empty);
   }
 
   getCategories(): Observable<Array<Category>> {
