@@ -15,11 +15,13 @@ export class DataService {
   private categories: Array<Category> = new Array<Category>();
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
   private questions: Array<Question> = new Array<Question>();
+  private languageMap: Map<string, string>;
 
   constructor(private http: HttpClient) {
     console.log('data.service.local.ts runs');
     console.log('environment.restUrl=', environment.restUrl);
 
+    this.initLanguageMap();
     this.initCategories();
     this.initKeyTerms();
     this.initQuestions(this.categories[0]);
@@ -128,12 +130,16 @@ export class DataService {
   }
 
   getLanguageMap(): Map<string, string> {
+    return this.languageMap;
+  }
+
+  private initLanguageMap(): void {
     const keys = Object.keys(Language);
-    const languageMap: Map<string, string> = new Map<string, string>();
+    const map: Map<string, string> = new Map<string, string>();
     for (let key of keys) {
-      languageMap.set(key, Language[key]);
+      map.set(key, Language[key]);
     }
-    return languageMap;
+    this.languageMap = map;
   }
 
   /*

@@ -11,13 +11,20 @@ import {Language, Question} from "./model/Question";
 })
 export class DataService {
 
+  private readonly categoriesUrl = environment.restUrl + '/categories';
+  private readonly keyTermsUrl = environment.restUrl + '/keyterms';
+  private readonly questionsUrl = environment.restUrl + '/questions';
+
+  private languageMap: Map<string, string>;
+
   constructor(private http: HttpClient) {
     console.log('data.service.ts runs');
     console.log('environment.restUrl=', environment.restUrl);
+    this.initLanguageMap();
   }
 
   getCategories(): Observable<Array<Category>> {
-    return this.http.get<Array<Category>>(environment.restUrl + '/categories')
+    return this.http.get<Array<Category>>(this.categoriesUrl)
       .pipe(
         map(data => {
           const categories = new Array<Category>();
@@ -30,21 +37,21 @@ export class DataService {
   }
 
   updateCategory(toUpdate: Category): Observable<Category> {
-    return this.http.put<Category>(environment.restUrl + '/categories', toUpdate)
+    return this.http.put<Category>(this.categoriesUrl, toUpdate)
       .pipe(map(data => Category.fromHttp(data)));
   }
 
   addCategory(newCategory: Category): Observable<Category> {
-    return this.http.post<Category>(environment.restUrl + '/categories', newCategory)
+    return this.http.post<Category>(this.categoriesUrl, newCategory)
     .pipe(map(data => Category.fromHttp(data)));
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http.delete(environment.restUrl + '/categories/' + id);
+    return this.http.delete(this.categoriesUrl + '/' + id);
   }
 
   getKeyTerms(): Observable<Array<KeyTerm>> {
-    return this.http.get<Array<KeyTerm>>(environment.restUrl + '/keyterms')
+    return this.http.get<Array<KeyTerm>>(this.keyTermsUrl)
       .pipe(
         map(data => {
           const keyterms = new Array<KeyTerm>();
@@ -57,21 +64,21 @@ export class DataService {
   }
 
   updateKeyTerm(keyTerm: KeyTerm): Observable<KeyTerm> {
-    return this.http.put<KeyTerm>(environment.restUrl + '/keyterms', keyTerm)
+    return this.http.put<KeyTerm>(this.keyTermsUrl, keyTerm)
       .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   addKeyTerm(newKeyTerm: KeyTerm): Observable<KeyTerm> {
-    return this.http.post<KeyTerm>(environment.restUrl + '/keyterms', newKeyTerm)
+    return this.http.post<KeyTerm>(this.keyTermsUrl, newKeyTerm)
       .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   deleteKeyTerm(id: number): Observable<any> {
-    return this.http.delete(environment.restUrl + '/keyterms/' + id);
+    return this.http.delete(this.keyTermsUrl + '/' + id);
   }
 
   getQuestions(): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>(environment.restUrl + '/questions')
+    return this.http.get<Array<Question>>(this.questionsUrl)
       .pipe(
         map(data => {
           const questions = new Array<Question>();
@@ -84,7 +91,7 @@ export class DataService {
   }
 
   getQuestionById(id: number): Observable<Question> {
-    return this.http.get<Question>(environment.restUrl + '/questions/' + id)
+    return this.http.get<Question>(this.questionsUrl + '/' + id)
       .pipe(map(data => Question.fromHttp(data)));
   }
 
@@ -94,12 +101,16 @@ export class DataService {
   }
 
   getLanguageMap(): Map<string, string> {
+    return this.languageMap;
+  }
+
+  private initLanguageMap(): void {
     const keys = Object.keys(Language);
-    const languageMap: Map<string, string> = new Map<string, string>();
+    const map: Map<string, string> = new Map<string, string>();
     for (let key of keys) {
-      languageMap.set(key, Language[key]);
+      map.set(key, Language[key]);
     }
-    return languageMap;
+    this.languageMap = map;
   }
 
   /*
