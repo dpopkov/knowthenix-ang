@@ -96,8 +96,8 @@ export class DataService {
   }
 
   updateQuestion(question: Question): Observable<Question> {
-    console.log('NOT IMPLEMENTED: data.service.ts:updateQuestion id=', question.id);
-    return of(null);
+    return this.http.put<Question>(this.questionsUrl, question)
+      .pipe(map(data => Question.fromHttp(data)));
   }
 
   getLanguageMap(): Map<string, string> {

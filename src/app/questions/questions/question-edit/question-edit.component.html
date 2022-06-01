@@ -1,6 +1,8 @@
-<h1>{{question.isNew() ? 'Add' : 'Edit'}} Question</h1>
+<h1>{{question?.isNew() ? 'Add' : 'Edit'}} Question</h1>
 
-<form>
+<div class="bg-warning p-3" *ngIf="message">{{ message }}</div>
+
+<form *ngIf="dataLoaded">
   <div class="row">
     <div class="form-group col-5">
       <label for="category">Category</label>
@@ -22,7 +24,7 @@
 
   <div class="row">
     <div class="form-group col-10">
-      <label for="displayTranslation">Display Question Translation ({{ question.displayTranslation.language }})</label>
+      <label for="displayTranslation">Display Question Translation ({{ question.displayTranslation?.language }})</label>
 
       <select class="form-control" id="displayTranslation" [(ngModel)]="question.displayTranslation" name="displayTranslation">
         <option *ngFor="let tr of question.translations" [ngValue]="tr"

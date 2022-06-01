@@ -4,6 +4,7 @@ import {Category} from "../../../model/Category";
 import {DataService} from "../../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Translation} from "../../../model/Translation";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-question-edit',
@@ -16,6 +17,8 @@ export class QuestionEditComponent implements OnInit {
   categories: Array<Category>;
   languages = Object.keys(Language);
   languageMap: Map<string, string>;
+  dataLoaded = false;
+  message = 'Please wait...';
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -24,14 +27,30 @@ export class QuestionEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.queryParams['id'];
-    const idNumber = +id;
-    this.dataService.getQuestionById(idNumber).subscribe(
-      next => this.question = next
-    )
-    this.dataService.getCategories().subscribe(
-      next => this.categories = next
-    )
+    this.categories = this.route.snapshot.data['preloaded_categories'];
+
+    const idAsString = this.route.snapshot.queryParams['id'];
+    if (idAsString) {
+      const idNumber = +idAsString;
+      this.dataService.getQuestionById(idNumber)
+        .pipe(
+          map(question => {
+            question.category = this.categories.find(c => c.id === question.category.id);
+            return question;
+          })
+        )
+        .subscribe(
+        next => {
+          this.question = next;
+          this.dataLoaded = true;
+          this.message = '';
+        }
+      )
+    } else {  // for creating a new Question
+      this.question = new Question();
+      this.dataLoaded = true;
+      this.message = '';
+    }
   }
 
   onSubmit(): void {
@@ -46,7 +65,6 @@ export class QuestionEditComponent implements OnInit {
       .find(tr => tr.language === this.question.selectedLanguage);
     if (found) {
       this.question.displayTranslation = found;
-      console.log('found:', found);
     }
   }
 }
