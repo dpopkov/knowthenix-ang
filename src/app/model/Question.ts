@@ -63,21 +63,6 @@ export class Question {
     }
     return new Question(obj.id,
       Category.fromHttp(obj.category), obj.selectedLanguage,
-      translations, obj.displayTranslation)
+      translations)
   }
-}
-
-export enum Language {
-  BE = "Belarusian",
-  DE = "German",
-  EN = "English",
-  ES = "Spanish",
-  FR = "French",
-  IT = "Italian",
-  JA = "Japanese",
-  KO = "Korean",
-  RU = "Russian",
-  TR = "Turkish",
-  UK = "Ukrainian",
-  ZH = "Chinese"
 }

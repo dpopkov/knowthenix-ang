@@ -4,7 +4,9 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
 import { KeyTerm } from './model/KeyTerm';
-import {Language, Question} from "./model/Question";
+import {Question} from "./model/Question";
+import {Language} from "./model/Language";
+import {Translation} from "./model/Translation";
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +100,22 @@ export class DataService {
   updateQuestion(question: Question): Observable<Question> {
     return this.http.put<Question>(this.questionsUrl, question)
       .pipe(map(data => Question.fromHttp(data)));
+  }
+
+  getTranslationsByQuestionId(questionId: number): Observable<Array<Translation>> {
+    return this.http.get<Array<Translation>>(this.questionsUrl + '/' + questionId + '/translations')
+      .pipe(map(data => {
+        const translations = new Array<Translation>();
+        for (const translationData of data) {
+          translations.push(Translation.fromHttp(translationData));
+        }
+        return translations;
+      }));
+  }
+
+  updateTranslation(questionId: number, translation: Translation): Observable<Translation> {
+    return this.http.put<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation)
+      .pipe(map(data => Translation.fromHttp(data)));
   }
 
   getLanguageMap(): Map<string, string> {

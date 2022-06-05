@@ -17,6 +17,7 @@ import { KeyTermEditComponent } from './keyterms/key-term-edit/key-term-edit.com
 import { QuestionsComponent } from './questions/questions/questions.component';
 import { QuestionEditComponent } from './questions/questions/question-edit/question-edit.component';
 import { TranslationsComponent } from './questions/questions/translations/translations.component';
+import { TranslationEditComponent } from './questions/questions/translations/translation-edit/translation-edit.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TranslationsComponent } from './questions/questions/translations/transl
     QuestionsComponent,
     QuestionEditComponent,
     TranslationsComponent,
+    TranslationEditComponent,
     PageNotFoundComponent
   ],
   imports: [

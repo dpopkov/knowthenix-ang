@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Language, Question} from "../../../model/Question";
+import {Question} from "../../../model/Question";
+import {Language} from "../../../model/Language";
 import {Category} from "../../../model/Category";
 import {DataService} from "../../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -66,5 +67,10 @@ export class QuestionEditComponent implements OnInit {
     if (found) {
       this.question.displayTranslation = found;
     }
+  }
+
+  navigateToTranslations(): void {
+    this.router.navigate(['questions', 'edit', 'translations'],
+      {queryParams: {questionId: this.question.id}} );
   }
 }

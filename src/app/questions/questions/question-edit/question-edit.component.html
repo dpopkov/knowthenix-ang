@@ -42,10 +42,12 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-10">
-      <app-translations [translations]="question.translations"></app-translations>
-    </div>
-  </div>
-
 </form>
+
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary"
+            (click)="navigateToTranslations()"
+    >List Translations</button>
+  </div>
+</div>
