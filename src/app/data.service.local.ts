@@ -17,6 +17,7 @@ export class DataService {
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
   private questions: Array<Question> = new Array<Question>();
   private languageMap: Map<string, string>;
+  private lastTranslationId = 1000;
 
   constructor(private http: HttpClient) {
     console.log('data.service.local.ts runs');
@@ -135,6 +136,14 @@ export class DataService {
   getTranslationsByQuestionId(questionId: number): Observable<Array<Translation>> {
     const foundQuestion: Question = this.findQuestionLocally(questionId);
     return of(foundQuestion.translations);
+  }
+
+  addTranslation(questionId: number, translation: Translation): Observable<Translation> {
+    const foundQuestion: Question = this.findQuestionLocally(questionId);
+    this.lastTranslationId++;
+    translation.id = this.lastTranslationId;
+    foundQuestion.translations.push(translation);
+    return of(translation);
   }
 
   updateTranslation(questionId: number, translation: Translation): Observable<Translation> {

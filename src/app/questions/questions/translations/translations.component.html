@@ -39,7 +39,7 @@
 
 <div class="row">
   <div class="col-10">
-    <app-translation-edit *ngIf="action === 'edit'"
+    <app-translation-edit *ngIf="action === 'edit' || action === 'add'"
                           [translation]="selectedTranslation" [questionId]="questionId"
                           (dataChangedEvent)="loadTranslations()">
     </app-translation-edit>

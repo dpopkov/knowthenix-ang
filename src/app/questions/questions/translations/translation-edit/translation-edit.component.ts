@@ -40,7 +40,12 @@ export class TranslationEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formTranslation.id == null) {
-      console.log('TranslationEditComponent:onSubmit for Adding is NOT IMPLEMENTED YET');
+      this.dataService.addTranslation(this.questionId, this.formTranslation).subscribe(
+        next => {
+          this.dataChangedEvent.emit();
+          this.navigateToTranslationList();
+        }
+      )
     } else {
       this.dataService.updateTranslation(this.questionId, this.formTranslation).subscribe(
         next => {

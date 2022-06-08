@@ -70,6 +70,8 @@ export class TranslationsComponent implements OnInit {
   }
 
   addTranslation() {
-    console.log('TranslationsComponent:addTranslation: NOT IMPLEMENTED YET');
+    this.selectedTranslation = new Translation();
+    this.router.navigate(['questions', 'edit', 'translations'],
+      {queryParams: {questionId: this.questionId, action: 'add'}} );
   }
 }

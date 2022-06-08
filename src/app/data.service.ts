@@ -113,6 +113,11 @@ export class DataService {
       }));
   }
 
+  addTranslation(questionId: number, translation: Translation): Observable<Translation> {
+    return this.http.post<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation)
+      .pipe(map(data => Translation.fromHttp(data)));
+  }
+
   updateTranslation(questionId: number, translation: Translation): Observable<Translation> {
     return this.http.put<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation)
       .pipe(map(data => Translation.fromHttp(data)));
