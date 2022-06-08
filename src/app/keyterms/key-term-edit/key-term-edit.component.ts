@@ -56,20 +56,24 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
       this.dataService.addKeyTerm(this.keyTerm).subscribe(
         next => {
           this.dataChangedEvent.emit();
-          this.navigateToFiew(next);
+          this.navigateToView(next);
         }
       )
     } else {
       this.dataService.updateKeyTerm(this.keyTerm).subscribe(
         next => {
           this.dataChangedEvent.emit();
-          this.navigateToFiew(next);
+          this.navigateToView(next);
         }
       )
     }
   }
 
-  private navigateToFiew(kt: KeyTerm): void {
+  closeKeyTermEdit(): void {
+    this.navigateToView(this.keyTerm);
+  }
+
+  private navigateToView(kt: KeyTerm): void {
     this.router.navigate(['keyterms'], {queryParams: {action: 'view', id: kt.id}});
   }
 

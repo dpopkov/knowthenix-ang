@@ -57,7 +57,7 @@ export class QuestionEditComponent implements OnInit {
   onSubmit(): void {
     this.question.computeLanguageFromDisplayTranslation();
     this.dataService.updateQuestion(this.question).subscribe(
-      next => this.router.navigate(['questions', 'questions'])
+      next => this.navigateToQuestionList()
     );
   }
 
@@ -72,5 +72,13 @@ export class QuestionEditComponent implements OnInit {
   navigateToTranslations(): void {
     this.router.navigate(['questions', 'edit', 'translations'],
       {queryParams: {questionId: this.question.id}} );
+  }
+
+  closeQuestionEdit(): void {
+    this.navigateToQuestionList();
+  }
+
+  private navigateToQuestionList(): void{
+    this.router.navigate(['questions', 'questions'])
   }
 }

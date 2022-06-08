@@ -69,6 +69,10 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     this.resetEventSubscription.unsubscribe();
   }
 
+  closeCategoryEdit(): void {
+    this.navigateToView(this.category);
+  }
+
   private navigateToView(category: Category) {
     this.router.navigate(['questions', 'categories'], {queryParams: {id: category.id, action: 'view'}});
   }

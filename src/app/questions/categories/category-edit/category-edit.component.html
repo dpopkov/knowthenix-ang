@@ -8,9 +8,9 @@
     <input type="text" class="form-control" id="name" placeholder="category name"
             (change)="checkIfNameIsValid()"
             [(ngModel)]="formCategory.name" name="name" required #nameField="ngModel">
-    <div *ngIf="nameField.invalid && nameField.touched" 
+    <div *ngIf="nameField.invalid && nameField.touched"
          class="alert alert-danger">Name is required</div>
-    <div *ngIf="nameField.touched && !nameIsValid" 
+    <div *ngIf="nameField.touched && !nameIsValid"
          class="alert alert-danger">Name cannot be blank</div>
   </div>
 
@@ -24,4 +24,7 @@
   <button type="button" class="btn btn-primary" (click)="onSubmit()"
             [disabled]="editCategoryForm.invalid || !nameIsValid"
   >Save</button>
+
+  <button type="button" class="btn btn-primary" (click)="closeCategoryEdit()"
+  >Cancel</button>
 </form>

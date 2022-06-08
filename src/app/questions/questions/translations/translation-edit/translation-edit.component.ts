@@ -45,10 +45,18 @@ export class TranslationEditComponent implements OnInit {
       this.dataService.updateTranslation(this.questionId, this.formTranslation).subscribe(
         next => {
           this.dataChangedEvent.emit();
-          this.router.navigate(['questions', 'edit', 'translations'],
-            {queryParams: {questionId: this.questionId}});
+          this.navigateToTranslationList();
         }
       )
     }
+  }
+
+  closeTranslationEdit(): void {
+    this.navigateToTranslationList();
+  }
+
+  private navigateToTranslationList(): void {
+    this.router.navigate(['questions', 'edit', 'translations'],
+      {queryParams: {questionId: this.questionId}});
   }
 }
