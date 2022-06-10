@@ -15,6 +15,8 @@ import {map} from "rxjs";
 export class QuestionEditComponent implements OnInit {
 
   question: Question;
+  // firstTranslation: Translation
+  action: string;
   categories: Array<Category>;
   languages = Object.keys(Language);
   languageMap: Map<string, string>;
@@ -29,7 +31,7 @@ export class QuestionEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories = this.route.snapshot.data['preloaded_categories'];
-
+    this.action = this.route.snapshot.queryParams['action'];
     const idAsString = this.route.snapshot.queryParams['id'];
     if (idAsString) {
       const idNumber = +idAsString;
@@ -51,14 +53,22 @@ export class QuestionEditComponent implements OnInit {
       this.question = new Question();
       this.dataLoaded = true;
       this.message = '';
+      // this.firstTranslation = new Translation();
+      // this.question.translations.push(this.firstTranslation)
     }
   }
 
   onSubmit(): void {
     this.question.computeLanguageFromDisplayTranslation();
-    this.dataService.updateQuestion(this.question).subscribe(
-      next => this.navigateToQuestionList()
-    );
+    if (this.question.isNew()) {
+      this.dataService.addNewQuestion(this.question).subscribe(
+        next => this.navigateToQuestionList()
+      );
+    } else {
+      this.dataService.updateQuestion(this.question).subscribe(
+        next => this.navigateToQuestionList()
+      );
+    }
   }
 
   selectTranslationByLanguage() {

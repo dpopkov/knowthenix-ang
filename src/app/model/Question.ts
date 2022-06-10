@@ -41,7 +41,9 @@ export class Question {
   }
 
   computeLanguageFromDisplayTranslation(): void {
-    this.selectedLanguage = this.displayTranslation.language;
+    if (this.displayTranslation) {
+      this.selectedLanguage = this.displayTranslation.language;
+    }
   }
 
   isNew(): boolean {

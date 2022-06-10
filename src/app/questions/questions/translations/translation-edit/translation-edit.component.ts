@@ -16,6 +16,8 @@ export class TranslationEditComponent implements OnInit {
   questionId: number;
   @Input()
   translation: Translation;
+  @Input()
+  isFirst = false;
   @Output()
   dataChangedEvent = new EventEmitter();
   formTranslation: Translation;
@@ -39,7 +41,7 @@ export class TranslationEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.formTranslation.id == null) {
+    if (this.formTranslation.id == null && !this.isFirst) {
       this.dataService.addTranslation(this.questionId, this.formTranslation).subscribe(
         next => {
           this.dataChangedEvent.emit();

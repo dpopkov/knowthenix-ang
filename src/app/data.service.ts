@@ -97,6 +97,11 @@ export class DataService {
       .pipe(map(data => Question.fromHttp(data)));
   }
 
+  addNewQuestion(question: Question): Observable<Question> {
+    return this.http.post<Question>(this.questionsUrl, question)
+      .pipe(map(data => Question.fromHttp(data)));
+  }
+
   updateQuestion(question: Question): Observable<Question> {
     return this.http.put<Question>(this.questionsUrl, question)
       .pipe(map(data => Question.fromHttp(data)));

@@ -47,10 +47,22 @@
 
 </form>
 
-<div class="row">
-  <div class="col">
-    <button type="button" class="btn btn-primary"
-            (click)="navigateToTranslations()"
-    >List Translations</button>
+<div *ngIf="action !== 'add'">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary"
+              (click)="navigateToTranslations()"
+      >List Translations</button>
+    </div>
   </div>
 </div>
+<!--
+<div *ngIf="action === 'add'">
+  <div class="row">
+    <div class="col-10">
+      <app-translation-edit [translation]="firstTranslation" [isFirst]="true" ]>
+      </app-translation-edit>
+    </div>
+  </div>
+</div>
+-->
