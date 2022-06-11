@@ -56,13 +56,12 @@
     </div>
   </div>
 </div>
-<!--
-<div *ngIf="action === 'add'">
+<div *ngIf="action === 'add' && !firstTranslationFilled">
   <div class="row">
     <div class="col-10">
-      <app-translation-edit [translation]="firstTranslation" [isFirst]="true" ]>
+      <app-translation-edit [translation]="firstTranslation" [isFirst]="true"
+                        (firstIsSavedEvent)="hideFirstTranslationForm()">
       </app-translation-edit>
     </div>
   </div>
 </div>
--->

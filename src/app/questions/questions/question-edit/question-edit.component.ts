@@ -15,7 +15,8 @@ import {map} from "rxjs";
 export class QuestionEditComponent implements OnInit {
 
   question: Question;
-  // firstTranslation: Translation
+  firstTranslation: Translation
+  firstTranslationFilled = false;
   action: string;
   categories: Array<Category>;
   languages = Object.keys(Language);
@@ -53,8 +54,8 @@ export class QuestionEditComponent implements OnInit {
       this.question = new Question();
       this.dataLoaded = true;
       this.message = '';
-      // this.firstTranslation = new Translation();
-      // this.question.translations.push(this.firstTranslation)
+      this.firstTranslation = new Translation();
+      this.question.translations.push(this.firstTranslation)
     }
   }
 
@@ -86,6 +87,11 @@ export class QuestionEditComponent implements OnInit {
 
   closeQuestionEdit(): void {
     this.navigateToQuestionList();
+  }
+
+  hideFirstTranslationForm(): void {
+    this.question.displayTranslation = this.question.translations[0];
+    this.firstTranslationFilled = true;
   }
 
   private navigateToQuestionList(): void{

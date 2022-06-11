@@ -29,7 +29,7 @@
   <button type="button" class="btn btn-primary" (click)="onSubmit()"
           [disabled]="editTranslationForm.invalid"
   >Save</button>
-  <button type="button" class="btn btn-primary" (click)="closeTranslationEdit()"
+  <button *ngIf="!isFirst" type="button" class="btn btn-primary" (click)="closeTranslationEdit()"
   >Cancel</button>
 
 </form>

@@ -20,6 +20,8 @@ export class TranslationEditComponent implements OnInit {
   isFirst = false;
   @Output()
   dataChangedEvent = new EventEmitter();
+  @Output()
+  firstIsSavedEvent = new EventEmitter();
   formTranslation: Translation;
   languages = Object.keys(Language);
   languageMap: Map<string, string>;
@@ -41,13 +43,18 @@ export class TranslationEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.formTranslation.id == null && !this.isFirst) {
-      this.dataService.addTranslation(this.questionId, this.formTranslation).subscribe(
-        next => {
-          this.dataChangedEvent.emit();
-          this.navigateToTranslationList();
-        }
-      )
+    if (this.formTranslation.id == null) {
+      if (this.isFirst) {
+        this.formTranslation.copyTo(this.translation);
+        this.firstIsSavedEvent.emit();
+      } else {
+        this.dataService.addTranslation(this.questionId, this.formTranslation).subscribe(
+          next => {
+            this.dataChangedEvent.emit();
+            this.navigateToTranslationList();
+          }
+        )
+      }
     } else {
       this.dataService.updateTranslation(this.questionId, this.formTranslation).subscribe(
         next => {
