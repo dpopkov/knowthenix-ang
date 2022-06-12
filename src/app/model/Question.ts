@@ -2,34 +2,13 @@ import {Category} from "./Category";
 import {Translation} from "./Translation";
 
 export class Question {
-  id: number;
-  category: Category;
-  selectedLanguage: String;
-  translations: Array<Translation>;
-  displayTranslation: Translation;
 
-  constructor(id?: number,
-              category?: Category,
-              selectedLanguage?: String,
-              translations?: Array<Translation>,
-              displayTranslation?: Translation) {
-    if (id) {
-      this.id = id;
-    }
-    if (category) {
-      this.category = category;
-    }
-    if (selectedLanguage) {
-      this.selectedLanguage = selectedLanguage;
-    }
-    if (translations) {
-      this.translations = translations;
-    } else {
-      this.translations = new Array<Translation>();
-    }
-    if (displayTranslation) {
-      this.displayTranslation = displayTranslation;
-    } else {
+  constructor(public id?: number,
+              public category?: Category,
+              public selectedLanguage?: String,
+              public translations: Array<Translation> = new Array<Translation>(),
+              public displayTranslation?: Translation) {
+    if (!displayTranslation) {
       this.computeDisplayTranslation();
     }
   }
