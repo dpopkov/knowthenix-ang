@@ -131,8 +131,10 @@ export class DataService {
   addNewQuestion(question: Question): Observable<Question> {
     this.lastQuestionId++;
     question.id = this.lastQuestionId;
+    for(const tr of question.translations) {
+      this.ensureTranslationLocalIdIsAssigned(tr);
+    }
     this.questions.push(question);
-    console.log('data.service.local::addNewQuestion() added with id="', question.id);
     return of(question);
   }
 
@@ -149,10 +151,16 @@ export class DataService {
 
   addTranslation(questionId: number, translation: Translation): Observable<Translation> {
     const foundQuestion: Question = this.findQuestionLocally(questionId);
-    this.lastTranslationId++;
-    translation.id = this.lastTranslationId;
+    this.ensureTranslationLocalIdIsAssigned(translation);
     foundQuestion.translations.push(translation);
     return of(translation);
+  }
+
+  private ensureTranslationLocalIdIsAssigned(translation: Translation) {
+    if (!translation.id) {
+      this.lastTranslationId++;
+      translation.id = this.lastTranslationId;
+    }
   }
 
   updateTranslation(questionId: number, translation: Translation): Observable<Translation> {
