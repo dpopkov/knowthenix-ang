@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Source} from "../model/Source";
 import {DataService} from "../data.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-sources',
@@ -10,11 +11,15 @@ import {DataService} from "../data.service";
 export class SourcesComponent implements OnInit {
 
   sources: Array<Source>;
+  selectedSource: Source;
+  action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Sources';
   reloadAttempts = 0;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -25,6 +30,7 @@ export class SourcesComponent implements OnInit {
       next => {
         this.sources = next;
         this.loadingData = false;
+        this.processUrlParams();
       },
       error => {
         this.reloadAttempts++;
@@ -39,4 +45,20 @@ export class SourcesComponent implements OnInit {
     )
   }
 
+  private processUrlParams(): void {
+    this.route.queryParams.subscribe(
+      params => {
+        const idAsString = params['id'];
+        if (idAsString) {
+          const idAsNumber = +idAsString;
+          this.selectedSource = this.sources.find(s => s.id === idAsNumber);
+        }
+        this.action = params['action'];
+      }
+    )
+  }
+
+  setSelectedSource(sourceId: number): void {
+    this.router.navigate(['sources'], {queryParams: {id: sourceId, action: 'view'}});
+  }
 }

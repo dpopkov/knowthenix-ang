@@ -20,6 +20,7 @@
         <td>{{ source.sourceType }}</td>
         <td>
           <button type="button" class="btn btn-primary"
+                  (click)="setSelectedSource(source.id)"
           >View</button>
         </td>
       </tr>
@@ -27,4 +28,8 @@
     </table>
   </div>
   <div *ngIf="loadingData">{{ message }}</div>
+  <div class="col-6">
+    <app-source-detail *ngIf="action === 'view'" [source]="selectedSource">
+    </app-source-detail>
+  </div>
 </div>
