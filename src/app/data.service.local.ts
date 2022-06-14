@@ -7,6 +7,7 @@ import {KeyTerm} from './model/KeyTerm';
 import {Question} from "./model/Question";
 import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
+import {Source} from "./model/Source";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class DataService {
   private categories: Array<Category> = new Array<Category>();
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
   private questions: Array<Question> = new Array<Question>();
+  private sources: Array<Source> = new Array<Source>();
   private languageMap: Map<string, string>;
   private lastQuestionId = 100;
   private lastTranslationId = 1000;
@@ -28,6 +30,7 @@ export class DataService {
     this.initCategories();
     this.initKeyTerms();
     this.initQuestions(this.categories[0]);
+    this.initSources();
   }
 
   private initCategories(): void {
@@ -53,6 +56,13 @@ export class DataService {
     this.questions.push(jre);
     const empty = new Question(33, category, 'EN');
     this.questions.push(empty);
+  }
+
+  private initSources(): void {
+    this.sources.push(new Source(201, 'JDK', 'JDK API', 'http://www.api.org',
+      'API_DOC', 'JDK API Documentation'))
+    this.sources.push(new Source(202, 'Core Java 11', 'Core Java, 11th Edition', 'http://www.core.org',
+      'BOOK', 'Core Java by Cay Horstmann'))
   }
 
   getCategories(): Observable<Array<Category>> {
@@ -185,6 +195,47 @@ export class DataService {
       map.set(key, Language[key]);
     }
     this.languageMap = map;
+  }
+
+  getSources(): Observable<Array<Source>> {
+    return of(this.sources);
+  }
+
+  getSourceById(id: number): Observable<Source> {
+    const found: Source = this.findSourceLocally(id);
+    return of(found);
+  }
+
+  addNewSource(source: Source): Observable<Source> {
+    source.id = this.findSourceMaxId() + 1;
+    this.sources.push(source);
+    return of(source);
+  }
+
+  updateSource(source: Source): Observable<Source> {
+    const existing = this.findSourceLocally(source.id);
+    source.copyTo(existing);
+    return of(existing);
+  }
+
+  deleteSource(id: number): Observable<any> {
+    const found: Source = this.findSourceLocally(id);
+    this.sources.splice(this.sources.indexOf(found), 1);
+    return of(null);
+  }
+
+  private findSourceLocally(sourceId: number): Source {
+    return this.sources.find(s => s.id === sourceId);
+  }
+
+  private findSourceMaxId(): number {
+    let maxId = 0;
+    for (const s of this.sources) {
+      if (s.id > maxId) {
+        maxId = s.id;
+      }
+    }
+    return maxId;
   }
 
   /*

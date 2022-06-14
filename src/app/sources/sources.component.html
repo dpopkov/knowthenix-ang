@@ -1,0 +1,30 @@
+<h1>Sources</h1>
+
+<a class="btn btn-primary mb-3" >Add</a>
+
+<div class="row">
+  <div class="col-6">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let source of sources">
+        <td>{{ source.id }}</td>
+        <td>{{ source.name }}</td>
+        <td>{{ source.sourceType }}</td>
+        <td>
+          <button type="button" class="btn btn-primary"
+          >View</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="loadingData">{{ message }}</div>
+</div>

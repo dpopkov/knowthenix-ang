@@ -28,4 +28,8 @@ export class MenuComponent implements OnInit {
   navigateToKeyTerms(): void {
     this.router.navigate(['keyterms']);
   }
+
+  navigateToSources(): void {
+    this.router.navigate(['sources']);
+  }
 }

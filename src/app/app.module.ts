@@ -18,6 +18,7 @@ import { QuestionsComponent } from './questions/questions/questions.component';
 import { QuestionEditComponent } from './questions/questions/question-edit/question-edit.component';
 import { TranslationsComponent } from './questions/questions/translations/translations.component';
 import { TranslationEditComponent } from './questions/questions/translations/translation-edit/translation-edit.component';
+import { SourcesComponent } from './sources/sources.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { TranslationEditComponent } from './questions/questions/translations/tra
     QuestionEditComponent,
     TranslationsComponent,
     TranslationEditComponent,
+    SourcesComponent,
     PageNotFoundComponent
   ],
   imports: [

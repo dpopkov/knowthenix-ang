@@ -7,6 +7,7 @@ import { KeyTerm } from './model/KeyTerm';
 import {Question} from "./model/Question";
 import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
+import {Source} from "./model/Source";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class DataService {
   private readonly categoriesUrl = environment.restUrl + '/categories';
   private readonly keyTermsUrl = environment.restUrl + '/keyterms';
   private readonly questionsUrl = environment.restUrl + '/questions';
+  private readonly sourcesUrl = environment.restUrl + '/sources';
 
   private languageMap: Map<string, string>;
 
@@ -139,6 +141,38 @@ export class DataService {
       map.set(key, Language[key]);
     }
     this.languageMap = map;
+  }
+
+  getSources(): Observable<Array<Source>> {
+    return this.http.get<Array<Source>>(this.sourcesUrl)
+      .pipe(
+        map(data => {
+          const sources = new Array<Source>();
+          for (const sourceData of data) {
+            sources.push(Source.fromHttp(sourceData));
+          }
+          return sources;
+        })
+      )
+  }
+
+  getSourceById(id: number): Observable<Source> {
+    return this.http.get<Source>(this.sourcesUrl + '/' + id)
+      .pipe(map(data => Source.fromHttp(data)));
+  }
+
+  addNewSource(source: Source): Observable<Source> {
+    return this.http.post<Source>(this.sourcesUrl, source)
+      .pipe(map(data => Source.fromHttp(data)));
+  }
+
+  updateSource(source: Source): Observable<Source> {
+    return this.http.put<Source>(this.sourcesUrl, source)
+      .pipe(map(data => Source.fromHttp(data)));
+  }
+
+  deleteSource(id: number): Observable<any> {
+    return this.http.delete<Source>(this.sourcesUrl + '/' + id);
   }
 
   /*

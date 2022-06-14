@@ -8,6 +8,7 @@ import { QuestionsComponent } from "./questions/questions/questions.component";
 import { QuestionEditComponent } from "./questions/questions/question-edit/question-edit.component";
 import { PrefetchCategoriesService } from "./prefetch-categories.service";
 import {TranslationsComponent} from "./questions/questions/translations/translations.component";
+import {SourcesComponent} from "./sources/sources.component";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path : 'questions/edit/translations', component: TranslationsComponent},
   {path : 'questions/categories', component : CategoriesComponent},
   {path : 'keyterms', component : KeytermsComponent},
+  {path : 'sources', component : SourcesComponent},
   {path : '', component : HomeComponent},
   {path : '404', component : PageNotFoundComponent},
   {path : '**', redirectTo : '/404'}
