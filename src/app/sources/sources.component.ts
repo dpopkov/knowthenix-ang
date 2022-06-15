@@ -61,4 +61,9 @@ export class SourcesComponent implements OnInit {
   setSelectedSource(sourceId: number): void {
     this.router.navigate(['sources'], {queryParams: {id: sourceId, action: 'view'}});
   }
+
+  addSource() {
+    this.selectedSource = new Source();
+    this.router.navigate(['sources'], {queryParams: {action: 'add'}});
+  }
 }

@@ -13,7 +13,11 @@ export class Source {
     other.description = this.description;
   }
 
-  static fromHttp(obj: Source): Source {
+  isNew(): boolean {
+    return this.id == null;
+  }
+
+  static from(obj: Source): Source {
     return new Source(obj.id, obj.name, obj.fullTitle, obj.url, obj.sourceType, obj.description);
   }
 }

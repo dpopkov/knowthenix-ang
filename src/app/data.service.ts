@@ -149,7 +149,7 @@ export class DataService {
         map(data => {
           const sources = new Array<Source>();
           for (const sourceData of data) {
-            sources.push(Source.fromHttp(sourceData));
+            sources.push(Source.from(sourceData));
           }
           return sources;
         })
@@ -158,17 +158,17 @@ export class DataService {
 
   getSourceById(id: number): Observable<Source> {
     return this.http.get<Source>(this.sourcesUrl + '/' + id)
-      .pipe(map(data => Source.fromHttp(data)));
+      .pipe(map(data => Source.from(data)));
   }
 
   addNewSource(source: Source): Observable<Source> {
     return this.http.post<Source>(this.sourcesUrl, source)
-      .pipe(map(data => Source.fromHttp(data)));
+      .pipe(map(data => Source.from(data)));
   }
 
   updateSource(source: Source): Observable<Source> {
     return this.http.put<Source>(this.sourcesUrl, source)
-      .pipe(map(data => Source.fromHttp(data)));
+      .pipe(map(data => Source.from(data)));
   }
 
   deleteSource(id: number): Observable<any> {

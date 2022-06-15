@@ -1,0 +1,47 @@
+<h1>{{ source.id == null ? 'Add' : 'Edit'}} Source</h1>
+
+<div class="bg-warning p-5" *ngIf="message">{{ message }}</div>
+
+<form #editSourceForm="ngForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="source name"
+           [(ngModel)]="formSource.name" name="name" required #nameField="ngModel">
+    <div *ngIf="nameField.invalid && nameField.touched"
+         class="alert alert-danger">Name is required</div>
+  </div>
+
+  <div class="form-group">
+    <label for="fullTitle">Full Title</label>
+    <input type="text" class="form-control" id="fullTitle" placeholder="source full title"
+           [(ngModel)]="formSource.fullTitle" name="fullTitle" #fullTitleField="ngModel">
+  </div>
+
+  <div class="form-group">
+    <label for="url">URL</label>
+    <input type="text" class="form-control" id="url" placeholder="source url"
+           [(ngModel)]="formSource.url" name="url" #urlField="ngModel">
+  </div>
+
+  <div class="form-group">
+    <label for="sourceType">Source Type</label>
+    <select class="form-control" id="sourceType"
+            [(ngModel)]="formSource.sourceType" name="sourceType">
+      <option *ngFor="let st of sourceTypes" [ngValue]="st"
+      >{{ st }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" placeholder="source description"
+           [(ngModel)]="formSource.description" name="description" #descriptionField="ngModel">
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="onSubmit()"
+          [disabled]="editSourceForm.invalid"
+  >Save</button>
+
+  <button type="button" class="btn btn-primary" (click)="closeSourceEdit()"
+  >Cancel</button>
+</form>

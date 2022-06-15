@@ -20,6 +20,7 @@ import { TranslationsComponent } from './questions/questions/translations/transl
 import { TranslationEditComponent } from './questions/questions/translations/translation-edit/translation-edit.component';
 import { SourcesComponent } from './sources/sources.component';
 import { SourceDetailComponent } from './sources/source-detail/source-detail.component';
+import { SourceEditComponent } from './sources/source-edit/source-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SourceDetailComponent } from './sources/source-detail/source-detail.com
     TranslationEditComponent,
     SourcesComponent,
     SourceDetailComponent,
+    SourceEditComponent,
     PageNotFoundComponent
   ],
   imports: [
