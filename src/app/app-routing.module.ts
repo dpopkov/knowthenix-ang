@@ -9,10 +9,12 @@ import { QuestionEditComponent } from "./questions/questions/question-edit/quest
 import { PrefetchCategoriesService } from "./prefetch-categories.service";
 import {TranslationsComponent} from "./questions/questions/translations/translations.component";
 import {SourcesComponent} from "./sources/sources.component";
+import {QuestionDetailComponent} from "./questions/questions/question-detail/question-detail.component";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent},
   {path : 'questions/edit', component : QuestionEditComponent, resolve: {preloaded_categories: PrefetchCategoriesService}},
+  {path : 'questions/view', component: QuestionDetailComponent},
   {path : 'questions/edit/translations', component: TranslationsComponent},
   {path : 'questions/categories', component : CategoriesComponent},
   {path : 'keyterms', component : KeytermsComponent},

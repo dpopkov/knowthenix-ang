@@ -42,6 +42,10 @@ export class QuestionsComponent implements OnInit {
     )
   }
 
+  displayViewQuestion(questionId: number): void {
+    this.router.navigate(['questions', 'view'], {queryParams: {questionId: questionId}});
+  }
+
   displayEditQuestion(questionId: number): void {
     this.router.navigate(['questions', 'edit'], {queryParams: {id: questionId}});
   }

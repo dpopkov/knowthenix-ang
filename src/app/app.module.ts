@@ -21,6 +21,7 @@ import { TranslationEditComponent } from './questions/questions/translations/tra
 import { SourcesComponent } from './sources/sources.component';
 import { SourceDetailComponent } from './sources/source-detail/source-detail.component';
 import { SourceEditComponent } from './sources/source-edit/source-edit.component';
+import { QuestionDetailComponent } from './questions/questions/question-detail/question-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SourceEditComponent } from './sources/source-edit/source-edit.component
     KeyTermDetailComponent,
     KeyTermEditComponent,
     QuestionsComponent,
+    QuestionDetailComponent,
     QuestionEditComponent,
     TranslationsComponent,
     TranslationEditComponent,

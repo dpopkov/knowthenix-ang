@@ -1,0 +1,25 @@
+<div>
+  <h2>Question detail</h2>
+  <a class="btn btn-small btn-primary"
+     (click)="displayEditQuestion(question.id)"
+  >Edit</a>
+  <a class="btn btn-small btn-danger">Delete</a>
+  <table>
+    <tr>
+      <th>ID</th>
+      <td>{{ question.id }}</td>
+    </tr>
+    <tr>
+      <th>Sel.Language</th>
+      <td>{{ question.selectedLanguage }}</td>
+    </tr>
+    <tr>
+      <th>Category</th>
+      <td>{{ question.category.name }}</td>
+    </tr>
+  </table>
+  <app-translations [fromEdit]="false"></app-translations>
+</div>
+<a class="btn btn-small btn-primary"
+   (click)="backToQuestions()"
+>Back to Questions</a>

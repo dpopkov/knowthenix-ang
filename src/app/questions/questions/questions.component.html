@@ -23,6 +23,9 @@
         <td>{{ question.selectedLanguage }}</td>
         <td>
           <button type="button" class="btn btn-primary"
+                  (click)="displayViewQuestion(question.id)"
+          >View</button>
+          <button type="button" class="btn btn-primary"
                   (click)="displayEditQuestion(question.id)"
           >Edit</button>
           <button type="button" class="btn btn-danger"

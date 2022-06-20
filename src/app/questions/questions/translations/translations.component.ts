@@ -16,6 +16,8 @@ export class TranslationsComponent implements OnInit {
   selectedTranslation: Translation;
   dataLoaded = false;
   message: string;
+  @Input()
+  fromEdit = true;
 
   constructor(private dataService: DataService,
               private router: Router,
