@@ -22,6 +22,7 @@ import { SourcesComponent } from './sources/sources.component';
 import { SourceDetailComponent } from './sources/source-detail/source-detail.component';
 import { SourceEditComponent } from './sources/source-edit/source-edit.component';
 import { QuestionDetailComponent } from './questions/questions/question-detail/question-detail.component';
+import { AnswersComponent } from './questions/answers/answers.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { QuestionDetailComponent } from './questions/questions/question-detail/q
     SourcesComponent,
     SourceDetailComponent,
     SourceEditComponent,
+    AnswersComponent,
     PageNotFoundComponent
   ],
   imports: [

@@ -8,6 +8,7 @@ import {Question} from "./model/Question";
 import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
+import {Answer} from "./model/Answer";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class DataService {
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
   private questions: Array<Question> = new Array<Question>();
   private sources: Array<Source> = new Array<Source>();
+  private answers: Array<Answer> = new Array<Answer>();
   private languageMap: Map<string, string>;
   private lastQuestionId = 100;
   private lastTranslationId = 1000;
@@ -31,6 +33,7 @@ export class DataService {
     this.initKeyTerms();
     this.initQuestions(this.categories[0]);
     this.initSources();
+    this.initAnswers();
   }
 
   private initCategories(): void {
@@ -63,6 +66,24 @@ export class DataService {
       'API_DOC', 'JDK API Documentation'))
     this.sources.push(new Source(202, 'Core Java 11', 'Core Java, 11th Edition', 'http://www.core.org',
       'BOOK', 'Core Java by Cay Horstmann'))
+    this.sources.push(new Source(203, 'Wikipedia', 'Wikipedia - The Free Encyclopedia', 'https://en.wikipedia.org',
+      'WEB_SITE', ''))
+  }
+
+  private initAnswers() {
+    const jvmQuestionId = 31;
+    const translationJvm1En = new Translation(51, 'EN', 'PLAINTEXT', 'JVM is Java Virtual Machine (local data)');
+    const translationJvm1Ru = new Translation(52, 'RU', 'PLAINTEXT', 'JVM это Виртуальная Машина Java (local data)');
+    const jvm1 = new Answer(301, jvmQuestionId, 202, 'Core Java 11',
+      'page 123', 'EN', [translationJvm1En, translationJvm1Ru], translationJvm1En);
+    this.answers.push(jvm1);
+
+    const translationJvm2En = new Translation(53, 'EN', 'PLAINTEXT', 'JVM is a virtual machine that enables a computer to run Java programs (local data)');
+    const translationJvm2Ru = new Translation(54, 'RU', 'PLAINTEXT', 'JVM это виртуальная Машина позволяющая компьютеру выполнять Java программы (local data)');
+    const jvm2 = new Answer(302, jvmQuestionId, 203, 'Wikipedia',
+      'https://en.wikipedia.org/wiki/Java_virtual_machine', 'EN',
+      [translationJvm2En, translationJvm2Ru], translationJvm2En);
+    this.answers.push(jvm2);
   }
 
   getCategories(): Observable<Array<Category>> {
@@ -236,6 +257,11 @@ export class DataService {
       }
     }
     return maxId;
+  }
+
+  getAnswersForQuestion(questionId: number): Observable<Array<Answer>> {
+    const result = this.answers.filter(a => a.questionId === questionId);
+    return of(result);
   }
 
   /*

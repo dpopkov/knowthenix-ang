@@ -12,6 +12,7 @@ export class QuestionDetailComponent implements OnInit {
 
   question: Question;
   action: string;
+  showAnswers: boolean = false;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -42,4 +43,11 @@ export class QuestionDetailComponent implements OnInit {
     this.router.navigate(['questions', 'questions'])
   }
 
+  displayAnswers() {
+    this.showAnswers = true;
+  }
+
+  hideAnswers() {
+    this.showAnswers = false;
+  }
 }

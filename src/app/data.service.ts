@@ -8,6 +8,7 @@ import {Question} from "./model/Question";
 import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
+import {Answer} from "./model/Answer";
 
 @Injectable({
   providedIn: 'root'
@@ -173,6 +174,19 @@ export class DataService {
 
   deleteSource(id: number): Observable<any> {
     return this.http.delete<Source>(this.sourcesUrl + '/' + id);
+  }
+
+  getAnswersForQuestion(questionId: number): Observable<Array<Answer>> {
+    return this.http.get<Array<Answer>>(this.questionsUrl + '/' + questionId + '/answers')
+      .pipe(
+        map(data => {
+          const answers = new Array<Answer>();
+          for (const answerData of data) {
+            answers.push(Answer.from(answerData));
+          }
+          return answers;
+        })
+      );
   }
 
   /*
