@@ -1,0 +1,55 @@
+<h1>{{ answer?.isNew ? 'Add' : 'Edit' }} Answer</h1>
+
+<div class="bg-warning p-3" *ngIf="message">{{ message }}</div>
+
+<form *ngIf="dataLoaded">
+  <div class="row">
+    <div class="form-group>">
+      <label for="source">Source</label>
+      <select class="form-control" id="source" [(ngModel)]="formAnswer.source" name="source"
+              (change)="onSourceChange()">
+        <option *ngFor="let src of sources" [ngValue]="src"
+        >{{ src.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group>">
+      <label for="sourceDetails">Source Details</label>
+      <input type="text" class="form-control" id="sourceDetails" placeholder="Source details text"
+             [(ngModel)]="formAnswer.sourceDetails" name="sourceDetails" required #textField="ngModel">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group>">
+      <label for="language">Selected Language</label>
+      <select class="form-control" id="language"
+              [(ngModel)]="formAnswer.selectedLanguage" name="language">
+        <option *ngFor="let lang of languages" [ngValue]="lang"
+        >{{ languageMap.get(lang) }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <h4><label for="selectedTranslation">Selected Translation</label></h4>
+    <textarea name="selectedTranslation" id="selectedTranslation" cols="30" rows="5" readonly
+    >{{ formAnswer.displayTranslation.text }}</textarea>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary"
+              (click)="navigateToAnswerTranslations()"
+      >List Translations</button>
+      <button type="button" class="btn btn-primary"
+              (click)="onSubmit()"
+      >Save Answer</button>
+      <button type="button" class="btn btn-primary"
+              (click)="closeAnswerEdit()"
+      >Cancel</button>
+    </div>
+  </div>
+</form>

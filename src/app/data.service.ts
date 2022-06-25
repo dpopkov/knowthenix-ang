@@ -18,6 +18,7 @@ export class DataService {
   private readonly categoriesUrl = environment.restUrl + '/categories';
   private readonly keyTermsUrl = environment.restUrl + '/keyterms';
   private readonly questionsUrl = environment.restUrl + '/questions';
+  private readonly answersUrl = environment.restUrl + '/answers';
   private readonly sourcesUrl = environment.restUrl + '/sources';
 
   private languageMap: Map<string, string>;
@@ -187,6 +188,11 @@ export class DataService {
           return answers;
         })
       );
+  }
+
+  getAnswerById(answerId: number): Observable<Answer> {
+    return this.http.get<Answer>(this.answersUrl + '/' + answerId)
+      .pipe(map(data => Answer.from(data)));
   }
 
   /*

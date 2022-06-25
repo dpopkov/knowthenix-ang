@@ -1,6 +1,9 @@
 import {Translation} from "./Translation";
+import {Source} from "./Source";
 
 export class Answer {
+  source?: Source;
+
   constructor(public id?: number,
               public questionId?: number,
               public sourceId?: number,
@@ -28,6 +31,10 @@ export class Answer {
     if (this.displayTranslation) {
       this.selectedLanguage = this.displayTranslation.language;
     }
+  }
+
+  chooseSourceByIdFrom(sources: Array<Source>) {
+    this.source = sources.find(s => s.id === this.sourceId);
   }
 
   static from(data: Answer): Answer {

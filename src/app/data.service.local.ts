@@ -264,6 +264,11 @@ export class DataService {
     return of(result);
   }
 
+  getAnswerById(answerId: number): Observable<Answer> {
+    const found = this.answers.find(a => a.id === answerId);
+    return of(found);
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.local.ts

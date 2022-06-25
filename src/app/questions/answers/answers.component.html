@@ -20,6 +20,7 @@
         <td>{{ answer.sourceDetails }}</td>
         <td>
           <button type="button" class="btn btn-primary"
+                  (click)="editAnswer(answer.id)"
           >Edit</button>
           <button type="button" class="btn btn-danger"
           >Del</button>
@@ -32,4 +33,5 @@
 <div *ngIf="loadingData">{{ message }}</div>
 
 <a class="btn btn-small btn-primary"
+   (click)="addAnswerForQuestion(questionId)"
 >Add Answer</a>
