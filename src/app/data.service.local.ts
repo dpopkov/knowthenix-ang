@@ -265,8 +265,18 @@ export class DataService {
   }
 
   getAnswerById(answerId: number): Observable<Answer> {
-    const found = this.answers.find(a => a.id === answerId);
+    const found = this.findLocalAnswerById(answerId);
     return of(found);
+  }
+
+  updateAnswer(answer: Answer): Observable<Answer> {
+    const found = this.findLocalAnswerById(answer.id);
+    answer.copyTo(found);
+    return of(found);
+  }
+
+  private findLocalAnswerById(answerId: number) {
+    return this.answers.find(a => a.id === answerId);
   }
 
   /*

@@ -25,7 +25,7 @@
   <a class="btn btn-small btn-primary"
      (click)="hideAnswers()" *ngIf="showAnswers"
   >Hide Answers</a>
-  <app-answers *ngIf="showAnswers"
+  <app-answers *ngIf="showAnswers && question"
                [questionId]="question.id"
   ></app-answers>
 </div>

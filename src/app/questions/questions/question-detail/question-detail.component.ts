@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Question} from "../../../model/Question";
 import {DataService} from "../../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,6 +20,7 @@ export class QuestionDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const idAsString = this.route.snapshot.queryParams['questionId'];
+    this.showAnswers = this.route.snapshot.queryParams['showAnswers'];
     if (idAsString) {
       const idNumber = +idAsString;
       this.dataService.getQuestionById(idNumber)

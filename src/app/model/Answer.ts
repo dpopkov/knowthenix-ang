@@ -37,6 +37,20 @@ export class Answer {
     this.source = sources.find(s => s.id === this.sourceId);
   }
 
+  copyTo(other: Answer) {
+    other.id = this.id;
+    other.questionId = this.questionId;
+    other.sourceId = this.sourceId;
+    if (!other.sourceId && this.source) {
+      other.sourceId = this.source.id;
+    }
+    other.sourceName = this.sourceName;
+    other.sourceDetails = this.sourceDetails;
+    other.selectedLanguage = this.selectedLanguage;
+    other.translations = this.translations;
+    other.displayTranslation = this.displayTranslation;
+  }
+
   static from(data: Answer): Answer {
     const translations = new Array<Translation>();
     for (const translationData of data.translations) {

@@ -195,6 +195,11 @@ export class DataService {
       .pipe(map(data => Answer.from(data)));
   }
 
+  updateAnswer(answer: Answer): Observable<Answer> {
+    return this.http.put<Answer>(this.answersUrl, answer)
+      .pipe(map(data => Answer.from(data)));
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts

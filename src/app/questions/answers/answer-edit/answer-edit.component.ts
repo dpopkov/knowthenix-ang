@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Answer} from "../../../model/Answer";
 import {DataService} from "../../../data.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Source} from "../../../model/Source";
 import {map} from "rxjs";
 import {Language} from "../../../model/Language";
@@ -22,6 +22,7 @@ export class AnswerEditComponent implements OnInit {
   message = 'Please wait...';
 
   constructor(private dataService: DataService,
+              private router: Router,
               private route: ActivatedRoute) {
     this.languageMap = dataService.getLanguageMap();
   }
@@ -60,23 +61,36 @@ export class AnswerEditComponent implements OnInit {
   onSourceChange() {
     this.formAnswer.sourceId = this.formAnswer.source.id;
     this.formAnswer.sourceName = this.formAnswer.source.name;
-
-    console.log('this.formAnswer.sourceId=', this.formAnswer.sourceId);
-    console.log('this.formAnswer.sourceName=', this.formAnswer.sourceName);
   }
 
   onSubmit() {
-    console.log('onSubmit is NOT IMPLEMENTED YET');
-
-    // todo: Null unnecessary for backend data
-    // this.answer.source = null;
+    this.formAnswer.computeDisplayTranslation();
+    this.formAnswer.source = null; // it is unnecessary for backend
+    if (this.formAnswer.isNew) {
+      // todo: create new Answer
+    } else {
+      this.dataService.updateAnswer(this.formAnswer).subscribe(
+        next => {
+          this.navigateToQuestionWithAnswerList();
+        },
+        error => {
+          this.message = 'Something went wrong and the Answer was not updated.';
+          console.log('Error updating Answer:', error);
+        }
+      );
+    }
   }
 
   closeAnswerEdit() {
-    console.log('closeAnswerEdit is NOT IMPLEMENTED YET');
+    this.navigateToQuestionWithAnswerList();
   }
 
   navigateToAnswerTranslations() {
     console.log('navigateToAnswerTranslations is NOT IMPLEMENTED YET');
+  }
+
+  private navigateToQuestionWithAnswerList() {
+    this.router.navigate(['questions', 'view'],
+      {queryParams: {questionId: this.answer.questionId, showAnswers: 'true'}})
   }
 }
