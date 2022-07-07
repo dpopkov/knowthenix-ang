@@ -36,7 +36,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   }
 
   private initializeForm() {
-    this.formCategory = Object.assign({}, this.category);
+    this.formCategory = Object.assign(new Category(), this.category);
     this.checkIfNameIsValid();
   }
 

@@ -24,6 +24,7 @@ import { SourceEditComponent } from './sources/source-edit/source-edit.component
 import { QuestionDetailComponent } from './questions/questions/question-detail/question-detail.component';
 import { AnswersComponent } from './questions/answers/answers.component';
 import { AnswerEditComponent } from './questions/answers/answer-edit/answer-edit.component';
+import { AnswerTranslationsComponent } from './questions/answers/answer-translations/answer-translations.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AnswerEditComponent } from './questions/answers/answer-edit/answer-edit
     SourceEditComponent,
     AnswersComponent,
     AnswerEditComponent,
+    AnswerTranslationsComponent,
     PageNotFoundComponent
   ],
   imports: [

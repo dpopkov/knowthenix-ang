@@ -86,7 +86,8 @@ export class AnswerEditComponent implements OnInit {
   }
 
   navigateToAnswerTranslations() {
-    console.log('navigateToAnswerTranslations is NOT IMPLEMENTED YET');
+    this.router.navigate(['answers', 'edit', 'translations'],
+      {queryParams: {answerId: this.answer.id}})
   }
 
   private navigateToQuestionWithAnswerList() {

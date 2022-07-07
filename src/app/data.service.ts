@@ -200,6 +200,17 @@ export class DataService {
       .pipe(map(data => Answer.from(data)));
   }
 
+  getTranslationsByAnswerId(answerId: number): Observable<Array<Translation>> {
+    return this.http.get<Array<Translation>>(this.answersUrl + '/' + answerId + '/translations')
+      .pipe(map(data => {
+        const translations = new Array<Translation>();
+        for (const translationData of data) {
+          translations.push(Translation.fromHttp(translationData));
+        }
+        return translations;
+      }));
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts

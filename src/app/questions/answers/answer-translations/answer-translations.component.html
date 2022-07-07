@@ -1,0 +1,52 @@
+<h3>Answer Translations</h3>
+
+<div class="bg-warning p-5" *ngIf="message">{{ message }}</div>
+
+<div *ngIf="dataLoaded && translations.length === 0">
+  There are no Translations for this Answer.
+</div>
+
+<button type="button" class="btn btn-primary"
+        *ngIf="fromEdit"
+        (click)="addTranslation()"
+>Add</button>
+
+<table *ngIf="dataLoaded && translations.length !== 0" class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Type</th>
+    <th>Lang</th>
+    <th>Text</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let translation of translations">
+    <td>{{ translation.id }}</td>
+    <td>{{ translation.type }}</td>
+    <td>{{ translation.language }}</td>
+    <td>{{ translation.text }}</td>
+    <td>
+      <span *ngIf="fromEdit">
+        <button type="button" class="btn btn-primary"
+                (click)="navigateToEditTranslation(translation.id)"
+        >Edit</button>
+        <button type="button" class="btn btn-danger"
+        >Del</button>
+      </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col-10">
+    <!--For TranslationEditComponent-->
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary"
+        *ngIf="fromEdit"
+        (click)="navigateToAnswer()"
+>Back to Answer</button>

@@ -12,6 +12,7 @@ import {SourcesComponent} from "./sources/sources.component";
 import {QuestionDetailComponent} from "./questions/questions/question-detail/question-detail.component";
 import {AnswerEditComponent} from "./questions/answers/answer-edit/answer-edit.component";
 import {PrefetchSourcesService} from "./prefetch-sources.service";
+import {AnswerTranslationsComponent} from "./questions/answers/answer-translations/answer-translations.component";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path : 'questions/view', component: QuestionDetailComponent},
   {path : 'questions/edit/translations', component: TranslationsComponent},
   {path : 'answers/edit', component: AnswerEditComponent, resolve: {preloaded_sources: PrefetchSourcesService}},
+  {path : 'answers/edit/translations', component: AnswerTranslationsComponent},
   {path : 'questions/categories', component : CategoriesComponent},
   {path : 'keyterms', component : KeytermsComponent},
   {path : 'sources', component : SourcesComponent},
