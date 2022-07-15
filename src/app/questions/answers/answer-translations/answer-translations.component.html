@@ -42,7 +42,11 @@
 
 <div class="row">
   <div class="col-10">
-    <!--For TranslationEditComponent-->
+    <app-answer-translation-edit *ngIf="action === 'edit' || action === 'add'"
+                                [translation]="selectedTranslation"
+                                [answerId]="answerId"
+                                 (dataChangedEvent)="loadTranslations()">
+    </app-answer-translation-edit>
   </div>
 </div>
 

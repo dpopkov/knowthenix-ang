@@ -3,6 +3,10 @@ export class Translation {
   constructor(public id?: number, public language?: string, public type?: string, public text?: string) {
   }
 
+  isNew(): boolean {
+    return this.id == null;
+  }
+
   copyTo(other: Translation): Translation {
     other.id = this.id;
     other.language = this.language;

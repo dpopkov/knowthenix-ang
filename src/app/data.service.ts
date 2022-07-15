@@ -211,6 +211,16 @@ export class DataService {
       }));
   }
 
+  addAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
+    return this.http.post<Translation>(this.answersUrl + '/' + answerId + '/translations', translation)
+      .pipe(map(data => Translation.fromHttp(data)));
+  }
+
+  updateAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
+    return this.http.put<Translation>(this.answersUrl + '/' + answerId + '/translations', translation)
+      .pipe(map(data => Translation.fromHttp(data)));
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts

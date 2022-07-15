@@ -46,6 +46,7 @@ export class AnswersComponent implements OnInit {
 
   addAnswerForQuestion(questionId: number): void {
     // todo:
+    console.log('addAnswerForQuestion IS NOT IMPLEMENTED YET!!!');
   }
 
   editAnswer(answerId: number): void {

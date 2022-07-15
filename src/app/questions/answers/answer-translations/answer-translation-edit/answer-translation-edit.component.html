@@ -1,0 +1,35 @@
+<h3>{{ translation?.id == null ? 'Add' : 'Edit'}} Answer Translation</h3>
+
+<form #editTranslationForm="ngForm">
+
+  <div class="form-group">
+    <label for="language">Language</label>
+    <select class="form-control" id="language"
+            [(ngModel)]="formTranslation.language" name="language">
+      <option *ngFor="let lang of languages" [ngValue]="lang"
+      >{{ languageMap.get(lang) }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="trType">Translation type</label>
+    <select class="form-control" id="trType"
+            [(ngModel)]="formTranslation.type" name="type">
+      <option *ngFor="let tt of types" [ngValue]="tt"
+      >{{ tt }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="text">Text</label>
+    <input type="text" class="form-control" id="text" placeholder="Question text"
+           [(ngModel)]="formTranslation.text" name="text" required #textField="ngModel">
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="onSubmit()"
+          [disabled]="editTranslationForm.invalid"
+  >Save</button>
+  <button *ngIf="!isFirst" type="button" class="btn btn-primary" (click)="closeTranslationEdit()"
+  >Cancel</button>
+
+</form>

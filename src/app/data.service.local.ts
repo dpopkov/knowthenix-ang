@@ -284,6 +284,20 @@ export class DataService {
     return of(foundAnswer.translations);
   }
 
+  addAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
+    const foundAnswer: Answer = this.findLocalAnswerById(answerId);
+    this.ensureTranslationLocalIdIsAssigned(translation);
+    foundAnswer.translations.push(translation);
+    return of(translation);
+  }
+
+  updateAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
+    const foundAnswer = this.findLocalAnswerById(answerId);
+    const foundTranslation = foundAnswer.translations.find(tr => tr.id === translation.id);
+    const copied = translation.copyTo(foundTranslation);
+    return of(copied);
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.local.ts
