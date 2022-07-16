@@ -25,6 +25,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['questions', 'questions']);
   }
 
+  navigateToAddNewQuestion(): void {
+    this.router.navigate(['questions', 'edit'], {queryParams: {action: 'add'}});
+  }
+
   navigateToKeyTerms(): void {
     this.router.navigate(['keyterms']);
   }
