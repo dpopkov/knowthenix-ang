@@ -2,15 +2,18 @@
 
 <div class="bg-warning p-3" *ngIf="message">{{ message }}</div>
 
-<form *ngIf="dataLoaded">
+<form #editAnswerForm="ngForm" *ngIf="dataLoaded">
   <div class="row">
     <div class="form-group>">
       <label for="source">Source</label>
       <select class="form-control" id="source" [(ngModel)]="formAnswer.source" name="source"
-              (change)="onSourceChange()">
+              (change)="onSourceChange()"
+              required #sourceField="ngModel">
         <option *ngFor="let src of sources" [ngValue]="src"
         >{{ src.name }}</option>
       </select>
+      <div *ngIf="sourceField.invalid && sourceField.touched"
+           class="alert alert-danger">Source of Answer is required</div>
     </div>
   </div>
 
@@ -18,7 +21,9 @@
     <div class="form-group>">
       <label for="sourceDetails">Source Details</label>
       <input type="text" class="form-control" id="sourceDetails" placeholder="Source details text"
-             [(ngModel)]="formAnswer.sourceDetails" name="sourceDetails" required #textField="ngModel">
+             [(ngModel)]="formAnswer.sourceDetails" name="sourceDetails" required #detailsField="ngModel">
+      <div *ngIf="detailsField.invalid && detailsField.touched"
+           class="alert alert-danger">Details for Source are required</div>
     </div>
   </div>
 
@@ -43,6 +48,7 @@
     <div class="col">
       <button type="button" class="btn btn-primary"
               (click)="onSubmit()"
+              [disabled]="editAnswerForm.invalid"
       >Save Answer</button>
       <button type="button" class="btn btn-primary"
               (click)="closeAnswerEdit()"

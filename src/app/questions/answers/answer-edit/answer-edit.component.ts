@@ -118,8 +118,8 @@ export class AnswerEditComponent implements OnInit {
   }
 
   hideFirstTranslationForm(): void {
-    console.log('this.formAnswer', this.formAnswer);
     this.formAnswer.displayTranslation = this.formAnswer.translations[0];
+    this.formAnswer.selectedLanguage = this.formAnswer.displayTranslation.language;
     this.firstTranslationFilled = true;
   }
 }
