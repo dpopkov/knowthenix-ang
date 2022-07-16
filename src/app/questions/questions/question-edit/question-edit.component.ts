@@ -16,7 +16,7 @@ export class QuestionEditComponent implements OnInit {
 
   question: Question;
   firstTranslation: Translation
-  firstTranslationFilled = false;
+  firstTranslationFilled = true;
   action: string;
   categories: Array<Category>;
   languages = Object.keys(Language);
@@ -55,6 +55,7 @@ export class QuestionEditComponent implements OnInit {
       this.dataLoaded = true;
       this.message = '';
       this.firstTranslation = new Translation();
+      this.firstTranslationFilled = false;
       this.question.translations.push(this.firstTranslation)
     }
   }
@@ -91,6 +92,7 @@ export class QuestionEditComponent implements OnInit {
 
   hideFirstTranslationForm(): void {
     this.question.displayTranslation = this.question.translations[0];
+    this.question.selectedLanguage = this.question.displayTranslation.language;
     this.firstTranslationFilled = true;
   }
 
