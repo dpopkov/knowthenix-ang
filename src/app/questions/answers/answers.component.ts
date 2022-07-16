@@ -45,8 +45,7 @@ export class AnswersComponent implements OnInit {
   }
 
   addAnswerForQuestion(questionId: number): void {
-    // todo:
-    console.log('addAnswerForQuestion IS NOT IMPLEMENTED YET!!!');
+    this.router.navigate(['answers', 'edit'], {queryParams: {questionId: questionId, action: 'add'}});
   }
 
   editAnswer(answerId: number): void {

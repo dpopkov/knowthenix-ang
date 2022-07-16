@@ -177,6 +177,11 @@ export class DataService {
     return this.http.delete<Source>(this.sourcesUrl + '/' + id);
   }
 
+  addNewAnswer(answer: Answer): Observable<Answer> {
+    return this.http.post<Answer>(this.answersUrl, answer)
+      .pipe(map(data => Answer.from(data)));
+  }
+
   getAnswersForQuestion(questionId: number): Observable<Array<Answer>> {
     return this.http.get<Array<Answer>>(this.questionsUrl + '/' + questionId + '/answers')
       .pipe(

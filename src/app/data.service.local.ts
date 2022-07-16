@@ -22,7 +22,8 @@ export class DataService {
   private answers: Array<Answer> = new Array<Answer>();
   private languageMap: Map<string, string>;
   private lastQuestionId = 100;
-  private lastTranslationId = 1000;
+  private lastAnswerId = 1000;
+  private lastTranslationId = 2000;
 
   constructor(private http: HttpClient) {
     console.log('data.service.local.ts runs');
@@ -257,6 +258,16 @@ export class DataService {
       }
     }
     return maxId;
+  }
+
+  addNewAnswer(answer: Answer): Observable<Answer> {
+    this.lastAnswerId++;
+    answer.id = this.lastAnswerId;
+    for (const tr of answer.translations) {
+      this.ensureTranslationLocalIdIsAssigned(tr);
+    }
+    this.answers.push(answer);
+    return of(answer);
   }
 
   getAnswersForQuestion(questionId: number): Observable<Array<Answer>> {
