@@ -5,25 +5,33 @@
   <div class="form-group">
     <label for="language">Language</label>
     <select class="form-control" id="language"
-            [(ngModel)]="formTranslation.language" name="language">
+            [(ngModel)]="formTranslation.language" name="language"
+            required #languageField="ngModel">
       <option *ngFor="let lang of languages" [ngValue]="lang"
       >{{ languageMap.get(lang) }}</option>
     </select>
+    <div *ngIf="languageField.invalid && languageField.touched"
+         class="alert alert-danger">Language is required</div>
   </div>
 
   <div class="form-group">
     <label for="trType">Translation type</label>
     <select class="form-control" id="trType"
-            [(ngModel)]="formTranslation.type" name="type">
+            [(ngModel)]="formTranslation.type" name="type"
+            required #typeField="ngModel">
       <option *ngFor="let tt of types" [ngValue]="tt"
       >{{ tt }}</option>
     </select>
+    <div *ngIf="typeField.invalid && typeField.touched"
+         class="alert alert-danger">Translation type is required</div>
   </div>
 
   <div class="form-group">
     <label for="text">Text</label>
     <input type="text" class="form-control" id="text" placeholder="Question text"
            [(ngModel)]="formTranslation.text" name="text" required #textField="ngModel">
+    <div *ngIf="textField.invalid && textField.touched"
+         class="alert alert-danger">Text of translation is required</div>
   </div>
 
   <button type="button" class="btn btn-primary" (click)="onSubmit()"
