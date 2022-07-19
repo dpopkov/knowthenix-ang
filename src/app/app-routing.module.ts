@@ -13,6 +13,8 @@ import {QuestionDetailComponent} from "./questions/questions/question-detail/que
 import {AnswerEditComponent} from "./questions/answers/answer-edit/answer-edit.component";
 import {PrefetchSourcesService} from "./prefetch-sources.service";
 import {AnswerTranslationsComponent} from "./questions/answers/answer-translations/answer-translations.component";
+import {KeyTermChooseComponent} from "./keyterms/key-term-choose/key-term-choose.component";
+import {PrefetchKeytermsService} from "./prefetch-keyterms.service";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent},
@@ -23,6 +25,7 @@ const routes: Routes = [
   {path : 'answers/edit/translations', component: AnswerTranslationsComponent},
   {path : 'questions/categories', component : CategoriesComponent},
   {path : 'keyterms', component : KeytermsComponent},
+  {path : 'keyterms/choose', component : KeyTermChooseComponent, resolve: {preloaded_keyterms: PrefetchKeytermsService}},
   {path : 'sources', component : SourcesComponent},
   {path : '', component : HomeComponent},
   {path : '404', component : PageNotFoundComponent},

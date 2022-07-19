@@ -132,6 +132,17 @@ export class DataService {
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
+  getKeyTermsByQuestionId(questionId: number): Observable<Array<KeyTerm>> {
+    return this.http.get<Array<KeyTerm>>(this.questionsUrl + '/' + questionId + '/keyterms')
+      .pipe(map(data => {
+        const keyterms = new Array<KeyTerm>();
+        for (const kt of data) {
+          keyterms.push(KeyTerm.fromHttp(kt));
+        }
+        return keyterms;
+      }));
+  }
+
   getLanguageMap(): Map<string, string> {
     return this.languageMap;
   }

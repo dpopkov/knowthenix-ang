@@ -45,8 +45,8 @@ export class DataService {
   }
 
   private initKeyTerms(): void {
-    this.keyTerms.push(new KeyTerm(3, 'KeyTerm 1 (local data)', 'Description 1'));
-    this.keyTerms.push(new KeyTerm(4, 'KeyTerm 2 (local data)', 'Description 2'));
+    this.keyTerms.push(new KeyTerm(3, 'JVM KeyTerm (local data)', 'Description 1'));
+    this.keyTerms.push(new KeyTerm(4, 'JRE KeyTerm (local data)', 'Description 2'));
   }
 
   private initQuestions(category: Category): void {
@@ -200,6 +200,12 @@ export class DataService {
     const foundTranslation = foundQuestion.translations.find(tr => tr.id === translation.id);
     const copied = translation.copyTo(foundTranslation);
     return of(copied);
+  }
+
+  getKeyTermsByQuestionId(questionId: number): Observable<Array<KeyTerm>> {
+    // todo: implement
+    console.log('data.service.local:getKeyTermsByQuestionId IS NOT IMPLEMENTED YET');
+    return of(null);
   }
 
   private findQuestionLocally(questionId: number): Question {

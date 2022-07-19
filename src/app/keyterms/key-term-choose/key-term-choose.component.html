@@ -1,0 +1,27 @@
+<h1>Choose KeyTerms for {{ targetType }}</h1>
+
+<div *ngIf="dataLoaded" class="row">
+  <div class="col-6">
+    <table class="table">
+      <tbody>
+      <tr *ngFor="let kt of allKeyTerms">
+        <td>
+          <input type="checkbox" [(ngModel)]="kt.checked">
+        </td>
+        <td>{{ kt.name }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary"
+            (click)="onSubmit()"
+    >Save</button>
+    <button type="button" class="btn btn-primary"
+            (click)="navigateBackToEditPage()"
+    >Cancel</button>
+  </div>
+</div>

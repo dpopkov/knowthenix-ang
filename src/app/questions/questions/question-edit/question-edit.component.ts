@@ -99,4 +99,9 @@ export class QuestionEditComponent implements OnInit {
   private navigateToQuestionList(): void{
     this.router.navigate(['questions', 'questions'])
   }
+
+  navigateToKeyTermsChoosing() {
+    this.router.navigate(['keyterms', 'choose'],
+      {queryParams: {target: 'question', id: this.question.id}});
+  }
 }

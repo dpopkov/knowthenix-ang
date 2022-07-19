@@ -26,6 +26,7 @@ import { AnswersComponent } from './questions/answers/answers.component';
 import { AnswerEditComponent } from './questions/answers/answer-edit/answer-edit.component';
 import { AnswerTranslationsComponent } from './questions/answers/answer-translations/answer-translations.component';
 import { AnswerTranslationEditComponent } from './questions/answers/answer-translations/answer-translation-edit/answer-translation-edit.component';
+import { KeyTermChooseComponent } from './keyterms/key-term-choose/key-term-choose.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AnswerTranslationEditComponent } from './questions/answers/answer-trans
     KeytermsComponent,
     KeyTermDetailComponent,
     KeyTermEditComponent,
+    KeyTermChooseComponent,
     QuestionsComponent,
     QuestionDetailComponent,
     QuestionEditComponent,
