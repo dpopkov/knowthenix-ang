@@ -1,7 +1,11 @@
 import {Category} from "./Category";
 import {Translation} from "./Translation";
+import {KeyTerm} from "./KeyTerm";
 
 export class Question {
+
+  // The keyterms used in local version only.
+  keyterms: Array<KeyTerm>;
 
   constructor(public id?: number,
               public category?: Category,
@@ -45,5 +49,12 @@ export class Question {
     return new Question(obj.id,
       Category.fromHttp(obj.category), obj.selectedLanguage,
       translations)
+  }
+
+  addKeyterm(keyterm: KeyTerm): void {
+    if (this.keyterms == null) {
+      this.keyterms = new Array<KeyTerm>();
+    }
+    this.keyterms.push(keyterm);
   }
 }

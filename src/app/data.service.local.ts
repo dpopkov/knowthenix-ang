@@ -44,19 +44,24 @@ export class DataService {
     this.categories.push(category2);
   }
 
+  private readonly JVM_KEYTERM = 3;
+  private readonly JRE_KEYTERM = 4;
+
   private initKeyTerms(): void {
-    this.keyTerms.push(new KeyTerm(3, 'JVM KeyTerm (local data)', 'Description 1'));
-    this.keyTerms.push(new KeyTerm(4, 'JRE KeyTerm (local data)', 'Description 2'));
+    this.keyTerms.push(new KeyTerm(this.JVM_KEYTERM, 'JVM KeyTerm (local data)', 'Description 1'));
+    this.keyTerms.push(new KeyTerm(this.JRE_KEYTERM, 'JRE KeyTerm (local data)', 'Description 2'));
   }
 
   private initQuestions(category: Category): void {
     const translationJvmEn = new Translation(41, 'EN', 'PLAINTEXT', 'What is JVM? (local data)');
     const translationJvmRu = new Translation(42, 'RU', 'PLAINTEXT', 'Что такое JVM? (local data)');
     const jvm = new Question(31, category, 'EN', [translationJvmEn, translationJvmRu]);
+    jvm.addKeyterm(this.findKeyTermByIdLocally(this.JVM_KEYTERM));
     this.questions.push(jvm);
     const translationJreEn = new Translation(43, 'EN', 'PLAINTEXT', 'What is JRE? (local data)');
     const translationJreRu = new Translation(44, 'RU', 'PLAINTEXT', 'Что такое JRE? (local data)');
     const jre = new Question(32, category, 'RU', [translationJreEn, translationJreRu] );
+    jre.addKeyterm(this.findKeyTermByIdLocally(this.JRE_KEYTERM));
     this.questions.push(jre);
     const empty = new Question(33, category, 'EN');
     this.questions.push(empty);
@@ -203,9 +208,12 @@ export class DataService {
   }
 
   getKeyTermsByQuestionId(questionId: number): Observable<Array<KeyTerm>> {
-    // todo: implement
-    console.log('data.service.local:getKeyTermsByQuestionId IS NOT IMPLEMENTED YET');
-    return of(null);
+    const question = this.findQuestionLocally(questionId);
+    return of(question.keyterms);
+  }
+
+  private findKeyTermByIdLocally(keytermId: number): KeyTerm {
+    return this.keyTerms.find(kt => kt.id === keytermId);
   }
 
   private findQuestionLocally(questionId: number): Question {
