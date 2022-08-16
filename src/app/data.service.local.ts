@@ -9,6 +9,7 @@ import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
 import {Answer} from "./model/Answer";
+import {IdChangeSet} from "./model/IdChangeSet";
 
 @Injectable({
   providedIn: 'root'
@@ -210,6 +211,27 @@ export class DataService {
   getKeyTermsByQuestionId(questionId: number): Observable<Array<KeyTerm>> {
     const question = this.findQuestionLocally(questionId);
     return of(question.keyterms);
+  }
+
+  patchKeyTermsByQuestionId(questionId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
+    const question = this.findQuestionLocally(questionId);
+    if (idChangeSet.add) {
+      idChangeSet.add.forEach(ktId => {
+        const keyterm = this.findKeyTermByIdLocally(ktId);
+        question.addKeyterm(keyterm);
+      })
+    }
+    if (idChangeSet.remove) {
+      idChangeSet.remove.forEach(ktId => {
+        const keyterm = this.findKeyTermByIdLocally(ktId);
+        question.removeKeyterm(keyterm);
+      })
+    }
+    const result = new Array<number>();
+    question.keyterms.forEach(kt => {
+      result.push(kt.id);
+    })
+    return of(result);
   }
 
   private findKeyTermByIdLocally(keytermId: number): KeyTerm {

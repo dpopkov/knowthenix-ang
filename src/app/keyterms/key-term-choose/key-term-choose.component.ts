@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {KeyTerm} from "../../model/KeyTerm";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../../data.service";
+import {IdChangeSet} from "../../model/IdChangeSet";
 
 @Component({
   selector: 'app-key-term-choose',
@@ -13,6 +14,7 @@ export class KeyTermChooseComponent implements OnInit {
   targetType: string;
   targetId: number;
   allKeyTerms: Array<KeyTerm>;
+  questionKeyTerms: Array<KeyTerm>;
   dataLoaded = false;
 
   constructor(private dataService: DataService,
@@ -30,6 +32,7 @@ export class KeyTermChooseComponent implements OnInit {
       this.dataService.getKeyTermsByQuestionId(this.targetId).subscribe(
         next => {
           this.checkKeyterms(next);
+          this.questionKeyTerms = next;
           this.dataLoaded = true;
         }
       )
@@ -45,8 +48,31 @@ export class KeyTermChooseComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // analyze selectedKeyTermIds and calculate arrays of IDs to add/remove
-    console.log('KeyTermChooseComponent:onSubmit IS NOT IMPLEMENTED YET');
+    const idChangeSet = new IdChangeSet();
+    this.allKeyTerms.forEach(kt => {
+      const contains = this.questionKeytermsContainId(kt.id);
+      if (kt.checked && !contains) {
+        idChangeSet.addIdToAdd(kt.id);
+      } else if (!kt.checked && contains) {
+        idChangeSet.addIdToRemove(kt.id);
+      }
+    });
+    if (this.targetType === 'question') {
+      this.dataService.patchKeyTermsByQuestionId(this.targetId, idChangeSet).subscribe(
+        next => {
+          this.displayEditQuestion(this.targetId);
+        }
+      )
+    }
+  }
+
+  displayEditQuestion(questionId: number): void {
+    this.router.navigate(['questions', 'edit'], {queryParams: {id: questionId}});
+  }
+
+  private questionKeytermsContainId(id: number) {
+    const found = this.questionKeyTerms.find(kt => kt.id === id);
+    return found != null;
   }
 
   navigateBackToEditPage(): void {

@@ -9,6 +9,7 @@ import {Language} from "./model/Language";
 import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
 import {Answer} from "./model/Answer";
+import {IdChangeSet} from "./model/IdChangeSet";
 
 @Injectable({
   providedIn: 'root'
@@ -141,6 +142,10 @@ export class DataService {
         }
         return keyterms;
       }));
+  }
+
+  patchKeyTermsByQuestionId(questionId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
+    return this.http.patch<Array<number>>(this.questionsUrl + '/' + questionId + '/keyterms', idChangeSet);
   }
 
   getLanguageMap(): Map<string, string> {

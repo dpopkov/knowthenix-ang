@@ -57,4 +57,11 @@ export class Question {
     }
     this.keyterms.push(keyterm);
   }
+
+  removeKeyterm(keyterm: KeyTerm): void {
+    if (this.keyterms != null) {
+      const idx = this.keyterms.findIndex(kt => kt.id === keyterm.id);
+      this.keyterms.splice(idx, 1);
+    }
+  }
 }
