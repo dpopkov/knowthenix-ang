@@ -14,7 +14,7 @@ export class KeyTermChooseComponent implements OnInit {
   targetType: string;
   targetId: number;
   allKeyTerms: Array<KeyTerm>;
-  questionKeyTerms: Array<KeyTerm>;
+  targetKeyTerms: Array<KeyTerm>;
   dataLoaded = false;
 
   constructor(private dataService: DataService,
@@ -32,7 +32,15 @@ export class KeyTermChooseComponent implements OnInit {
       this.dataService.getKeyTermsByQuestionId(this.targetId).subscribe(
         next => {
           this.checkKeyterms(next);
-          this.questionKeyTerms = next;
+          this.targetKeyTerms = next;
+          this.dataLoaded = true;
+        }
+      )
+    } else if (this.targetType === 'answer') {
+      this.dataService.getKeyTermsByAnswerId(this.targetId).subscribe(
+        next => {
+          this.checkKeyterms(next);
+          this.targetKeyTerms = next;
           this.dataLoaded = true;
         }
       )
@@ -64,14 +72,26 @@ export class KeyTermChooseComponent implements OnInit {
         }
       )
     }
+    // todo: implement patchKeyTermsByAnswerId in dataSource
+    /*else if (this.targetType === 'answer') {
+      this.dataService.patchKeyTermsByAnswerId(this.targetId, idChangeSet).subscribe(
+        next => {
+          this.displayEditAnswer(this.targetId);
+        }
+      )
+    }*/
   }
 
   displayEditQuestion(questionId: number): void {
     this.router.navigate(['questions', 'edit'], {queryParams: {id: questionId}});
   }
 
+  displayEditAnswer(answerId: number): void {
+    this.router.navigate(['answers', 'edit'], {queryParams: {answerId: answerId}});
+  }
+
   private questionKeytermsContainId(id: number) {
-    const found = this.questionKeyTerms.find(kt => kt.id === id);
+    const found = this.targetKeyTerms.find(kt => kt.id === id);
     return found != null;
   }
 

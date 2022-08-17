@@ -1,8 +1,12 @@
 import {Translation} from "./Translation";
 import {Source} from "./Source";
+import {KeyTerm} from "./KeyTerm";
 
 export class Answer {
   source?: Source;
+
+  // The keyterms used in local version only.
+  keyterms: Array<KeyTerm>;
 
   constructor(public id?: number,
               public questionId?: number,
@@ -58,5 +62,19 @@ export class Answer {
     }
     return new Answer(data.id, data.questionId, data.sourceId, data.sourceName,
       data.sourceDetails, data.selectedLanguage, translations);
+  }
+
+  addKeyterm(keyterm: KeyTerm): void {
+    if (this.keyterms == null) {
+      this.keyterms = new Array<KeyTerm>();
+    }
+    this.keyterms.push(keyterm);
+  }
+
+  removeKeyterm(keyterm: KeyTerm): void {
+    if (this.keyterms != null) {
+      const idx = this.keyterms.findIndex(kt => kt.id === keyterm.id);
+      this.keyterms.splice(idx, 1);
+    }
   }
 }

@@ -122,4 +122,9 @@ export class AnswerEditComponent implements OnInit {
     this.formAnswer.selectedLanguage = this.formAnswer.displayTranslation.language;
     this.firstTranslationFilled = true;
   }
+
+  navigateToKeyTermsChoosing() {
+    this.router.navigate(['keyterms', 'choose'],
+      {queryParams: {target: 'answer', id: this.answer.id}});
+  }
 }

@@ -242,6 +242,17 @@ export class DataService {
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
+  getKeyTermsByAnswerId(answerId: number): Observable<Array<KeyTerm>> {
+    return this.http.get<Array<KeyTerm>>(this.answersUrl + '/' + answerId + '/keyterms')
+      .pipe(map(data => {
+        const keyterms = new Array<KeyTerm>();
+        for (const kt of data) {
+          keyterms.push(KeyTerm.fromHttp(kt));
+        }
+        return keyterms;
+      }));
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts

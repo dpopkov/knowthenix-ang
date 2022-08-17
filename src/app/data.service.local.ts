@@ -83,6 +83,7 @@ export class DataService {
     const translationJvm1Ru = new Translation(52, 'RU', 'PLAINTEXT', 'JVM это Виртуальная Машина Java (local data)');
     const jvm1 = new Answer(301, jvmQuestionId, 202, 'Core Java 11',
       'page 123', 'EN', [translationJvm1En, translationJvm1Ru], translationJvm1En);
+    jvm1.addKeyterm(this.findKeyTermByIdLocally(this.JVM_KEYTERM));
     this.answers.push(jvm1);
 
     const translationJvm2En = new Translation(53, 'EN', 'PLAINTEXT', 'JVM is a virtual machine that enables a computer to run Java programs (local data)');
@@ -90,6 +91,7 @@ export class DataService {
     const jvm2 = new Answer(302, jvmQuestionId, 203, 'Wikipedia',
       'https://en.wikipedia.org/wiki/Java_virtual_machine', 'EN',
       [translationJvm2En, translationJvm2Ru], translationJvm2En);
+    jvm2.addKeyterm(this.findKeyTermByIdLocally(this.JVM_KEYTERM));
     this.answers.push(jvm2);
   }
 
@@ -343,6 +345,11 @@ export class DataService {
     const foundTranslation = foundAnswer.translations.find(tr => tr.id === translation.id);
     const copied = translation.copyTo(foundTranslation);
     return of(copied);
+  }
+
+  getKeyTermsByAnswerId(answerId: number): Observable<Array<KeyTerm>> {
+    const answer = this.findLocalAnswerById(answerId);
+    return of(answer.keyterms);
   }
 
   /*
