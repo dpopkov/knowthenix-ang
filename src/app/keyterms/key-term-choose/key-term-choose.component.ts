@@ -72,14 +72,13 @@ export class KeyTermChooseComponent implements OnInit {
         }
       )
     }
-    // todo: implement patchKeyTermsByAnswerId in dataSource
-    /*else if (this.targetType === 'answer') {
+    else if (this.targetType === 'answer') {
       this.dataService.patchKeyTermsByAnswerId(this.targetId, idChangeSet).subscribe(
         next => {
           this.displayEditAnswer(this.targetId);
         }
       )
-    }*/
+    }
   }
 
   displayEditQuestion(questionId: number): void {
@@ -96,11 +95,10 @@ export class KeyTermChooseComponent implements OnInit {
   }
 
   navigateBackToEditPage(): void {
-    console.log('KeyTermChooseComponent:navigateBackToEditPage IS UNDER CONSTRUCTION');
     if (this.targetType === 'question') {
       this.router.navigate(['questions', 'edit'], {queryParams: {id: this.targetId}});
     } else {
-      console.log('KeyTermChooseComponent:navigateBackToEditPage: CANNOT PROCESS targetType=', this.targetType);
+      this.router.navigate(['answers', 'edit'], {queryParams: {answerId: this.targetId}});
     }
   }
 

@@ -148,6 +148,10 @@ export class DataService {
     return this.http.patch<Array<number>>(this.questionsUrl + '/' + questionId + '/keyterms', idChangeSet);
   }
 
+  patchKeyTermsByAnswerId(answerId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
+    return this.http.patch<Array<number>>(this.answersUrl + '/' + answerId + '/keyterms', idChangeSet);
+  }
+
   getLanguageMap(): Map<string, string> {
     return this.languageMap;
   }

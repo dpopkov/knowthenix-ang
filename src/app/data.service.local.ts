@@ -236,6 +236,27 @@ export class DataService {
     return of(result);
   }
 
+  patchKeyTermsByAnswerId(answerId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
+    const answer = this.findLocalAnswerById(answerId);
+    if (idChangeSet.add) {
+      idChangeSet.add.forEach(ktId => {
+        const keyterm = this.findKeyTermByIdLocally(ktId);
+        answer.addKeyterm(keyterm);
+      })
+    }
+    if (idChangeSet.remove) {
+      idChangeSet.remove.forEach(ktId => {
+        const keyterm = this.findKeyTermByIdLocally(ktId);
+        answer.removeKeyterm(keyterm);
+      })
+    }
+    const result = new Array<number>();
+    answer.keyterms.forEach(kt => {
+      result.push(kt.id);
+    })
+    return of(result);
+  }
+
   private findKeyTermByIdLocally(keytermId: number): KeyTerm {
     return this.keyTerms.find(kt => kt.id === keytermId);
   }
