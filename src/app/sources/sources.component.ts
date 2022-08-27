@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Source} from "../model/Source";
 import {DataService} from "../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FormResetService} from "../form-reset.service";
 
 @Component({
   selector: 'app-sources',
@@ -19,6 +20,7 @@ export class SourcesComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
+              private formResetService: FormResetService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class SourcesComponent implements OnInit {
 
   addSource() {
     this.selectedSource = new Source();
+    this.formResetService.resetSourceFormEvent.emit(this.selectedSource);
     this.router.navigate(['sources'], {queryParams: {action: 'add'}});
   }
 }

@@ -1,15 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Source} from "../../model/Source";
 import {SourceType} from "../../model/SourceType";
 import {Router} from "@angular/router";
 import {DataService} from "../../data.service";
+import {FormResetService} from "../../form-reset.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-source-edit',
   templateUrl: './source-edit.component.html',
   styleUrls: ['./source-edit.component.css']
 })
-export class SourceEditComponent implements OnInit {
+export class SourceEditComponent implements OnInit, OnDestroy {
 
   @Input()
   source: Source;
@@ -18,14 +20,26 @@ export class SourceEditComponent implements OnInit {
   formSource: Source;
   message: string;
   sourceTypes: Array<string>;
+  resetEventSubscription: Subscription;
 
   constructor(private dataService: DataService,
+              private formResetService: FormResetService,
               private router: Router) {
     this.sourceTypes = SourceEditComponent.getSourceTypeLabels();
   }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.resetEventSubscription = this.formResetService.resetSourceFormEvent.subscribe(
+      source => {
+        this.source = source;
+        this.initializeForm();
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.resetEventSubscription.unsubscribe();
   }
 
   private initializeForm() {
