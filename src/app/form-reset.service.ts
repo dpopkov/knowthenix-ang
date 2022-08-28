@@ -11,6 +11,7 @@ export class FormResetService {
   resetCategoryFormEvent = new EventEmitter<Category>();
   resetKeyTermFormEvent = new EventEmitter<KeyTerm>();
   resetSourceFormEvent = new EventEmitter<Source>();
+  resetQuestionFormEvent = new EventEmitter();
 
   constructor() { }
 }

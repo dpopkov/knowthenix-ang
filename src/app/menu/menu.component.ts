@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {FormResetService} from "../form-reset.service";
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private formResetService: FormResetService) { }
 
   ngOnInit(): void {
   }
@@ -26,6 +28,7 @@ export class MenuComponent implements OnInit {
   }
 
   navigateToAddNewQuestion(): void {
+    this.formResetService.resetQuestionFormEvent.emit();
     this.router.navigate(['questions', 'edit'], {queryParams: {action: 'add'}});
   }
 

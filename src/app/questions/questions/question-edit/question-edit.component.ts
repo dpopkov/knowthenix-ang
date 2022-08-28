@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Question} from "../../../model/Question";
 import {Language} from "../../../model/Language";
 import {Category} from "../../../model/Category";
@@ -6,13 +6,15 @@ import {DataService} from "../../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Translation} from "../../../model/Translation";
 import {map} from "rxjs";
+import {FormResetService} from "../../../form-reset.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-question-edit',
   templateUrl: './question-edit.component.html',
   styleUrls: ['./question-edit.component.css']
 })
-export class QuestionEditComponent implements OnInit {
+export class QuestionEditComponent implements OnInit, OnDestroy {
 
   question: Question;
   firstTranslation: Translation
@@ -23,9 +25,11 @@ export class QuestionEditComponent implements OnInit {
   languageMap: Map<string, string>;
   dataLoaded = false;
   message = 'Please wait...';
+  resetEventSubscription: Subscription;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
+              private formResetService: FormResetService,
               private router: Router) {
     this.languageMap = dataService.getLanguageMap();
   }
@@ -50,14 +54,28 @@ export class QuestionEditComponent implements OnInit {
           this.message = '';
         }
       )
-    } else {  // for creating a new Question
-      this.question = new Question();
-      this.dataLoaded = true;
-      this.message = '';
-      this.firstTranslation = new Translation();
-      this.firstTranslationFilled = false;
-      this.question.translations.push(this.firstTranslation)
+    } else {
+      this.initNewQuestion();
     }
+    this.resetEventSubscription = this.formResetService.resetQuestionFormEvent.subscribe(
+      next => {
+        this.initNewQuestion();
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.resetEventSubscription.unsubscribe();
+  }
+
+  private initNewQuestion() {
+    this.question = new Question();
+    this.dataLoaded = true;
+    this.message = '';
+    this.firstTranslation = new Translation();
+    this.firstTranslationFilled = false;
+    this.action = 'add';
+    this.question.translations.push(this.firstTranslation)
   }
 
   onSubmit(): void {
