@@ -27,10 +27,14 @@ export class AppUsersComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.action = params['action'];
-        const idString = params['id'];
-        if (idString) {
-          const idNumber = +idString;
-          this.selectedUser = this.users.find(u => u.id === idNumber);
+        if (this.action === 'add') {
+          this.selectedUser = new AppUser();
+        } else if (this.action === 'edit' || this.action === 'view') {
+          const idString = params['id'];
+          if (idString) {
+            const idNumber = +idString;
+            this.selectedUser = this.users.find(u => u.id === idNumber);
+          }
         }
       }
     )
@@ -41,7 +45,6 @@ export class AppUsersComponent implements OnInit {
   }
 
   addUser(): void {
-    this.selectedUser = new AppUser();
     this.router.navigate(['users'], {queryParams: {action: 'add'}});
   }
 }

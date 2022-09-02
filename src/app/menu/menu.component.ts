@@ -43,4 +43,8 @@ export class MenuComponent implements OnInit {
   navigateToUsers() {
     this.router.navigate(['users']);
   }
+
+  navigateToAddNewAppUser() {
+    this.router.navigate(['users'], {queryParams: {action: 'add'}});
+  }
 }
