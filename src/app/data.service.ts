@@ -10,6 +10,7 @@ import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
 import {Answer} from "./model/Answer";
 import {IdChangeSet} from "./model/IdChangeSet";
+import {AppUser} from "./model/AppUser";
 
 @Injectable({
   providedIn: 'root'
@@ -255,6 +256,12 @@ export class DataService {
         }
         return keyterms;
       }));
+  }
+
+  getAppUsers(): Observable<Array<AppUser>> {
+    // todo: use http client and backend
+    console.log('data.service:getAppUsers IS NOT IMPLEMENTED YET!!!');
+    return of(null);
   }
 
   /*

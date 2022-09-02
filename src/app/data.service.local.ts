@@ -10,6 +10,7 @@ import {Translation} from "./model/Translation";
 import {Source} from "./model/Source";
 import {Answer} from "./model/Answer";
 import {IdChangeSet} from "./model/IdChangeSet";
+import {AppUser} from "./model/AppUser";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class DataService {
   private questions: Array<Question> = new Array<Question>();
   private sources: Array<Source> = new Array<Source>();
   private answers: Array<Answer> = new Array<Answer>();
+  private appUsers: Array<AppUser> = new Array<AppUser>();
   private languageMap: Map<string, string>;
   private lastQuestionId = 100;
   private lastAnswerId = 1000;
@@ -36,6 +38,7 @@ export class DataService {
     this.initQuestions(this.categories[0]);
     this.initSources();
     this.initAnswers();
+    this.initAppUsers();
   }
 
   private initCategories(): void {
@@ -93,6 +96,11 @@ export class DataService {
       [translationJvm2En, translationJvm2Ru], translationJvm2En);
     jvm2.addKeyterm(this.findKeyTermByIdLocally(this.JVM_KEYTERM));
     this.answers.push(jvm2);
+  }
+
+  private initAppUsers() {
+    this.appUsers.push(new AppUser(1, 'James'));
+    this.appUsers.push(new AppUser(2, 'Alice'));
   }
 
   getCategories(): Observable<Array<Category>> {
@@ -371,6 +379,10 @@ export class DataService {
   getKeyTermsByAnswerId(answerId: number): Observable<Array<KeyTerm>> {
     const answer = this.findLocalAnswerById(answerId);
     return of(answer.keyterms);
+  }
+
+  getAppUsers(): Observable<Array<AppUser>> {
+    return of(this.appUsers);
   }
 
   /*

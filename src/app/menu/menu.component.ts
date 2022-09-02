@@ -39,4 +39,8 @@ export class MenuComponent implements OnInit {
   navigateToSources(): void {
     this.router.navigate(['sources']);
   }
+
+  navigateToUsers() {
+    this.router.navigate(['users']);
+  }
 }
