@@ -264,6 +264,12 @@ export class DataService {
     return of(null);
   }
 
+  updateAppUser(toUpdate: AppUser): Observable<AppUser> {
+    // todo: use http client and backend
+    console.log('data.service:updateAppUser IS NOT IMPLEMENTED YET!!!');
+    return of(null);
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts

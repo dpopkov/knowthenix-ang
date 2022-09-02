@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppUser} from "../../../model/AppUser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-app-user-detail',
@@ -11,9 +12,13 @@ export class AppUserDetailComponent implements OnInit {
   @Input()
   user: AppUser;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  editUser() {
+    this.router.navigate(['users'],
+      {queryParams: {id: this.user.id, action: 'edit'}});
+  }
 }

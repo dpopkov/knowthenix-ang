@@ -385,6 +385,12 @@ export class DataService {
     return of(this.appUsers);
   }
 
+  updateAppUser(toUpdate: AppUser): Observable<AppUser> {
+    const original = this.appUsers.find(u => u.id === toUpdate.id);
+    original.name = toUpdate.name;
+    return of(original);
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.local.ts

@@ -12,6 +12,7 @@ export class AppUsersComponent implements OnInit {
 
   users: Array<AppUser>;
   selectedUser: AppUser;
+  action: string;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -25,6 +26,7 @@ export class AppUsersComponent implements OnInit {
     )
     this.route.queryParams.subscribe(
       params => {
+        this.action = params['action'];
         const idString = params['id'];
         if (idString) {
           const idNumber = +idString;
@@ -35,7 +37,7 @@ export class AppUsersComponent implements OnInit {
   }
 
   setSelectedUser(userId: number): void {
-    this.router.navigate(['users'], {queryParams: {id: userId}});
+    this.router.navigate(['users'], {queryParams: {id: userId, action: 'view'}});
   }
 
 }

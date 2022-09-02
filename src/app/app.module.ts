@@ -29,6 +29,7 @@ import { AnswerTranslationEditComponent } from './questions/answers/answer-trans
 import { KeyTermChooseComponent } from './keyterms/key-term-choose/key-term-choose.component';
 import { AppUsersComponent } from './users/app-users/app-users.component';
 import { AppUserDetailComponent } from './users/app-users/app-user-detail/app-user-detail.component';
+import { AppUserEditComponent } from './users/app-users/app-user-edit/app-user-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AppUserDetailComponent } from './users/app-users/app-user-detail/app-us
     AnswerTranslationEditComponent,
     AppUsersComponent,
     AppUserDetailComponent,
+    AppUserEditComponent,
     PageNotFoundComponent
   ],
   imports: [
