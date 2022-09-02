@@ -13,7 +13,7 @@
   <div class="form-group" *ngIf="user.isNew">
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" placeholder="password"
-            name="password">
+           [(ngModel)]="password" name="password">
     <div class="alert alert-danger">error message placeholder</div>
   </div>
 

@@ -1,6 +1,8 @@
 <h1>Users</h1>
 
-<a class="btn btn-primary mb-3">Add</a>
+<a class="btn btn-primary mb-3"
+   (click)="addUser()"
+>Add</a>
 
 <div class="row">
   <div class="col-6">
@@ -27,6 +29,6 @@
   </div>
   <div class="col-6">
     <app-app-user-detail *ngIf="action === 'view'" [user]="selectedUser"></app-app-user-detail>
-    <app-app-user-edit *ngIf="action === 'edit'" [user]="selectedUser"></app-app-user-edit>
+    <app-app-user-edit *ngIf="action === 'edit' || action === 'add'" [user]="selectedUser"></app-app-user-edit>
   </div>
 </div>

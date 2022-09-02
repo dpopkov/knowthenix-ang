@@ -391,6 +391,24 @@ export class DataService {
     return of(original);
   }
 
+  addAppUser(appUser: AppUser, password: string): Observable<AppUser> {
+    const maxId = this.findMaxUserIdLocally();
+    appUser.id = maxId + 1;
+    // the password is not used in local data service
+    this.appUsers.push(appUser);
+    return of(appUser);
+  }
+
+  private findMaxUserIdLocally(): number {
+    let maxId = 0;
+    this.appUsers.forEach(u => {
+      if (u.id > maxId) {
+        maxId = u.id;
+      }
+    })
+    return maxId;
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.local.ts

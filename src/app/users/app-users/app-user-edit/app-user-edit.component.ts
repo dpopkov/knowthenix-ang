@@ -14,6 +14,7 @@ export class AppUserEditComponent implements OnInit {
   user: AppUser;
   formUser: AppUser;
   message: string;
+  password: string;
 
   constructor(private dataService: DataService,
               private router: Router) { }
@@ -23,11 +24,23 @@ export class AppUserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.dataService.updateAppUser(this.formUser).subscribe(
-      user => {
-        this.router.navigate(['users'],
-          {queryParams: {id: user.id, action: 'view'}});
-      }
-    )
+    if (this.formUser.isNew) {
+      this.dataService.addAppUser(this.formUser, this.password).subscribe(
+        user => {
+          this.navigateToView(user);
+        }
+      )
+    } else {
+      this.dataService.updateAppUser(this.formUser).subscribe(
+        user => {
+          this.navigateToView(user);
+        }
+      )
+    }
+  }
+
+  private navigateToView(user: AppUser): void {
+    this.router.navigate(['users'],
+      {queryParams: {id: user.id, action: 'view'}});
   }
 }

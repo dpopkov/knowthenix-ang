@@ -40,4 +40,8 @@ export class AppUsersComponent implements OnInit {
     this.router.navigate(['users'], {queryParams: {id: userId, action: 'view'}});
   }
 
+  addUser(): void {
+    this.selectedUser = new AppUser();
+    this.router.navigate(['users'], {queryParams: {action: 'add'}});
+  }
 }
