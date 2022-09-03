@@ -17,16 +17,25 @@
   <div class="form-group" *ngIf="user.isNew">
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" placeholder="password"
-           [(ngModel)]="password" name="password" required>
-    <div class="alert alert-danger">error message placeholder</div>
+           (change)="checkIfPasswordIsValid(); checkIfPasswordsMatch()"
+           [(ngModel)]="password" name="password" required #passwordField="ngModel">
+    <div *ngIf="passwordField.invalid && passwordField.touched"
+         class="alert alert-danger">Password is required</div>
+    <div *ngIf="passwordField.touched && !passwordIsValid"
+         class="alert alert-danger">Password cannot be less than 8 characters</div>
+
     <label for="password2">Repeat password</label>
     <input type="password" class="form-control" id="password2" placeholder="password"
-           [(ngModel)]="passwordDouble" name="password2" required>
-    <div class="alert alert-danger">error message placeholder</div>
+           (change)="checkIfPasswordsMatch()"
+           [(ngModel)]="passwordDouble" name="password2" required #password2Field="ngModel">
+    <div *ngIf="password2Field.invalid && password2Field.touched"
+         class="alert alert-danger">Re-typed password is required</div>
+    <div *ngIf="password2Field.touched && !passwordsMatch"
+         class="alert alert-danger">Passwords do not match</div>
   </div>
 
   <button type="button" class="btn btn-primary"
           (click)="onSubmit()"
-          [disabled]="editUserForm.invalid || !nameIsValid"
+          [disabled]="editUserForm.invalid || !nameIsValid || (user.isNew && (!passwordIsValid || !passwordsMatch))"
   >Save</button>
 </form>

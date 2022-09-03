@@ -17,6 +17,8 @@ export class AppUserEditComponent implements OnInit {
   password: string;
   passwordDouble: string;
   nameIsValid = false;
+  passwordIsValid = false;
+  passwordsMatch = false;
 
   constructor(private dataService: DataService,
               private router: Router) { }
@@ -24,6 +26,8 @@ export class AppUserEditComponent implements OnInit {
   ngOnInit(): void {
     this.formUser = AppUser.fromHttp(this.user);
     this.checkIfNameIsValid();
+    this.checkIfPasswordIsValid();
+    this.checkIfPasswordsMatch();
   }
 
   onSubmit(): void {
@@ -52,6 +56,26 @@ export class AppUserEditComponent implements OnInit {
       this.nameIsValid = this.formUser.name.trim().length > 0;
     } else {
       this.nameIsValid = false;
+    }
+  }
+
+  checkIfPasswordIsValid(): void {
+    if (this.user.isNotNew) {
+      this.passwordIsValid = true;
+    } else if (this.password) {
+      this.passwordIsValid = this.password.trim().length >= 8;
+    } else {
+      this.passwordIsValid = false;
+    }
+  }
+
+  checkIfPasswordsMatch(): void {
+    if (this.user.isNotNew) {
+      this.passwordsMatch = true;
+    } else if (this.password && this.passwordDouble) {
+      this.passwordsMatch = this.password === this.passwordDouble;
+    } else {
+      this.passwordsMatch = false;
     }
   }
 }
