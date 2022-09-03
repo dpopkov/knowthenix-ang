@@ -16,12 +16,14 @@ export class AppUserEditComponent implements OnInit {
   message: string;
   password: string;
   passwordDouble: string;
+  nameIsValid = false;
 
   constructor(private dataService: DataService,
               private router: Router) { }
 
   ngOnInit(): void {
     this.formUser = AppUser.fromHttp(this.user);
+    this.checkIfNameIsValid();
   }
 
   onSubmit(): void {
@@ -43,5 +45,13 @@ export class AppUserEditComponent implements OnInit {
   private navigateToView(user: AppUser): void {
     this.router.navigate(['users'],
       {queryParams: {id: user.id, action: 'view'}});
+  }
+
+  checkIfNameIsValid(): void {
+    if (this.formUser.name) {
+      this.nameIsValid = this.formUser.name.trim().length > 0;
+    } else {
+      this.nameIsValid = false;
+    }
   }
 }
