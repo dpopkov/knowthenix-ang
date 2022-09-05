@@ -381,6 +381,12 @@ export class DataService {
     return of(answer.keyterms);
   }
 
+  deleteAnswer(id: number): Observable<any> {
+    const a = this.answers.find(ans => ans.id === id);
+    this.answers.splice(this.answers.indexOf(a), 1);
+    return of(null);
+  }
+
   getAppUsers(): Observable<Array<AppUser>> {
     return of(this.appUsers);
   }

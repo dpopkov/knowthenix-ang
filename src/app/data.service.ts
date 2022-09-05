@@ -258,6 +258,10 @@ export class DataService {
       }));
   }
 
+  deleteAnswer(id: number): Observable<any> {
+    return this.http.delete(this.answersUrl + '/' + id);
+  }
+
   getAppUsers(): Observable<Array<AppUser>> {
     // todo: use http client and backend
     console.log('data.service:getAppUsers IS NOT IMPLEMENTED YET!!!');

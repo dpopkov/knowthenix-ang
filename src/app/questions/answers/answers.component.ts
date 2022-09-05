@@ -51,4 +51,19 @@ export class AnswersComponent implements OnInit {
   editAnswer(answerId: number): void {
     this.router.navigate(['answers', 'edit'], {queryParams: {answerId}});
   }
+
+  deleteAnswer(answerId: number): void {
+    console.log('Deleting answer: ', answerId);
+    const deleteConfirmed = confirm('Are you sure you wish do delete this Answer?');
+    if (deleteConfirmed) {
+      this.message = "Deleting...";
+      this.dataService.deleteAnswer(answerId).subscribe(
+        next => {
+          this.loadData();
+        }, error => {
+          this.message = 'Sorry, this Answer cannot be deleted at this time.';
+        }
+      );
+    }
+  }
 }
