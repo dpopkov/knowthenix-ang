@@ -3,7 +3,9 @@
   <a class="btn btn-small btn-primary"
      (click)="editUser()"
   >Edit</a>
-  <a class="btn btn-small btn-warning">Delete</a>
+  <a class="btn btn-small btn-warning"
+     (click)="deleteUser()"
+  >Delete</a>
   <table>
     <tr>
       <td>id</td>
@@ -15,7 +17,9 @@
     </tr>
     <tr>
       <td>Password</td>
-      <td><a class="btn btn-small btn-warning">Reset</a></td>
+      <td><a class="btn btn-small btn-warning"
+             (click)="resetUserPassword()"
+      >Reset</a></td>
     </tr>
   </table>
 </div>

@@ -405,6 +405,18 @@ export class DataService {
     return of(appUser);
   }
 
+  deleteAppUser(appUserId: number): Observable<any> {
+    const found = this.appUsers.find(u => u.id === appUserId);
+    this.appUsers.splice(this.appUsers.indexOf(found), 1);
+    return of(null);
+  }
+
+  resetUserPassword(appUserId: number): Observable<any> {
+    // todo: implement password reset
+    console.log('data.service.local:resetUserPassword IS NOT IMPLEMENTED YET!!!');
+    return of(null);
+  }
+
   private findMaxUserIdLocally(): number {
     let maxId = 0;
     this.appUsers.forEach(u => {

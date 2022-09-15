@@ -280,6 +280,18 @@ export class DataService {
     return of(null);
   }
 
+  deleteAppUser(appUserId: number): Observable<any> {
+    // todo: use http client and backend
+    console.log('data.service:deleteAppUser IS NOT IMPLEMENTED YET!!!');
+    return of (null);
+  }
+
+  resetUserPassword(appUserId: number): Observable<any> {
+    // todo: implement password reset
+    console.log('data.service:resetUserPassword IS NOT IMPLEMENTED YET!!!');
+    return of(null);
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.ts
