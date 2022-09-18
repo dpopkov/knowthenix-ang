@@ -30,6 +30,7 @@ import { KeyTermChooseComponent } from './keyterms/key-term-choose/key-term-choo
 import { AppUsersComponent } from './users/app-users/app-users.component';
 import { AppUserDetailComponent } from './users/app-users/app-user-detail/app-user-detail.component';
 import { AppUserEditComponent } from './users/app-users/app-user-edit/app-user-edit.component';
+import { RecentsComponent } from './recents/recents.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AppUserEditComponent } from './users/app-users/app-user-edit/app-user-e
     AppUsersComponent,
     AppUserDetailComponent,
     AppUserEditComponent,
+    RecentsComponent,
     PageNotFoundComponent
   ],
   imports: [

@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {Category} from './model/Category';
@@ -11,12 +11,14 @@ import {Source} from "./model/Source";
 import {Answer} from "./model/Answer";
 import {IdChangeSet} from "./model/IdChangeSet";
 import {AppUser} from "./model/AppUser";
+import {formatDate} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
+  public localID: string;
   private categories: Array<Category> = new Array<Category>();
   private keyTerms: Array<KeyTerm> = new Array<KeyTerm>();
   private questions: Array<Question> = new Array<Question>();
@@ -28,9 +30,11 @@ export class DataService {
   private lastAnswerId = 1000;
   private lastTranslationId = 2000;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, @Inject(LOCALE_ID) localId: string) {
     console.log('data.service.local.ts runs');
     console.log('environment.restUrl=', environment.restUrl);
+
+    this.localID = localId;
 
     this.initLanguageMap();
     this.initCategories();
@@ -57,14 +61,15 @@ export class DataService {
   }
 
   private initQuestions(category: Category): void {
+    const today = formatDate(new Date(), 'yyyy-MM-dd', this.localID);
     const translationJvmEn = new Translation(41, 'EN', 'PLAINTEXT', 'What is JVM? (local data)');
     const translationJvmRu = new Translation(42, 'RU', 'PLAINTEXT', 'Что такое JVM? (local data)');
-    const jvm = new Question(31, category, 'EN', [translationJvmEn, translationJvmRu]);
+    const jvm = new Question(31, category, 'EN', today, [translationJvmEn, translationJvmRu]);
     jvm.addKeyterm(this.findKeyTermByIdLocally(this.JVM_KEYTERM));
     this.questions.push(jvm);
     const translationJreEn = new Translation(43, 'EN', 'PLAINTEXT', 'What is JRE? (local data)');
     const translationJreRu = new Translation(44, 'RU', 'PLAINTEXT', 'Что такое JRE? (local data)');
-    const jre = new Question(32, category, 'RU', [translationJreEn, translationJreRu] );
+    const jre = new Question(32, category, 'RU', today, [translationJreEn, translationJreRu] );
     jre.addKeyterm(this.findKeyTermByIdLocally(this.JRE_KEYTERM));
     this.questions.push(jre);
     const empty = new Question(33, category, 'EN');

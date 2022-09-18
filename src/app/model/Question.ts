@@ -9,11 +9,20 @@ export class Question {
 
   constructor(public id?: number,
               public category?: Category,
-              public selectedLanguage?: String,
+              public selectedLanguage?: string,
+              public createdAt?: string,
               public translations: Array<Translation> = new Array<Translation>(),
               public displayTranslation?: Translation) {
     if (!displayTranslation) {
       this.computeDisplayTranslation();
+    }
+  }
+
+  getCreatedAtAsDate(): Date {
+    if (this.createdAt) {
+      return new Date(this.createdAt);
+    } else {
+      return new Date();
     }
   }
 
@@ -36,6 +45,7 @@ export class Question {
   copyTo(other: Question): Question {
     other.category = this.category;
     other.selectedLanguage = this.selectedLanguage;
+    other.createdAt = this.createdAt;
     other.translations = this.translations;
     other.displayTranslation = this.displayTranslation;
     return other;
@@ -47,7 +57,7 @@ export class Question {
       translations.push(Translation.fromHttp(translationData))
     }
     return new Question(obj.id,
-      Category.fromHttp(obj.category), obj.selectedLanguage,
+      Category.fromHttp(obj.category), obj.selectedLanguage, obj.createdAt,
       translations)
   }
 

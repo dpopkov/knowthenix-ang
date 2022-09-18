@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category } from './model/Category';
@@ -23,11 +23,13 @@ export class DataService {
   private readonly answersUrl = environment.restUrl + '/answers';
   private readonly sourcesUrl = environment.restUrl + '/sources';
 
+  public localID: string;
   private languageMap: Map<string, string>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, @Inject(LOCALE_ID) localId: string) {
     console.log('data.service.ts runs');
     console.log('environment.restUrl=', environment.restUrl);
+    this.localID = localId;
     this.initLanguageMap();
   }
 

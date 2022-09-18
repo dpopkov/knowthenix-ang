@@ -17,6 +17,10 @@
       <th>Category</th>
       <td>{{ question?.category?.name }}</td>
     </tr>
+    <tr>
+      <th>Created</th>
+      <td>{{ question?.createdAt }}</td>
+    </tr>
   </table>
   <app-translations [fromEdit]="false"></app-translations>
   <a class="btn btn-small btn-primary"
