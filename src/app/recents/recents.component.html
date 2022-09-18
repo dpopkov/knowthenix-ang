@@ -1,7 +1,7 @@
 <h1>Recent Elements</h1>
 
 <h2>The following questions were added on:
-  <input type="date"/>
+  <input type="date" [(ngModel)]="selectedDate" (change)="dateChanged()" name="selectedDate"/>
 </h2>
 
 <div *ngIf="message">{{ message }}</div>

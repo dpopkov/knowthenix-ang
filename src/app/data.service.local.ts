@@ -181,6 +181,16 @@ export class DataService {
     return of(found);
   }
 
+  getQuestionsByCreatedAt(createdAt: string): Observable<Array<Question>> {
+    const found = new Array<Question>();
+    this.questions.forEach(q => {
+      if (q.createdAt === createdAt) {
+        found.push(q);
+      }
+    });
+    return of(found);
+  }
+
   addNewQuestion(question: Question): Observable<Question> {
     this.lastQuestionId++;
     question.id = this.lastQuestionId;

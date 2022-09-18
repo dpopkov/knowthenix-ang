@@ -105,6 +105,12 @@ export class DataService {
       .pipe(map(data => Question.fromHttp(data)));
   }
 
+  getQuestionsByCreatedAt(createdAt: string): Observable<Array<Question>> {
+    // todo: implement getQuestionsByCreatedAt using backend
+    console.log('data.service:getQuestionsByCreatedAt IS NOT IMPLEMENTED YET!');
+    return of(null);
+  }
+
   addNewQuestion(question: Question): Observable<Question> {
     return this.http.post<Question>(this.questionsUrl, question)
       .pipe(map(data => Question.fromHttp(data)));
