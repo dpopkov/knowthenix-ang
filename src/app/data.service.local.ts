@@ -181,7 +181,7 @@ export class DataService {
     return of(found);
   }
 
-  getQuestionsByCreatedAt(createdAt: string): Observable<Array<Question>> {
+  getQuestionsByCreatedOn(createdAt: string): Observable<Array<Question>> {
     const found = new Array<Question>();
     this.questions.forEach(q => {
       if (q.createdAt === createdAt) {

@@ -8,7 +8,7 @@
 
 <div *ngIf="dataLoaded">
 
-  <h3 class="mt-5" *ngIf="questions.length === 0">There are no questions added on this date.</h3>
+  <h3 class="mt-5" *ngIf="questions?.length === 0">There are no questions added on this date.</h3>
 
   <div class="row row-striped" *ngFor="let question of questions">
     <div class="col-2 text-right">

@@ -37,7 +37,7 @@ export class RecentsComponent implements OnInit {
   }
 
   private loadQuestions() {
-    this.dataService.getQuestionsByCreatedAt(this.selectedDate).subscribe(
+    this.dataService.getQuestionsByCreatedOn(this.selectedDate).subscribe(
       next => {
         this.questions = next;
         this.dataLoaded = true;
