@@ -22,6 +22,7 @@ export class DataService {
   private readonly questionsUrl = environment.restUrl + '/questions';
   private readonly answersUrl = environment.restUrl + '/answers';
   private readonly sourcesUrl = environment.restUrl + '/sources';
+  private readonly usersUrl = environment.restUrl + '/users';
 
   public localID: string;
   private languageMap: Map<string, string>;
@@ -278,27 +279,34 @@ export class DataService {
   }
 
   getAppUsers(): Observable<Array<AppUser>> {
-    // todo: use http client and backend
-    console.log('data.service:getAppUsers IS NOT IMPLEMENTED YET!!!');
-    return of(null);
+    return this.http.get<Array<AppUser>>(this.usersUrl)
+      .pipe(
+        map(data => {
+          const users = new Array<AppUser>();
+          for (const userData of data) {
+            users.push(AppUser.fromHttp(userData));
+          }
+          return users;
+        })
+      );
   }
 
   updateAppUser(toUpdate: AppUser): Observable<AppUser> {
-    // todo: use http client and backend
-    console.log('data.service:updateAppUser IS NOT IMPLEMENTED YET!!!');
-    return of(null);
+    return this.http.put<AppUser>(this.usersUrl, toUpdate)
+      .pipe(map(data => AppUser.fromHttp(data)));
   }
 
-  addAppUser(appUser: AppUser, password: string): Observable<AppUser> {
-    // todo: use http client and backend
-    console.log('data.service:addAppUser IS NOT IMPLEMENTED YET!!!');
-    return of(null);
+  addAppUser(appUser: AppUser, userPassword: string): Observable<AppUser> {
+    const userToCreate = {
+      name: appUser.name,
+      password: userPassword
+    };
+    return this.http.post<AppUser>(this.usersUrl, userToCreate)
+      .pipe(map(data => AppUser.fromHttp(data)));
   }
 
   deleteAppUser(appUserId: number): Observable<any> {
-    // todo: use http client and backend
-    console.log('data.service:deleteAppUser IS NOT IMPLEMENTED YET!!!');
-    return of (null);
+    return this.http.delete(this.usersUrl + '/' + appUserId);
   }
 
   resetUserPassword(appUserId: number): Observable<any> {

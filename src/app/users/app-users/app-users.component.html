@@ -27,8 +27,11 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="loadingData">{{ message }}</div>
   <div class="col-6">
-    <app-app-user-detail *ngIf="action === 'view'" [user]="selectedUser"></app-app-user-detail>
-    <app-app-user-edit *ngIf="action === 'edit' || action === 'add'" [user]="selectedUser"></app-app-user-edit>
+    <app-app-user-detail *ngIf="action === 'view' && selectedUser" [user]="selectedUser"
+      (userDeletedEvent)="loadUsers()"></app-app-user-detail>
+    <app-app-user-edit *ngIf="(action === 'edit' || action === 'add') && selectedUser" [user]="selectedUser"
+      (userChangeEvent)="loadUsers()"></app-app-user-edit>
   </div>
 </div>

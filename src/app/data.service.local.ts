@@ -412,7 +412,7 @@ export class DataService {
     return of(original);
   }
 
-  addAppUser(appUser: AppUser, password: string): Observable<AppUser> {
+  addAppUser(appUser: AppUser, userPassword: string): Observable<AppUser> {
     const maxId = this.findMaxUserIdLocally();
     appUser.id = maxId + 1;
     // the password is not used in local data service

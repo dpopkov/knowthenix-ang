@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AppUser} from "../../../model/AppUser";
 import {DataService} from "../../../data.service";
 import {Router} from "@angular/router";
@@ -12,6 +12,8 @@ export class AppUserEditComponent implements OnInit {
 
   @Input()
   user: AppUser;
+  @Output()
+  userChangeEvent = new EventEmitter();
   formUser: AppUser;
   message: string;
   password: string;
@@ -34,12 +36,14 @@ export class AppUserEditComponent implements OnInit {
     if (this.formUser.isNew) {
       this.dataService.addAppUser(this.formUser, this.password).subscribe(
         user => {
+          this.userChangeEvent.emit();
           this.navigateToView(user);
         }
       )
     } else {
       this.dataService.updateAppUser(this.formUser).subscribe(
         user => {
+          this.userChangeEvent.emit();
           this.navigateToView(user);
         }
       )

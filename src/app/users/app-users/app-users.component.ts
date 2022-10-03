@@ -13,17 +13,31 @@ export class AppUsersComponent implements OnInit {
   users: Array<AppUser>;
   selectedUser: AppUser;
   action: string;
+  loadingData = true;
+  message = 'Please wait... getting the list of Users';
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers() {
     this.dataService.getAppUsers().subscribe(
       next => {
         this.users = next;
+        this.loadingData = false;
+        this.processUrlParams();
+      },
+      error => {
+        console.log('Error loading users:', error);
       }
     )
+  }
+
+  private processUrlParams() {
     this.route.queryParams.subscribe(
       params => {
         this.action = params['action'];
