@@ -27,12 +27,17 @@ export class AppUserDetailComponent implements OnInit {
   }
 
   deleteUser() {
-    this.dataService.deleteAppUser(this.user.id).subscribe(
-      next => {
-        this.userDeletedEvent.emit();
-        this.router.navigate(['users']);
-      }
-    )
+    const deleteConfirmed = confirm('Are you sure you wish do delete this User?');
+    if (deleteConfirmed) {
+      this.dataService.deleteAppUser(this.user.id).subscribe(
+        next => {
+          this.userDeletedEvent.emit();
+          this.router.navigate(['users']);
+        }, error => {
+          console.log('Error deleting user:', error);
+        }
+      )
+    }
   }
 
   resetUserPassword() {
