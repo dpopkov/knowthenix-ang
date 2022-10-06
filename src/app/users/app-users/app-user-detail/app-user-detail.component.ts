@@ -14,6 +14,7 @@ export class AppUserDetailComponent implements OnInit {
   user: AppUser;
   @Output()
   userDeletedEvent = new EventEmitter();
+  message: string;
 
   constructor(private dataService: DataService,
               private router: Router) { }
@@ -29,11 +30,13 @@ export class AppUserDetailComponent implements OnInit {
   deleteUser() {
     const deleteConfirmed = confirm('Are you sure you wish do delete this User?');
     if (deleteConfirmed) {
+      this.message = 'Deleting...';
       this.dataService.deleteAppUser(this.user.id).subscribe(
         next => {
           this.userDeletedEvent.emit();
           this.router.navigate(['users']);
         }, error => {
+          this.message = 'Sorry - this user cannot be deleted at this time.';
           console.log('Error deleting user:', error);
         }
       )

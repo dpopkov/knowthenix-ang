@@ -3,6 +3,7 @@ import {Source} from "../model/Source";
 import {DataService} from "../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormResetService} from "../form-reset.service";
+import {Reloader} from "../reloader";
 
 @Component({
   selector: 'app-sources',
@@ -16,12 +17,14 @@ export class SourcesComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Sources';
-  reloadAttempts = 0;
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private formResetService: FormResetService,
-              private router: Router) { }
+              private router: Router) {
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadData());
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -35,14 +38,7 @@ export class SourcesComponent implements OnInit {
         this.processUrlParams();
       },
       error => {
-        this.reloadAttempts++;
-        if (this.reloadAttempts < 5) {
-          this.message = 'Sorry - something went wrong, trying again... please wait';
-          this.loadData();
-        } else {
-          this.message = 'Sorry - something went wrong, please contact support';
-          console.log('Error loading sources:', error);
-        }
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

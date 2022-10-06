@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Question} from "../../model/Question";
 import {DataService} from "../../data.service";
 import {Router} from "@angular/router";
+import {Reloader} from "../../reloader";
 
 @Component({
   selector: 'app-questions',
@@ -15,10 +16,12 @@ export class QuestionsComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Questions';
-  reloadAttempts = 0;
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
-              private router: Router) { }
+              private router: Router) {
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadData());
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -31,13 +34,7 @@ export class QuestionsComponent implements OnInit {
         this.loadingData = false;
       },
       (error) => {
-        this.reloadAttempts++;
-        if (this.reloadAttempts < 5) {
-          this.message = 'Sorry - something went wrong, trying again... please wait';
-          this.loadData();
-        } else {
-          this.message = 'Sorry - something went wrong, please contact support';
-        }
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

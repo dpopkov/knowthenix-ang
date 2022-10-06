@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Answer} from "../../model/Answer";
 import {DataService} from "../../data.service";
 import {Router} from "@angular/router";
+import {Reloader} from "../../reloader";
 
 @Component({
   selector: 'app-answers',
@@ -15,10 +16,12 @@ export class AnswersComponent implements OnInit {
   answers: Array<Answer>;
   loadingData = false;
   message = 'Please wait... getting the list of Answers';
-  reloadAttempts = 0;
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
-              private router: Router) { }
+              private router: Router) {
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadData());
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -32,14 +35,7 @@ export class AnswersComponent implements OnInit {
         this.loadingData = false;
       },
       error => {
-        this.reloadAttempts++;
-        if (this.reloadAttempts < 5) {
-          this.message = 'Sorry - something went wrong, trying again... please wait';
-          this.loadData();
-        } else {
-          this.message = 'Sorry - something went wrong, please contact support';
-          console.log('Error loading answers:', error);
-        }
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
 import { FormResetService } from 'src/app/form-reset.service';
 import { Category } from 'src/app/model/Category';
+import {Reloader} from "../../reloader";
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +17,7 @@ export class CategoriesComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Categories';
-  reloadAttempts = 0;
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class CategoriesComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadData());
     this.loadData();
   }
 
@@ -35,13 +37,7 @@ export class CategoriesComponent implements OnInit {
         this.processUrlParams();
       },
       (error) => {
-        this.reloadAttempts++;
-        if (this.reloadAttempts < 5) {
-          this.message = 'Sorry - something went wrong, trying again... please wait';
-          this.loadData();
-        } else {
-          this.message = 'Sorry - something went wrong, please contact support';
-        }
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

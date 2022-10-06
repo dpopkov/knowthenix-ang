@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AppUser} from "../../model/AppUser";
 import {DataService} from "../../data.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Reloader} from "../../reloader";
 
 @Component({
   selector: 'app-app-users',
@@ -15,10 +16,13 @@ export class AppUsersComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of Users';
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadUsers());
+  }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -32,7 +36,7 @@ export class AppUsersComponent implements OnInit {
         this.processUrlParams();
       },
       error => {
-        console.log('Error loading users:', error);
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

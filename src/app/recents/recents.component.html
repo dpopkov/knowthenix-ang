@@ -4,8 +4,6 @@
   <input type="date" [(ngModel)]="selectedDate" (change)="dateChanged()" name="selectedDate"/>
 </h2>
 
-<div *ngIf="message">{{ message }}</div>
-
 <div *ngIf="dataLoaded">
 
   <h3 class="mt-5" *ngIf="questions?.length === 0">There are no questions added on this date.</h3>
@@ -34,3 +32,4 @@
   </div>
 
 </div>
+<div *ngIf="!dataLoaded">{{ message }}</div>

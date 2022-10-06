@@ -3,6 +3,7 @@ import {Question} from "../model/Question";
 import {DataService} from "../data.service";
 import {Router} from "@angular/router";
 import {formatDate} from "@angular/common";
+import {Reloader} from "../reloader";
 
 @Component({
   selector: 'app-recents',
@@ -15,12 +16,14 @@ export class RecentsComponent implements OnInit {
   selectedDate: string;
   questions: Array<Question>;
   dataLoaded = false;
-  message: string;
+  message = "Please wait... loading list of questions.";
+  reloader: Reloader;
 
   constructor(private dataService: DataService,
               private router: Router,
               @Inject(LOCALE_ID) localId: string) {
     this.localID = localId;
+    this.reloader = new Reloader((msg) => this.message = msg, () => this.loadQuestions());
   }
 
   ngOnInit(): void {
@@ -41,6 +44,8 @@ export class RecentsComponent implements OnInit {
       next => {
         this.questions = next;
         this.dataLoaded = true;
+      }, error => {
+        this.reloader.tryToReloadOrLog(error);
       }
     )
   }

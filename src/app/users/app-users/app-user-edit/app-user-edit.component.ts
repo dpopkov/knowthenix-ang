@@ -33,11 +33,15 @@ export class AppUserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.message = 'Saving...';
     if (this.formUser.isNew) {
       this.dataService.addAppUser(this.formUser, this.password).subscribe(
         user => {
           this.userChangeEvent.emit();
           this.navigateToView(user);
+        }, error => {
+          this.message = 'Something went wrong, you may wish to try again.';
+          console.log('Error adding user:', error);
         }
       )
     } else {
@@ -45,6 +49,9 @@ export class AppUserEditComponent implements OnInit {
         user => {
           this.userChangeEvent.emit();
           this.navigateToView(user);
+        }, error => {
+          this.message = 'Something went wrong, you may wish to try again.';
+          console.log('Error updating user:', error);
         }
       )
     }
