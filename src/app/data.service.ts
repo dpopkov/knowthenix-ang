@@ -310,9 +310,7 @@ export class DataService {
   }
 
   resetUserPassword(appUserId: number): Observable<any> {
-    // todo: implement password reset
-    console.log('data.service:resetUserPassword IS NOT IMPLEMENTED YET!!!');
-    return of(null);
+    return this.http.put(this.usersUrl + '/resetPassword/' + appUserId, null);;
   }
 
   /*

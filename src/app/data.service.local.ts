@@ -427,8 +427,7 @@ export class DataService {
   }
 
   resetUserPassword(appUserId: number): Observable<any> {
-    // todo: implement password reset
-    console.log('data.service.local:resetUserPassword IS NOT IMPLEMENTED YET!!!');
+    console.log('data.service.local:resetUserPassword will NOT BE IMPLEMENTED for local data service.');
     return of(null);
   }
 
