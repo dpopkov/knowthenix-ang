@@ -16,19 +16,28 @@ import {AnswerTranslationsComponent} from "./questions/answers/answer-translatio
 import {KeyTermChooseComponent} from "./keyterms/key-term-choose/key-term-choose.component";
 import {PrefetchKeytermsService} from "./prefetch-keyterms.service";
 import {AppUsersComponent} from "./users/app-users/app-users.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthRouteGuardService} from "./auth-route-guard.service";
 
 const routes: Routes = [
-  {path : 'questions/questions', component : QuestionsComponent},
-  {path : 'questions/edit', component : QuestionEditComponent, resolve: {preloaded_categories: PrefetchCategoriesService}},
-  {path : 'questions/view', component: QuestionDetailComponent},
-  {path : 'questions/edit/translations', component: TranslationsComponent},
-  {path : 'answers/edit', component: AnswerEditComponent, resolve: {preloaded_sources: PrefetchSourcesService}},
-  {path : 'answers/edit/translations', component: AnswerTranslationsComponent},
-  {path : 'questions/categories', component : CategoriesComponent},
-  {path : 'keyterms', component : KeytermsComponent},
-  {path : 'keyterms/choose', component : KeyTermChooseComponent, resolve: {preloaded_keyterms: PrefetchKeytermsService}},
-  {path : 'sources', component : SourcesComponent},
-  {path : 'users', component : AppUsersComponent},
+  {path : 'questions/questions', component : QuestionsComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'questions/edit', component : QuestionEditComponent,
+    resolve: {preloaded_categories: PrefetchCategoriesService},
+    canActivate: [AuthRouteGuardService]},
+  {path : 'questions/view', component: QuestionDetailComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'questions/edit/translations', component: TranslationsComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'answers/edit', component: AnswerEditComponent,
+    resolve: {preloaded_sources: PrefetchSourcesService},
+    canActivate: [AuthRouteGuardService]},
+  {path : 'answers/edit/translations', component: AnswerTranslationsComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'questions/categories', component : CategoriesComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'keyterms', component : KeytermsComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'keyterms/choose', component : KeyTermChooseComponent,
+    resolve: {preloaded_keyterms: PrefetchKeytermsService},
+    canActivate: [AuthRouteGuardService]},
+  {path : 'sources', component : SourcesComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'users', component : AppUsersComponent, canActivate: [AuthRouteGuardService]},
+  {path : 'login', component : LoginComponent},
   {path : '', component : HomeComponent},
   {path : '404', component : PageNotFoundComponent},
   {path : '**', redirectTo : '/404'}

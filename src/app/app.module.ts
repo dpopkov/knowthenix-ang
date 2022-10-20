@@ -31,6 +31,7 @@ import { AppUsersComponent } from './users/app-users/app-users.component';
 import { AppUserDetailComponent } from './users/app-users/app-user-detail/app-user-detail.component';
 import { AppUserEditComponent } from './users/app-users/app-user-edit/app-user-edit.component';
 import { RecentsComponent } from './recents/recents.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { RecentsComponent } from './recents/recents.component';
     AppUserDetailComponent,
     AppUserEditComponent,
     RecentsComponent,
+    LoginComponent,
     PageNotFoundComponent
   ],
   imports: [
