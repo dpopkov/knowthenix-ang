@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,7 @@ export class DataService {
   private readonly answersUrl = environment.restUrl + '/answers';
   private readonly sourcesUrl = environment.restUrl + '/sources';
   private readonly usersUrl = environment.restUrl + '/users';
+  private readonly authUrl = environment.restUrl + '/basicAuth/validate';
 
   public localID: string;
   private languageMap: Map<string, string>;
@@ -311,6 +312,12 @@ export class DataService {
 
   resetUserPassword(appUserId: number): Observable<any> {
     return this.http.put(this.usersUrl + '/resetPassword/' + appUserId, null);;
+  }
+
+  validateUser(name: string, password: string): Observable<string> {
+    const authData = btoa(`${name}:${password}`);
+    const headers = new HttpHeaders().append('Authorization', 'Basic ' + authData);
+    return this.http.get<string>(this.authUrl, {headers: headers});
   }
 
   /*

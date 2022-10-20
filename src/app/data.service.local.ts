@@ -441,6 +441,11 @@ export class DataService {
     return maxId;
   }
 
+  validateUser(name: string, password: string): Observable<string> {
+    console.log('data.service.local:validateUser always validates any user');
+    return of('ok');
+  }
+
   /*
                 IMPORTANT !!!
     The signatures of all non-private methods in data.service.local.ts
