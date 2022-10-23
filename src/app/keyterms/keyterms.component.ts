@@ -4,13 +4,15 @@ import { DataService } from '../data.service';
 import { FormResetService } from '../form-reset.service';
 import { KeyTerm } from '../model/KeyTerm';
 import {Reloader} from "../reloader";
+import {UiComponent} from "../ui-component";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-keyterms',
   templateUrl: './keyterms.component.html',
   styleUrls: ['./keyterms.component.css']
 })
-export class KeytermsComponent implements OnInit {
+export class KeytermsComponent extends UiComponent implements OnInit {
 
   keyterms: Array<KeyTerm>;
   selectedKeyTerm: KeyTerm;
@@ -21,10 +23,14 @@ export class KeytermsComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
+              private authService: AuthService,
               private formResetService: FormResetService,
-              private router: Router) { }
+              private router: Router) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.setRole(this.authService.getRole());
     this.reloader = new Reloader((msg) => this.message = msg, () => this.loadData());
     this.loadData();
   }

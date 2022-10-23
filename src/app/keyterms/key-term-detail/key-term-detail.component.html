@@ -1,9 +1,11 @@
 <div class="keyTermDetails">
     <h2>KeyTerm details</h2>
     <a class="btn btn-small btn-primary"
+       *ngIf="isEditorUser"
         (click)="editKeyTerm()"
     >Edit</a>
     <a class="btn btn-small btn-danger"
+       *ngIf="isAdminUser"
         (click)="deleteKeyTerm()"
     >Delete</a>
     <div class="bg-warning p-5" *ngIf="message">{{ message }}</div>

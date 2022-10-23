@@ -5,13 +5,15 @@ import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { FormResetService } from 'src/app/form-reset.service';
 import { KeyTerm } from 'src/app/model/KeyTerm';
+import {AuthService} from "../../auth.service";
+import {UiComponent} from "../../ui-component";
 
 @Component({
   selector: 'app-key-term-edit',
   templateUrl: './key-term-edit.component.html',
   styleUrls: ['./key-term-edit.component.css']
 })
-export class KeyTermEditComponent implements OnInit, OnDestroy {
+export class KeyTermEditComponent extends UiComponent implements OnInit, OnDestroy {
 
   @Input()
   keyTerm: KeyTerm;
@@ -23,9 +25,13 @@ export class KeyTermEditComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
             private dataService: DataService,
             private router: Router,
-            private formResetService: FormResetService) { }
+            private authService: AuthService,
+            private formResetService: FormResetService) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.setRole(this.authService.getRole());
     this.initializeForm();
     this.resetEventSubscription = this.formResetService.resetKeyTermFormEvent.subscribe(
       (keyTerm) => {

@@ -1,6 +1,6 @@
 <h1>KeyTerms</h1>
 
-<a class="btn btn-primary mb-3" (click)="addKeyTerm()">Add</a>
+<a class="btn btn-primary mb-3" *ngIf="isEditorUser" (click)="addKeyTerm()">Add</a>
 
 <div class="row">
   <div class="col-6">
@@ -27,9 +27,9 @@
   </div>
   <div *ngIf="loadingData">{{ message }}</div>
   <div class="col-6">
-    <app-key-term-detail *ngIf="action === 'view'" [keyTerm]="selectedKeyTerm" 
+    <app-key-term-detail *ngIf="action === 'view'" [keyTerm]="selectedKeyTerm"
                         (dataChangedEvent)="loadData()"></app-key-term-detail>
-    <app-key-term-edit *ngIf="action === 'edit'" [keyTerm]="selectedKeyTerm"
+    <app-key-term-edit *ngIf="isEditorUser && action === 'edit'" [keyTerm]="selectedKeyTerm"
                         (dataChangedEvent)="loadData()"></app-key-term-edit>
   </div>
 </div>
