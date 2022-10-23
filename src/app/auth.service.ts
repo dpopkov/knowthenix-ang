@@ -16,6 +16,7 @@ export class AuthService {
     this.dataService.validateUser(name, password).subscribe(
       next => {
         this.jwtToken = next.result;
+        this.dataService.setJwtToken(this.jwtToken);
         this.isAuthenticated = true;
         this.authenticationResultEvent.emit(true);
       }, error => {

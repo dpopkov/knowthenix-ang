@@ -27,6 +27,7 @@ export class DataService {
 
   public localID: string;
   private languageMap: Map<string, string>;
+  private headersWithToken: HttpHeaders;
 
   constructor(private http: HttpClient, @Inject(LOCALE_ID) localId: string) {
     console.log('data.service.ts runs');
@@ -35,8 +36,16 @@ export class DataService {
     this.initLanguageMap();
   }
 
+  setJwtToken(jwtToken: string) {
+    if (jwtToken) {
+      this.headersWithToken = new HttpHeaders().append('Authorization', 'Bearer ' + jwtToken);
+    } else {
+      this.headersWithToken = null;
+    }
+  }
+
   getCategories(): Observable<Array<Category>> {
-    return this.http.get<Array<Category>>(this.categoriesUrl)
+    return this.http.get<Array<Category>>(this.categoriesUrl, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const categories = new Array<Category>();
@@ -49,21 +58,21 @@ export class DataService {
   }
 
   updateCategory(toUpdate: Category): Observable<Category> {
-    return this.http.put<Category>(this.categoriesUrl, toUpdate)
+    return this.http.put<Category>(this.categoriesUrl, toUpdate, {headers: this.headersWithToken})
       .pipe(map(data => Category.fromHttp(data)));
   }
 
   addCategory(newCategory: Category): Observable<Category> {
-    return this.http.post<Category>(this.categoriesUrl, newCategory)
+    return this.http.post<Category>(this.categoriesUrl, newCategory, {headers: this.headersWithToken})
     .pipe(map(data => Category.fromHttp(data)));
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http.delete(this.categoriesUrl + '/' + id);
+    return this.http.delete(this.categoriesUrl + '/' + id, {headers: this.headersWithToken});
   }
 
   getKeyTerms(): Observable<Array<KeyTerm>> {
-    return this.http.get<Array<KeyTerm>>(this.keyTermsUrl)
+    return this.http.get<Array<KeyTerm>>(this.keyTermsUrl, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const keyterms = new Array<KeyTerm>();
@@ -76,21 +85,21 @@ export class DataService {
   }
 
   updateKeyTerm(keyTerm: KeyTerm): Observable<KeyTerm> {
-    return this.http.put<KeyTerm>(this.keyTermsUrl, keyTerm)
+    return this.http.put<KeyTerm>(this.keyTermsUrl, keyTerm, {headers: this.headersWithToken})
       .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   addKeyTerm(newKeyTerm: KeyTerm): Observable<KeyTerm> {
-    return this.http.post<KeyTerm>(this.keyTermsUrl, newKeyTerm)
+    return this.http.post<KeyTerm>(this.keyTermsUrl, newKeyTerm, {headers: this.headersWithToken})
       .pipe(map(data => KeyTerm.fromHttp(data)));
   }
 
   deleteKeyTerm(id: number): Observable<any> {
-    return this.http.delete(this.keyTermsUrl + '/' + id);
+    return this.http.delete(this.keyTermsUrl + '/' + id, {headers: this.headersWithToken});
   }
 
   getQuestions(): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>(this.questionsUrl)
+    return this.http.get<Array<Question>>(this.questionsUrl, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const questions = new Array<Question>();
@@ -103,12 +112,12 @@ export class DataService {
   }
 
   getQuestionById(id: number): Observable<Question> {
-    return this.http.get<Question>(this.questionsUrl + '/' + id)
+    return this.http.get<Question>(this.questionsUrl + '/' + id, {headers: this.headersWithToken})
       .pipe(map(data => Question.fromHttp(data)));
   }
 
   getQuestionsByCreatedOn(createdOn: string): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>(this.questionsUrl + '/created/' + createdOn)
+    return this.http.get<Array<Question>>(this.questionsUrl + '/created/' + createdOn, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const questions = new Array<Question>();
@@ -121,17 +130,18 @@ export class DataService {
   }
 
   addNewQuestion(question: Question): Observable<Question> {
-    return this.http.post<Question>(this.questionsUrl, question)
+    return this.http.post<Question>(this.questionsUrl, question, {headers: this.headersWithToken})
       .pipe(map(data => Question.fromHttp(data)));
   }
 
   updateQuestion(question: Question): Observable<Question> {
-    return this.http.put<Question>(this.questionsUrl, question)
+    return this.http.put<Question>(this.questionsUrl, question, {headers: this.headersWithToken})
       .pipe(map(data => Question.fromHttp(data)));
   }
 
   getTranslationsByQuestionId(questionId: number): Observable<Array<Translation>> {
-    return this.http.get<Array<Translation>>(this.questionsUrl + '/' + questionId + '/translations')
+    return this.http.get<Array<Translation>>(this.questionsUrl + '/' + questionId + '/translations',
+      {headers: this.headersWithToken})
       .pipe(map(data => {
         const translations = new Array<Translation>();
         for (const translationData of data) {
@@ -142,17 +152,20 @@ export class DataService {
   }
 
   addTranslation(questionId: number, translation: Translation): Observable<Translation> {
-    return this.http.post<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation)
+    return this.http.post<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation,
+      {headers: this.headersWithToken})
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
   updateTranslation(questionId: number, translation: Translation): Observable<Translation> {
-    return this.http.put<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation)
+    return this.http.put<Translation>(this.questionsUrl + '/' + questionId + '/translations', translation,
+      {headers: this.headersWithToken})
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
   getKeyTermsByQuestionId(questionId: number): Observable<Array<KeyTerm>> {
-    return this.http.get<Array<KeyTerm>>(this.questionsUrl + '/' + questionId + '/keyterms')
+    return this.http.get<Array<KeyTerm>>(this.questionsUrl + '/' + questionId + '/keyterms',
+      {headers: this.headersWithToken})
       .pipe(map(data => {
         const keyterms = new Array<KeyTerm>();
         for (const kt of data) {
@@ -163,11 +176,13 @@ export class DataService {
   }
 
   patchKeyTermsByQuestionId(questionId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
-    return this.http.patch<Array<number>>(this.questionsUrl + '/' + questionId + '/keyterms', idChangeSet);
+    return this.http.patch<Array<number>>(this.questionsUrl + '/' + questionId + '/keyterms', idChangeSet,
+      {headers: this.headersWithToken});
   }
 
   patchKeyTermsByAnswerId(answerId: number, idChangeSet: IdChangeSet): Observable<Array<number>> {
-    return this.http.patch<Array<number>>(this.answersUrl + '/' + answerId + '/keyterms', idChangeSet);
+    return this.http.patch<Array<number>>(this.answersUrl + '/' + answerId + '/keyterms', idChangeSet,
+      {headers: this.headersWithToken});
   }
 
   getLanguageMap(): Map<string, string> {
@@ -184,7 +199,7 @@ export class DataService {
   }
 
   getSources(): Observable<Array<Source>> {
-    return this.http.get<Array<Source>>(this.sourcesUrl)
+    return this.http.get<Array<Source>>(this.sourcesUrl, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const sources = new Array<Source>();
@@ -197,31 +212,32 @@ export class DataService {
   }
 
   getSourceById(id: number): Observable<Source> {
-    return this.http.get<Source>(this.sourcesUrl + '/' + id)
+    return this.http.get<Source>(this.sourcesUrl + '/' + id, {headers: this.headersWithToken})
       .pipe(map(data => Source.from(data)));
   }
 
   addNewSource(source: Source): Observable<Source> {
-    return this.http.post<Source>(this.sourcesUrl, source)
+    return this.http.post<Source>(this.sourcesUrl, source, {headers: this.headersWithToken})
       .pipe(map(data => Source.from(data)));
   }
 
   updateSource(source: Source): Observable<Source> {
-    return this.http.put<Source>(this.sourcesUrl, source)
+    return this.http.put<Source>(this.sourcesUrl, source, {headers: this.headersWithToken})
       .pipe(map(data => Source.from(data)));
   }
 
   deleteSource(id: number): Observable<any> {
-    return this.http.delete<Source>(this.sourcesUrl + '/' + id);
+    return this.http.delete<Source>(this.sourcesUrl + '/' + id, {headers: this.headersWithToken});
   }
 
   addNewAnswer(answer: Answer): Observable<Answer> {
-    return this.http.post<Answer>(this.answersUrl, answer)
+    return this.http.post<Answer>(this.answersUrl, answer, {headers: this.headersWithToken})
       .pipe(map(data => Answer.from(data)));
   }
 
   getAnswersForQuestion(questionId: number): Observable<Array<Answer>> {
-    return this.http.get<Array<Answer>>(this.questionsUrl + '/' + questionId + '/answers')
+    return this.http.get<Array<Answer>>(this.questionsUrl + '/' + questionId + '/answers',
+      {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const answers = new Array<Answer>();
@@ -234,17 +250,18 @@ export class DataService {
   }
 
   getAnswerById(answerId: number): Observable<Answer> {
-    return this.http.get<Answer>(this.answersUrl + '/' + answerId)
+    return this.http.get<Answer>(this.answersUrl + '/' + answerId, {headers: this.headersWithToken})
       .pipe(map(data => Answer.from(data)));
   }
 
   updateAnswer(answer: Answer): Observable<Answer> {
-    return this.http.put<Answer>(this.answersUrl, answer)
+    return this.http.put<Answer>(this.answersUrl, answer, {headers: this.headersWithToken})
       .pipe(map(data => Answer.from(data)));
   }
 
   getTranslationsByAnswerId(answerId: number): Observable<Array<Translation>> {
-    return this.http.get<Array<Translation>>(this.answersUrl + '/' + answerId + '/translations')
+    return this.http.get<Array<Translation>>(this.answersUrl + '/' + answerId + '/translations',
+      {headers: this.headersWithToken})
       .pipe(map(data => {
         const translations = new Array<Translation>();
         for (const translationData of data) {
@@ -255,17 +272,20 @@ export class DataService {
   }
 
   addAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
-    return this.http.post<Translation>(this.answersUrl + '/' + answerId + '/translations', translation)
+    return this.http.post<Translation>(this.answersUrl + '/' + answerId + '/translations', translation,
+      {headers: this.headersWithToken})
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
   updateAnswerTranslation(answerId: number, translation: Translation): Observable<Translation> {
-    return this.http.put<Translation>(this.answersUrl + '/' + answerId + '/translations', translation)
+    return this.http.put<Translation>(this.answersUrl + '/' + answerId + '/translations', translation,
+      {headers: this.headersWithToken})
       .pipe(map(data => Translation.fromHttp(data)));
   }
 
   getKeyTermsByAnswerId(answerId: number): Observable<Array<KeyTerm>> {
-    return this.http.get<Array<KeyTerm>>(this.answersUrl + '/' + answerId + '/keyterms')
+    return this.http.get<Array<KeyTerm>>(this.answersUrl + '/' + answerId + '/keyterms',
+      {headers: this.headersWithToken})
       .pipe(map(data => {
         const keyterms = new Array<KeyTerm>();
         for (const kt of data) {
@@ -276,11 +296,11 @@ export class DataService {
   }
 
   deleteAnswer(id: number): Observable<any> {
-    return this.http.delete(this.answersUrl + '/' + id);
+    return this.http.delete(this.answersUrl + '/' + id, {headers: this.headersWithToken});
   }
 
   getAppUsers(): Observable<Array<AppUser>> {
-    return this.http.get<Array<AppUser>>(this.usersUrl)
+    return this.http.get<Array<AppUser>>(this.usersUrl, {headers: this.headersWithToken})
       .pipe(
         map(data => {
           const users = new Array<AppUser>();
@@ -293,7 +313,7 @@ export class DataService {
   }
 
   updateAppUser(toUpdate: AppUser): Observable<AppUser> {
-    return this.http.put<AppUser>(this.usersUrl, toUpdate)
+    return this.http.put<AppUser>(this.usersUrl, toUpdate, {headers: this.headersWithToken})
       .pipe(map(data => AppUser.fromHttp(data)));
   }
 
@@ -302,16 +322,17 @@ export class DataService {
       name: appUser.name,
       password: userPassword
     };
-    return this.http.post<AppUser>(this.usersUrl, userToCreate)
+    return this.http.post<AppUser>(this.usersUrl, userToCreate, {headers: this.headersWithToken})
       .pipe(map(data => AppUser.fromHttp(data)));
   }
 
   deleteAppUser(appUserId: number): Observable<any> {
-    return this.http.delete(this.usersUrl + '/' + appUserId);
+    return this.http.delete(this.usersUrl + '/' + appUserId, {headers: this.headersWithToken});
   }
 
   resetUserPassword(appUserId: number): Observable<any> {
-    return this.http.put(this.usersUrl + '/resetPassword/' + appUserId, null);;
+    return this.http.put(this.usersUrl + '/resetPassword/' + appUserId, null,
+      {headers: this.headersWithToken});;
   }
 
   validateUser(name: string, password: string): Observable<{result: string}> {
