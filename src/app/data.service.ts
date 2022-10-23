@@ -314,10 +314,10 @@ export class DataService {
     return this.http.put(this.usersUrl + '/resetPassword/' + appUserId, null);;
   }
 
-  validateUser(name: string, password: string): Observable<string> {
+  validateUser(name: string, password: string): Observable<{result: string}> {
     const authData = btoa(`${name}:${password}`);
     const headers = new HttpHeaders().append('Authorization', 'Basic ' + authData);
-    return this.http.get<string>(this.authUrl, {headers: headers});
+    return this.http.get<{result: string}>(this.authUrl, {headers: headers});
   }
 
   /*

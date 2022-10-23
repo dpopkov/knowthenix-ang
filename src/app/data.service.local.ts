@@ -441,9 +441,9 @@ export class DataService {
     return maxId;
   }
 
-  validateUser(name: string, password: string): Observable<string> {
+  validateUser(name: string, password: string): Observable<{result: string}> {
     console.log('data.service.local:validateUser always validates any user');
-    return of('ok');
+    return of({result :'ok'});
   }
 
   /*

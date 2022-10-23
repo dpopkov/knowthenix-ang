@@ -5,7 +5,7 @@ export class Reloader {
 
   constructor(private messageSetter: (msg: string) => void,
               private loadAction: () => void,
-              private attemptsLimit: number = 5) {
+              private attemptsLimit: number = 3) {
   }
 
   public tryToReloadOrLog(error?: any): void {
