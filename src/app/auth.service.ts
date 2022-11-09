@@ -1,6 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {DataService} from "./data.service";
 
+// todo: delete this old AuthService when new AuthenticationService is ready and tested
+
 @Injectable({
   providedIn: 'root'
 })

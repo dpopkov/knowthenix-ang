@@ -108,6 +108,11 @@ export class DataService {
     this.appUsers.push(new AppUser(2, 'Alice'));
   }
 
+  // This method is a stab for compiling compatibility with non-local versions of the service
+  setJwtToken(jwtToken: string) {
+    // It does nothing
+  }
+
   getCategories(): Observable<Array<Category>> {
     return of(this.categories);
   }
