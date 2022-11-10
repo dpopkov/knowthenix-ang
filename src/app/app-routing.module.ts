@@ -18,6 +18,9 @@ import {PrefetchKeytermsService} from "./prefetch-keyterms.service";
 import {AppUsersComponent} from "./users/app-users/app-users.component";
 import {LoginComponent} from "./login/login.component";
 import {AuthRouteGuardService} from "./auth-route-guard.service";
+import {AuthUserLoginComponent} from "./ums/auth-user-login/auth-user-login.component";
+import {AuthUserRegisterComponent} from "./ums/auth-user-register/auth-user-register.component";
+import {AuthUsersComponent} from "./ums/auth-users/auth-users.component";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent, canActivate: [AuthRouteGuardService]},
@@ -38,6 +41,14 @@ const routes: Routes = [
   {path : 'sources', component : SourcesComponent, canActivate: [AuthRouteGuardService]},
   {path : 'users', component : AppUsersComponent, canActivate: [AuthRouteGuardService]},
   {path : 'login', component : LoginComponent},
+
+  /* AuthUser Routes */
+  {path : 'auth-user-login', component: AuthUserLoginComponent},
+  {path : 'auth-user-register', component: AuthUserRegisterComponent},
+  {path : 'auth-users/management', component: AuthUsersComponent},
+  // {path : '', redirectTo : '/auth-user-login'},
+
+  /* General Routes */
   {path : '', component : HomeComponent},
   {path : '404', component : PageNotFoundComponent},
   {path : '**', redirectTo : '/404'}

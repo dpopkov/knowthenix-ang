@@ -38,6 +38,9 @@ import { AuthenticationInterceptor } from "./interceptors/authentication.interce
 import { AuthGuard } from "./guards/auth.guard";
 import { NotificationModule } from "./notification.module";
 import { NotificationService } from "./notification.service";
+import { AuthUserLoginComponent } from './ums/auth-user-login/auth-user-login.component';
+import { AuthUserRegisterComponent } from './ums/auth-user-register/auth-user-register.component';
+import { AuthUsersComponent } from './ums/auth-users/auth-users.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { NotificationService } from "./notification.service";
     AppUserEditComponent,
     RecentsComponent,
     LoginComponent,
+    AuthUsersComponent,
+    AuthUserLoginComponent,
+    AuthUserRegisterComponent,
     PageNotFoundComponent
   ],
   imports: [
