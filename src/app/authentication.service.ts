@@ -14,7 +14,7 @@ export class AuthenticationService {
   public static readonly TOKEN_KEY = 'ld9zGd8ld8Tl';
   public static readonly USER_KEY = 'ucu6RysCo35';
 
-  private readonly host = environment.restUserUrl;
+  public readonly host = environment.restUserUrl;
   private token: string;
   private loggedInUsername: string;
   private jwtHelper = new JwtHelperService();

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,9 @@ import { AppUserDetailComponent } from './users/app-users/app-user-detail/app-us
 import { AppUserEditComponent } from './users/app-users/app-user-edit/app-user-edit.component';
 import { RecentsComponent } from './recents/recents.component';
 import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from "./authentication.service";
+import { AuthUserService } from "./auth-user.service";
+import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 
 @NgModule({
   declarations: [
@@ -71,7 +74,13 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationService,
+    AuthUserService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
