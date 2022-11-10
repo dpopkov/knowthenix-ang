@@ -36,6 +36,8 @@ import { AuthenticationService } from "./authentication.service";
 import { AuthUserService } from "./auth-user.service";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { AuthGuard } from "./guards/auth.guard";
+import { NotificationModule } from "./notification.module";
+import { NotificationService } from "./notification.service";
 
 @NgModule({
   declarations: [
@@ -73,12 +75,14 @@ import { AuthGuard } from "./guards/auth.guard";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NotificationModule,
     AppRoutingModule
   ],
   providers: [
     AuthGuard,
     AuthenticationService,
     AuthUserService,
+    NotificationService,
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true
     }
