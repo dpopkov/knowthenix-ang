@@ -35,6 +35,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from "./authentication.service";
 import { AuthUserService } from "./auth-user.service";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
+import { AuthGuard } from "./guards/auth.guard";
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { AuthenticationInterceptor } from "./interceptors/authentication.interce
     AppRoutingModule
   ],
   providers: [
+    AuthGuard,
     AuthenticationService,
     AuthUserService,
     {
