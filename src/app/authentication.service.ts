@@ -22,13 +22,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  public register(user: AuthUser): Observable<AuthUser | HttpErrorResponse> {
-    return this.http.post<AuthUser | HttpErrorResponse>(`${this.host}/user/register`, user);
+  public register(user: AuthUser): Observable<AuthUser> {
+    return this.http.post<AuthUser>(`${this.host}/user/register`, user);
   }
 
-  public login(user: AuthUser): Observable<HttpResponse<any> | HttpErrorResponse> {
-    return this.http.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/user/login`, user,
-      {observe: 'response'}); // adding "observe:'response'" in order to get the whole response, not only body
+  public login(user: AuthUser): Observable<HttpResponse<AuthUser>> {
+    return this.http.post<AuthUser>(`${this.host}/user/login`,
+      user, {observe: 'response'}); // adding "observe:'response'" in order to get the whole response, not body
   }
 
   public logOut(): void {

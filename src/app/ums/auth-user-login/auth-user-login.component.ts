@@ -15,6 +15,7 @@ import {HeaderType} from "../../model/HeaderType.enum";
 })
 export class AuthUserLoginComponent implements OnInit, OnDestroy {
   public showLoading: boolean;
+  public registerUrl = AppUrls.AUTH_USER_REGISTER;
   private subscriptions: Subscription[] = [];
 
   constructor(private router: Router,
@@ -25,8 +26,6 @@ export class AuthUserLoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.router.navigateByUrl(AppUrls.USERS_MANAGEMENT);
-    } else {
-      this.router.navigateByUrl(AppUrls.AUTH_USER_LOGIN);
     }
   }
 
