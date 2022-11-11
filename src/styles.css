@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~angular-notifier/styles";
 
 a {
   cursor: pointer;
@@ -8,12 +9,12 @@ a {
     background-color: #efefef;
     border-left: 4px #000000 solid;
   }
-  
+
   .row-striped:nth-of-type(even){
     background-color: #ffffff;
     border-left: 4px #efefef solid;
   }
-  
+
   .row-striped {
     padding: 15px 0;
   }
