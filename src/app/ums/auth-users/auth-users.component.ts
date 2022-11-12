@@ -58,8 +58,26 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     ))
   }
 
-  public searchUsers(value: any) {
-    console.log('Not implemented yet');
+  public searchUsers(searchTerm: string): void {
+    if (!searchTerm) {
+      this.users = this.userService.getUsersFromLocalCache();
+      return;
+    }
+    const search = searchTerm.toLowerCase();
+    const result: AuthUser[] = [];
+    for (const user of this.userService.getUsersFromLocalCache()) {
+      if (user.firstName.toLowerCase().indexOf(search) !== -1
+        || user.lastName.toLowerCase().indexOf(search) !== -1
+        || user.username.toLowerCase().indexOf(search) !== -1
+        || user.email.toLowerCase().indexOf(search) !== -1
+        || user.publicId.toLowerCase().indexOf(search) !== -1) {
+        result.push(user);
+      }
+    }
+    this.users = result;
+    if (result.length === 0) {
+      this.users = this.userService.getUsersFromLocalCache();
+    }
   }
 
   public onSelectUser(appUser: AuthUser) {
