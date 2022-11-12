@@ -1,4 +1,5 @@
 <div class="container">
+  <!-- title -->
   <div class="row mb-2 mt-2 text-center">
     <div class="col-md-4">
     </div>
@@ -9,6 +10,7 @@
     <div class="col-md-4">
     </div>
   </div>
+  <!-- end of title -->
 
   <!-- nav bar -->
   <nav class="navbar navbar-expand-md breadcrumb">
@@ -32,11 +34,78 @@
       </div>
     </div>
   </nav>
+  <!-- end nav bar -->
 
   <!-- main content -->
-
-  <!-- user table -->
-
+  <div class="tab-content mt-3" id="myTabContent">
+    <!-- users table -->
+    <div class="tab-pane fade show active" id="users">
+      <!-- Controls above table -->
+      <div class="mb-3 float-right">
+        <div class="btn-group mr-2">
+          <!-- Search Users Form -->
+          <form class="form-inline my-2 my-lg-0 justify-content-center">
+            <input name="searchTerm" #searchInput="ngModel" class="form-control mr-sm-2" ngModel
+                   (ngModelChange)="searchUsers(searchInput.value)" type="search" placeholder="Search users...">
+          </form>
+          <!-- Add New User Button -->
+          <button [hidden]="!isAdmin" type="button" class="btn btn-info" data-toggle="modal" data-target="#addUserModal">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            New User
+          </button>
+        </div>
+        <!-- Refresh Button -->
+        <div class="btn-group">
+          <button type="button" (click)="getUsers(true)" class="btn btn-info">
+            <i *ngIf="refreshing" class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <i *ngIf="!refreshing" class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Table of Users -->
+      <table class="table table-hover">
+        <thead class="table-borderless">
+        <tr class="text-center">
+          <th>Photo</th>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let authUser of users">
+        <tr class="text-center">
+          <td (click)="onSelectUser(authUser)">
+            <img height="40" width="40" src="{{authUser?.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt=""/>
+          </td>
+          <td (click)="onSelectUser(authUser)">{{authUser?.publicId}}</td>
+          <td (click)="onSelectUser(authUser)">{{authUser?.firstName}}</td>
+          <td (click)="onSelectUser(authUser)">{{authUser?.lastName}}</td>
+          <td (click)="onSelectUser(authUser)">{{authUser?.username}}</td>
+          <td (click)="onSelectUser(authUser)">{{authUser?.email}}</td>
+          <td (click)="onSelectUser(authUser)">
+            <span [hidden]="!authUser?.active" class="badge badge-success">Active</span>
+            <span [hidden]="authUser?.active" class="badge badge-danger">Inactive</span>
+          </td>
+          <td class="">
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="onEditUser(authUser)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+              <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUser(authUser?.username)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- end of Table of Users -->
+    </div>
+    <!-- end of users table -->
 
   <!-- change password  -->
 
@@ -56,4 +125,8 @@
   <!-- profile image change form -->
 
 
+  </div>
+  <!-- end of main content -->
+
 </div>
+<!-- end of div container -->

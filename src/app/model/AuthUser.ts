@@ -9,6 +9,7 @@ export class AuthUser {
   public lastLoginDate: Date;
   public role: string;
   public authorities: string[];
+  public profileImageUrl: string;
   public active: boolean;
   public notLocked: boolean;
   // public profileImageUrl: string;
@@ -24,6 +25,7 @@ export class AuthUser {
     this.lastLoginDate = null;
     this.role = '';
     this.authorities = [];
+    this.profileImageUrl = '';
     this.active = false;
     this.notLocked = false;
     // this.profileImageUrl = '';
