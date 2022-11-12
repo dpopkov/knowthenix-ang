@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {AuthUserService} from "../../auth-user.service";
 import {NotificationService} from "../../notification.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-auth-users',
@@ -20,6 +21,8 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   public refreshing: boolean;
   public isAdmin: boolean = true;
   private subscriptions: Subscription[] = [];
+  public fileName: string;
+  private profileImage: File;
 
   constructor(private userService: AuthUserService,
               private notificationService: NotificationService) {
@@ -61,7 +64,41 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
 
   public onSelectUser(appUser: AuthUser) {
     this.selectedUser = appUser;
-    document.getElementById('openUserInfo').click();
+    AuthUsersComponent.clickButtonById('openUserInfo');
+  }
+
+  public onProfileImageChange(event: Event) {
+    const target = event.target;
+    // @ts-ignore
+    if (target.files.length === 1) {
+      // @ts-ignore
+      const file = target.files[0];
+      this.fileName = file.name;
+      this.profileImage = file;
+    }
+  }
+
+  public saveNewUser(): void {
+    AuthUsersComponent.clickButtonById('new-user-save');
+  }
+
+  public onAddNewUser(userForm: NgForm): void {
+    const formData = this.userService.createUserFormData(null, userForm.value, this.profileImage);
+    this.subscriptions.push(this.userService.addUser(formData).subscribe(
+      (response: AuthUser) => {
+        AuthUsersComponent.clickButtonById('new-user-close');
+        this.getUsers(false);
+        this.fileName = null;
+        this.profileImage = null;
+        userForm.reset();
+        this.notificationService.notifySuccess(`${response.firstName} ${response.lastName} added successfully`);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.showError(errorResponse);
+        this.fileName = null;
+        this.profileImage = null;
+      }
+    ));
   }
 
   public onEditUser(appUser: AuthUser) {
@@ -70,6 +107,10 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
 
   public onDeleteUser(username: string) {
     console.log('Not implemented yet');
+  }
+
+  private static clickButtonById(buttonId: string): void {
+    document.getElementById(buttonId).click();
   }
 
   private showError(errorResponse: HttpErrorResponse): void {
