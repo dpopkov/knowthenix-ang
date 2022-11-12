@@ -16,6 +16,7 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   private titleSubject = new BehaviorSubject<string>('Users');
   public titleAction$ = this.titleSubject.asObservable();
   public users: AuthUser[];
+  public selectedUser: AuthUser;
   public refreshing: boolean;
   public isAdmin: boolean = true;
   private subscriptions: Subscription[] = [];
@@ -59,7 +60,8 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   }
 
   public onSelectUser(appUser: AuthUser) {
-    console.log('Not implemented yet');
+    this.selectedUser = appUser;
+    document.getElementById('openUserInfo').click();
   }
 
   public onEditUser(appUser: AuthUser) {
