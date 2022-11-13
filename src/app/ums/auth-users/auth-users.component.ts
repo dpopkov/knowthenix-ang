@@ -14,15 +14,18 @@ import {NgForm} from "@angular/forms";
 })
 export class AuthUsersComponent implements OnInit, OnDestroy {
 
-  private titleSubject = new BehaviorSubject<string>('Users');
+  private titleSubject = new BehaviorSubject<string>('User Management');
   public titleAction$ = this.titleSubject.asObservable();
   public users: AuthUser[];
   public selectedUser: AuthUser;
+  public editUser: AuthUser = new AuthUser();
   public refreshing: boolean;
   public isAdmin: boolean = true;
+  public isManager: boolean = true;
   private subscriptions: Subscription[] = [];
   public fileName: string;
   private profileImage: File;
+  private originalUsername: string;
 
   constructor(private userService: AuthUserService,
               private notificationService: NotificationService) {
@@ -119,8 +122,28 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     ));
   }
 
-  public onEditUser(appUser: AuthUser) {
-    console.log('Not implemented yet');
+  public onEditUser(user: AuthUser) {
+    this.editUser = user;
+    this.originalUsername = user.username;
+    AuthUsersComponent.clickButtonById('openUserEdit');
+  }
+
+  public onUpdateUser(): void {
+    const formData = this.userService.createUserFormData(this.originalUsername, this.editUser, this.profileImage);
+    this.subscriptions.push(this.userService.updateUser(formData).subscribe(
+      (response: AuthUser) => {
+        AuthUsersComponent.clickButtonById('closeEditUserModalButton');
+        this.getUsers(false);
+        this.fileName = null;
+        this.profileImage = null;
+        this.notificationService.notifySuccess(`${response.firstName} ${response.lastName} updated successfully`);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.showError(errorResponse);
+        this.fileName = null;
+        this.profileImage = null;
+      }
+    ));
   }
 
   public onDeleteUser(username: string) {
