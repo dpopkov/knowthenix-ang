@@ -6,6 +6,7 @@ import {AuthUserService} from "../../auth-user.service";
 import {NotificationService} from "../../notification.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {CustomHttpResponse} from "../../model/CustomHttpResponse";
 
 @Component({
   selector: 'app-auth-users',
@@ -147,7 +148,18 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   }
 
   public onDeleteUser(username: string) {
-    console.log('Not implemented yet');
+    const deleteConfirmed = confirm(`Are you sure you wish do delete user "${username}" ?`);
+    if (deleteConfirmed) {
+      this.subscriptions.push(this.userService.deleteUserByUsername(username).subscribe(
+        (response: CustomHttpResponse) => {
+          this.notificationService.notifySuccess(response.message);
+          this.getUsers(false);
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.showError(errorResponse);
+        }
+      ));
+    }
   }
 
   private static clickButtonById(buttonId: string): void {
