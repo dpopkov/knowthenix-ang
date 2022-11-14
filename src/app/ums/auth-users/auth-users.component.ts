@@ -182,6 +182,35 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     ));
   }
 
+  public updateProfileImage(): void {
+    // todo: implement
+  }
+
+  public onUpdateCurrentUser(currentUser: AuthUser): void {
+    this.refreshing = true;
+    const formData = this.userService.createUserFormData(this.user.username, currentUser, this.profileImage);
+    this.subscriptions.push(this.userService.updateUser(formData).subscribe(
+      (response: AuthUser) => {
+        this.authenticationService.addAuthUserToLocalCache(response);
+        this.getUsers(false);
+        this.refreshing = false;
+        this.fileName = null;
+        this.profileImage = null;
+        this.notificationService.notifySuccess(`${response.firstName} ${response.lastName} updated successfully`);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.refreshing = false;
+        this.showError(errorResponse);
+        this.fileName = null;
+        this.profileImage = null;
+      }
+    ));
+  }
+
+  public onLogOut(): void {
+    // todo: implement
+  }
+
   private static clickButtonById(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
