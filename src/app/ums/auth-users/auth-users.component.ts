@@ -166,6 +166,22 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onResetPassword(emailForm: NgForm): void {
+    this.refreshing = true;
+    const emailAddress = emailForm.value['reset-password-email'];
+    this.subscriptions.push(this.userService.resetPasswordFor(emailAddress).subscribe(
+      (response: CustomHttpResponse) => {
+        this.notificationService.notifySuccess(response.message);
+        this.refreshing = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.showError(errorResponse);
+        this.refreshing = false;
+      },
+      () => emailForm.reset()
+    ));
+  }
+
   private static clickButtonById(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
