@@ -7,6 +7,7 @@ import {NotificationService} from "../../notification.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {CustomHttpResponse} from "../../model/CustomHttpResponse";
+import {AuthenticationService} from "../../authentication.service";
 
 @Component({
   selector: 'app-auth-users',
@@ -18,6 +19,7 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   private titleSubject = new BehaviorSubject<string>('User Management');
   public titleAction$ = this.titleSubject.asObservable();
   public users: AuthUser[];
+  public user: AuthUser;
   public selectedUser: AuthUser;
   public editUser: AuthUser = new AuthUser();
   public refreshing: boolean;
@@ -29,10 +31,12 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   private originalUsername: string;
 
   constructor(private userService: AuthUserService,
+              private authenticationService: AuthenticationService,
               private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
+    this.user = this.authenticationService.getAuthUserFromLocalCache();
     this.getUsers(true);
   }
 

@@ -21,6 +21,7 @@ import {AuthRouteGuardService} from "./auth-route-guard.service";
 import {AuthUserLoginComponent} from "./ums/auth-user-login/auth-user-login.component";
 import {AuthUserRegisterComponent} from "./ums/auth-user-register/auth-user-register.component";
 import {AuthUsersComponent} from "./ums/auth-users/auth-users.component";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {path : 'questions/questions', component : QuestionsComponent, canActivate: [AuthRouteGuardService]},
@@ -45,7 +46,7 @@ const routes: Routes = [
   /* AuthUser Routes */
   {path : 'auth-user-login', component: AuthUserLoginComponent},
   {path : 'auth-user-register', component: AuthUserRegisterComponent},
-  {path : 'auth-users/management', component: AuthUsersComponent},
+  {path : 'auth-users/management', component: AuthUsersComponent, canActivate: [AuthGuard]},
   // {path : '', redirectTo : '/auth-user-login'},
 
   /* General Routes */
