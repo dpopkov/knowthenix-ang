@@ -4,12 +4,13 @@ import {AuthUser} from "../../model/AuthUser";
 import {Subscription} from "rxjs";
 import {AuthUserService} from "../../auth-user.service";
 import {NotificationService} from "../../notification.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {CustomHttpResponse} from "../../model/CustomHttpResponse";
 import {AuthenticationService} from "../../authentication.service";
 import {Router} from "@angular/router";
 import {AppUrls} from "../../app-urls";
+import {FileUploadStatus} from "../../model/FileUploadStatus";
 
 @Component({
   selector: 'app-auth-users',
@@ -29,6 +30,7 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   public isManager: boolean = true;
   private subscriptions: Subscription[] = [];
   public fileName: string;
+  public fileStatus: FileUploadStatus = new FileUploadStatus();
   private profileImage: File;
   private originalUsername: string;
 
@@ -186,7 +188,22 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   }
 
   public updateProfileImage(): void {
-    // todo: implement
+    AuthUsersComponent.clickButtonById('profile-image-input');
+  }
+
+  public onUpdateProfileImage() {
+    const formData = new FormData();
+    formData.append('username', this.user.username);
+    formData.append('profileImage', this.profileImage);
+    this.subscriptions.push(this.userService.updateProfileImage(formData).subscribe(
+      (event: HttpEvent<AuthUser>) => {
+        this.reportUploadProgress(event);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.fileStatus.status = 'done';
+        this.showError(errorResponse);
+      }
+    ));
   }
 
   public onUpdateCurrentUser(currentUser: AuthUser): void {
@@ -214,6 +231,26 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     this.authenticationService.logOut();
     this.notificationService.notifySuccess("You've successfully logged out!");
     this.router.navigate([AppUrls.AUTH_USER_LOGIN]);
+  }
+
+  private reportUploadProgress(event: HttpEvent<AuthUser>): void {
+    switch (event.type) {
+      case HttpEventType.UploadProgress:
+        this.fileStatus.percentage = Math.round(100 * event.loaded / event.total);
+        this.fileStatus.status = 'progress';
+        break;
+      case HttpEventType.Response:
+        if (event.status === 200) {
+          this.user.profileImageUrl = `${event.body.profileImageUrl}?time=${new Date().getTime()}`;
+          this.notificationService.notifySuccess(`${event.body.firstName}'s profile image updated successfully`);
+          this.fileStatus.status = 'done';
+        } else {
+          this.notificationService.notifyError('Unable to upload image. Please try again');
+        }
+        break;
+      default:
+        `Finished all processes`;
+    }
   }
 
   private static clickButtonById(buttonId: string): void {
