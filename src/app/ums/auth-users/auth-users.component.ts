@@ -8,6 +8,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {CustomHttpResponse} from "../../model/CustomHttpResponse";
 import {AuthenticationService} from "../../authentication.service";
+import {Router} from "@angular/router";
+import {AppUrls} from "../../app-urls";
 
 @Component({
   selector: 'app-auth-users',
@@ -32,6 +34,7 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
 
   constructor(private userService: AuthUserService,
               private authenticationService: AuthenticationService,
+              private router: Router,
               private notificationService: NotificationService) {
   }
 
@@ -208,7 +211,9 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   }
 
   public onLogOut(): void {
-    // todo: implement
+    this.authenticationService.logOut();
+    this.notificationService.notifySuccess("You've successfully logged out!");
+    this.router.navigate([AppUrls.AUTH_USER_LOGIN]);
   }
 
   private static clickButtonById(buttonId: string): void {
