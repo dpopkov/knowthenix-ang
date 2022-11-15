@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../authentication.service";
 import {Router} from "@angular/router";
 import {AppUrls} from "../../app-urls";
 import {FileUploadStatus} from "../../model/FileUploadStatus";
+import {AuthRole} from "../../model/AuthRole";
 
 @Component({
   selector: 'app-auth-users',
@@ -26,13 +27,12 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
   public selectedUser: AuthUser;
   public editUser: AuthUser = new AuthUser();
   public refreshing: boolean;
-  public isAdmin: boolean = true;
-  public isManager: boolean = true;
   private subscriptions: Subscription[] = [];
   public fileName: string;
   public fileStatus: FileUploadStatus = new FileUploadStatus();
   private profileImage: File;
   private originalUsername: string;
+  private userRole: string;
 
   constructor(private userService: AuthUserService,
               private authenticationService: AuthenticationService,
@@ -42,6 +42,7 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.authenticationService.getAuthUserFromLocalCache();
+    this.userRole = this.user.role;
     this.getUsers(true);
   }
 
@@ -231,6 +232,19 @@ export class AuthUsersComponent implements OnInit, OnDestroy {
     this.authenticationService.logOut();
     this.notificationService.notifySuccess("You've successfully logged out!");
     this.router.navigate([AppUrls.AUTH_USER_LOGIN]);
+  }
+
+  public get isSuperAdmin(): boolean {
+    return this.userRole === AuthRole.SUPER_ADMIN;
+  }
+
+  public get isAdmin(): boolean {
+    return this.userRole === AuthRole.ADMIN || this.userRole === AuthRole.SUPER_ADMIN;
+  }
+
+  public get isManager(): boolean {
+    return this.userRole === AuthRole.MANAGER || this.userRole === AuthRole.ADMIN
+      || this.userRole === AuthRole.SUPER_ADMIN;
   }
 
   private reportUploadProgress(event: HttpEvent<AuthUser>): void {

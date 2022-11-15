@@ -24,6 +24,7 @@
         </a>
         <a class="nav-item nav-link ml-3" data-toggle="tab"
            href="#reset-password"
+           [hidden]="!isAdmin"
            (click)="changeTitle('Settings')">
           <i class="fa fa-cogs"></i>
           Settings
@@ -98,7 +99,7 @@
               <button class="btn btn-outline-info" (click)="onEditUser(authUser)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUser(authUser?.username)">
+              <button [hidden]="!isSuperAdmin" class="btn btn-outline-danger" (click)="onDeleteUser(authUser?.username)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </div>
@@ -577,14 +578,13 @@
     </div>
     <!-- end of modal edit user -->
 
-    <!-- profile image change form -->
-
-    <!-- Hidden form that is used programmatically. -->
+    <!-- profile image change form - hidden form that is used programmatically. -->
     <form enctype="multipart/form-data" style="display:none;">
       <input type="file"
              (change)="onProfileImageChange($event); onUpdateProfileImage()"
              name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
     </form>
+    <!-- end of profile image change form -->
 
   </div>
   <!-- end of main content -->
