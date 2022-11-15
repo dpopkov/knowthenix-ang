@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormResetService} from "../form-reset.service";
+import {AuthenticationService} from "../authentication.service";
+import {AppUrls} from "../app-urls";
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +12,7 @@ import {FormResetService} from "../form-reset.service";
 export class MenuComponent implements OnInit {
 
   constructor(private router: Router,
+              private authenticationService: AuthenticationService,
               private formResetService: FormResetService) { }
 
   ngOnInit(): void {
@@ -27,10 +30,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['questions', 'questions']);
   }
 
-  navigateToAddNewQuestion(): void {
+  /*navigateToAddNewQuestion(): void {
     this.formResetService.resetQuestionFormEvent.emit();
     this.router.navigate(['questions', 'edit'], {queryParams: {action: 'add'}});
-  }
+  }*/
 
   navigateToKeyTerms(): void {
     this.router.navigate(['keyterms']);
@@ -41,10 +44,15 @@ export class MenuComponent implements OnInit {
   }
 
   navigateToUsers() {
-    this.router.navigate(['users']);
+    this.router.navigate(['auth-users', 'management']);
   }
 
-  navigateToAddNewAppUser() {
+  /*navigateToAddNewAppUser() {
     this.router.navigate(['users'], {queryParams: {action: 'add'}});
+  }*/
+
+  public logout(): void {
+    this.authenticationService.logOut();
+    this.router.navigate([AppUrls.AUTH_USER_LOGIN]);
   }
 }
