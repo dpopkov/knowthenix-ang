@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../authentication.service";
 import {NotificationService} from "../../notification.service";
 import {AppUrls} from "../../app-urls";
@@ -20,6 +20,7 @@ export class AuthUserLoginComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private authService: AuthenticationService,
+              private activatedRoute: ActivatedRoute,
               private notificationService: NotificationService) {
   }
 
@@ -41,7 +42,12 @@ export class AuthUserLoginComponent implements OnInit, OnDestroy {
           const token = response.headers.get(HeaderType.JWT_TOKEN);
           this.authService.saveToken(token);
           this.authService.addAuthUserToLocalCache(response.body);
-          this.router.navigateByUrl(AppUrls.USERS_MANAGEMENT);
+          const url = this.activatedRoute.snapshot.queryParams['requested'];
+          if (url) {
+            this.router.navigateByUrl(url);
+          } else {
+            this.router.navigateByUrl(AppUrls.USERS_MANAGEMENT);
+          }
           this.showLoading = false;
         },
         (errorResponse: HttpErrorResponse) => {
