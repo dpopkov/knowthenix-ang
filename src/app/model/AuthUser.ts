@@ -12,7 +12,6 @@ export class AuthUser {
   public profileImageUrl: string;
   public active: boolean;
   public notLocked: boolean;
-  // public profileImageUrl: string;
 
   constructor() {
     this.publicId = '';
@@ -28,6 +27,5 @@ export class AuthUser {
     this.profileImageUrl = '';
     this.active = false;
     this.notLocked = false;
-    // this.profileImageUrl = '';
   }
 }
