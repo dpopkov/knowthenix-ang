@@ -55,4 +55,8 @@ export class MenuComponent implements OnInit {
     this.authenticationService.logOut();
     this.router.navigate([AppUrls.AUTH_USER_LOGIN]);
   }
+
+  public get isLoggedIn(): boolean {
+    return this.authenticationService.isLoggedIn();
+  }
 }

@@ -1,54 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" (click)="navigateToHome()" >Knowthenix</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-md breadcrumb">
+  <div class="collapse navbar-collapse">
+    <!-- Navbar brand -->
+    <!--<a class="navbar-brand" (click)="navigateToHome()" >Knowthenix</a>-->
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" (click)="navigateToQuestionsCategories()" >Categories</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" (click)="navigateToViewAllQuestions()" >Questions</a>
-        </li>
-        <!--<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="questionsNavbarDropdown" role="button" data-bs-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
-            Questions
-          </a>
-          <div class="dropdown-menu" aria-labelledby="questionsNavbarDropdown">
-            <a class="dropdown-item" (click)="navigateToViewAllQuestions()" >List Questions</a>
-            <a class="dropdown-item" (click)="navigateToAddNewQuestion()" >Add Question</a>
-            <a class="dropdown-item" >Find Question</a>
-            <a class="dropdown-item" (click)="navigateToQuestionsCategories()" >Categories</a>
-            <a class="dropdown-item" >Collections</a>
-          </div>
-        </li>-->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="decksNavbarDropdown" role="button" data-bs-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
-            Decks
-          </a>
-          <div class="dropdown-menu" aria-labelledby="decksNavbarDropdown">
-            <a class="dropdown-item" >List Decks</a>
-            <a class="dropdown-item" >Add Deck</a>
-          </div>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" (click)="navigateToKeyTerms()" >KeyTerms</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" (click)="navigateToSources()" >Sources</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" (click)="navigateToUsers()" >Users</a>
-        </li>
-        <li class="nav-item active move-right">
-          <a class="nav-link" (click)="logout()" >Logout</a>
-        </li>
-      </ul>
-
+    <div class="nav nav-pills">
+      <a class="nav-item nav-link active ml-1" data-toggle="tab"
+         (click)="navigateToQuestionsCategories()">
+        <i class="fa fa-cubes"></i>
+        Categories
+      </a>
+      <a class="nav-item nav-link ml-3" data-toggle="tab"
+         (click)="navigateToViewAllQuestions()">
+        <i class="fa fa-question"></i>
+        Questions
+      </a>
+      <a class="nav-item nav-link ml-3" data-toggle="tab"
+         (click)="navigateToKeyTerms()">
+        <i class="fa fa-key"></i>
+        KeyTerms
+      </a>
+      <a class="nav-item nav-link ml-3" data-toggle="tab"
+         (click)="navigateToSources()">
+        <i class="fa fa-book"></i>
+        Sources
+      </a>
+      <a class="nav-item nav-link ml-3" data-toggle="tab"
+         (click)="navigateToUsers()">
+        <i class="fa fa-users"></i>
+        Users
+      </a>
+      <a class="nav-item nav-link move-right mr-3" data-toggle="tab"
+         *ngIf="isLoggedIn"
+         (click)="logout()">
+        Logout
+        <i class="fa fa-sign-out"></i>
+      </a>
     </div>
-  </nav>
+  </div>
+</nav>
