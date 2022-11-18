@@ -91,8 +91,13 @@
           <td (click)="onSelectUser(authUser)">{{authUser?.username}}</td>
           <td (click)="onSelectUser(authUser)">{{authUser?.email}}</td>
           <td (click)="onSelectUser(authUser)">
-            <span [hidden]="!authUser?.active" class="badge badge-success">Active</span>
-            <span [hidden]="authUser?.active" class="badge badge-danger">Inactive</span>
+            <div>
+              <span [hidden]="!authUser?.active" class="badge badge-success">Active</span>
+              <span [hidden]="authUser?.active" class="badge badge-danger">Inactive</span>
+            </div>
+            <div [hidden]="authUser?.notLocked" >
+              <span class="badge badge-danger">Locked</span>
+            </div>
           </td>
           <td class="">
             <div class="btn-group">
