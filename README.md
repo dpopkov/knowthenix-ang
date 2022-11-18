@@ -16,4 +16,14 @@ Backend: [Knowthenix](https://github.com/dpopkov/knowthenix)
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ### Screenshots
-Will be added later.
+
+|  |  |
+| ------------- | ------------- |
+| <img align="center" src="docs/images/ui-01-register.png" /> | <img align="center" src="docs/images/ui-02-login.png" /> |
+| Registration page. If password is not provided, it will be generated. | Login page. Number of login attempts is limited, then user is locked. |
+| <img align="center" src="docs/images/ui-03-users.png" /> | <img align="center" src="docs/images/ui-04-settings.png" /> |
+| List of all users. | Resetting user password. | 
+| <img align="center" src="docs/images/ui-05-edit-user.png" /> | <img align="center" src="docs/images/ui-06-profile.png" /> |
+| Edit user. | Profile of current user. |
+
+The rest of screenshots for categories, questions, keyterms and sources will be added later.
