@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md breadcrumb">
+<nav class="navbar navbar-expand-md breadcrumb" *ngIf="isLoggedIn">
   <div class="collapse navbar-collapse">
     <!-- Navbar brand -->
     <!--<a class="navbar-brand" (click)="navigateToHome()" >Knowthenix</a>-->
@@ -30,7 +30,6 @@
         Users
       </a>
       <a class="nav-item nav-link move-right mr-3" data-toggle="tab"
-         *ngIf="isLoggedIn"
          (click)="logout()">
         Logout
         <i class="fa fa-sign-out"></i>
