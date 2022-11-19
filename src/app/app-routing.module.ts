@@ -46,10 +46,10 @@ const routes: Routes = [
   {path : 'auth-user-login', component: AuthUserLoginComponent},
   {path : 'auth-user-register', component: AuthUserRegisterComponent},
   {path : 'auth-users/management', component: AuthUsersComponent, canActivate: [AuthGuard]},
-  // {path : '', redirectTo : '/auth-user-login'},
+  {path : '', component : AuthUserLoginComponent},
 
   /* General Routes */
-  {path : '', component : HomeComponent},
+  // {path : '', component : HomeComponent},
   {path : '404', component : PageNotFoundComponent},
   {path : '**', redirectTo : '/404'}
 ];
